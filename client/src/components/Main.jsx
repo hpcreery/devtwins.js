@@ -1,6 +1,9 @@
 // ReactJS
 import React, { Component } from 'react'
 
+// Components
+import MainHeader from './MainHeader'
+
 // UI Elements
 import { Layout, Affix, Button } from 'antd'
 
@@ -71,11 +74,8 @@ export default class Main extends Component {
 	}
 
 	changeTheme = (nextTheme) => {
-		console.log(nextTheme)
-		//document.documentElement.style.setProperty('--color-text', 'white')
-		var theme = nextTheme === 'dark' ? this.darkTheme : this.lightTheme
-		Object.keys(theme).map((key) => {
-			var value = theme[key]
+		Object.keys(nextTheme).map((key) => {
+			var value = nextTheme[key]
 			document.documentElement.style.setProperty(key, value)
 		})
 	}
@@ -84,14 +84,10 @@ export default class Main extends Component {
 		return (
 			<Layout className='SiteLayout'>
 				<Affix offsetTop={0}>
-					<Header className='SiteHeader'>Header</Header>
+					<MainHeader />
 				</Affix>
-
 				<Content className='Content'>
 					<div>This is a test</div>
-					<Button onClick={() => this.changeTheme('dark')}>
-						dark
-					</Button>
 				</Content>
 				<Footer>Footer</Footer>
 			</Layout>
