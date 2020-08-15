@@ -7,12 +7,12 @@
 ## API example
 
 * `/pagelist`
- * Array: `["First Gallery","First Page","Home"]`
+	* Array: `["First Gallery","First Page","Home"]`
 * `/pagedata/First%20Gallery'`
- * Object: `{"type":"collage","images":["IMG_8667.jpg","IMG_8671.jpg"]}`
+	* Object: `{"type":"collage","images":["IMG_8667.jpg","IMG_8671.jpg"]}`
 * `/pageimage/First%20Gallery/IMG_8671.jpg`
- * File: *IMG_8671.jpg*
+	* File: *IMG_8671.jpg*
  
 * `/help`
- * File: (README.md)
+	* File: (README.md)
  
