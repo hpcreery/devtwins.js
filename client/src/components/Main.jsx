@@ -51,9 +51,6 @@ export default class Main extends Component {
 		)
 		//console.log(scrollPostion)
 		document.documentElement.dataset.scroll = scrollPostion
-		this.setState({
-			scrollPosition: scrollPostion,
-		})
 	}
 
 	getDocHeight = () => {
@@ -67,13 +64,6 @@ export default class Main extends Component {
 		)
 	}
 
-	addScrollData = () => {
-		document.addEventListener('scroll', () => {
-			document.documentElement.dataset.scroll = window.scrollY
-			console.log(window.scrollY)
-		})
-	}
-
 	changeTheme = (nextTheme) => {
 		Object.keys(nextTheme).map((key) => {
 			var value = nextTheme[key]
@@ -82,11 +72,12 @@ export default class Main extends Component {
 	}
 
 	render() {
+		console.log('rendering')
 		return (
 			<Layout className='SiteLayout'>
 				{/* <Affix offsetTop={0}> */}
-					{/* <MainHeader /> */}
-          <Header2 />
+				{/* <MainHeader /> */}
+				<Header2 />
 				{/* </Affix> */}
 				<Content className='Content'>
 					<div>This is a test</div>
@@ -97,6 +88,5 @@ export default class Main extends Component {
 	}
 	componentDidMount() {
 		this.listenToScrollEvent()
-		//this.addScrollData()
 	}
 }

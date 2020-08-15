@@ -20,6 +20,7 @@ export default class MainHeader extends Component {
 						Navigation Two
 					</Menu.Item>
 					<SubMenu
+						style={{ position: 'fixed' }}
 						icon={<SettingOutlined />}
 						title='Navigation Three - Submenu'
 					>
