@@ -83,9 +83,7 @@ export default class Main extends Component {
 	render() {
 		return (
 			<Layout className='SiteLayout'>
-				<Affix offsetTop={0}>
-					<MainHeader />
-				</Affix>
+				<MainHeader />
 				<Content className='Content'>
 					<div>This is a test</div>
 				</Content>
