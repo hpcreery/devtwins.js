@@ -49,4 +49,8 @@ module.exports = (app) => {
     )
   })
 
+  app.get('/help', (req, res) => {
+    res.sendFile(process.cwd() + '/README.md')
+  })
+
 }
