@@ -1,0 +1,27 @@
+@import '~antd/dist/antd.css';
+
+:root {
+	--color-text-primary: black;
+	--color-text-secondary: white;
+	--color-background-primary: rgba(0, 0, 0, 0);
+	--color-background-secondary: rgba(0, 0, 0, 1);
+}
+
+.App {
+	text-align: center;
+}
+
+.SiteHeader {
+	transition-duration: 0.5s;
+	background: var(--color-background-primary);
+	color: var(--color-text-primary);
+}
+
+.Content {
+	min-height: 1000px;
+}
+
+html:not([data-scroll='0']) .SiteHeader {
+	background: var(--color-background-secondary);
+	color: var(--color-text-secondary);
+}
