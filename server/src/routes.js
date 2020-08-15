@@ -1,14 +1,14 @@
 // const AuthenticationController = require('./controllers/AuthenticationController')
 // const MusicController = require('./controllers/MusicController')
 // const VideoController = require('./controllers/VideoController')
-const PhotoController = require('./controllers/PhotoController')
+// const PhotoController = require('./controllers/PhotoController')
 const PageController = require('./controllers/PageController')
 // const FileController = require('./controllers/FileController')
 // const NewAuthenticationController = require('./controllers/NewAuthenticationController')
 // const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 
-const express = require('express');
-const config = require('./config/config')
+// const express = require('express');
+// const config = require('./config/config')
 
 
 module.exports = (app) => {
