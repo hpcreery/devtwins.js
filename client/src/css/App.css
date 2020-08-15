@@ -1,17 +1,22 @@
 @import '~antd/dist/antd.css';
 
 :root {
-	--color-text-primary: black;
+	--color-text-transparent: black;
 	--color-text-secondary: white;
 	--color-background-primary: rgba(0, 0, 0, 0);
-	--color-background-secondary: rgba(0, 0, 0, 0.8);
+  --color-background-secondary: rgba(0, 0, 0, 0.8);
+  --color-accent: red;
 }
 
 .App {
 	text-align: center;
 }
 
-.SiteHeader {
+.Content {
+	min-height: 1000px;
+}
+
+/* .SiteHeader {
 	transition-duration: 0.5s;
 	background: var(--color-background-primary);
 	color: var(--color-text-primary);
@@ -24,4 +29,25 @@
 html:not([data-scroll='0']) .SiteHeader {
 	background: var(--color-background-secondary);
 	color: var(--color-text-secondary);
+} */
+
+.ant-layout-header {
+  transition-duration: 0.5s;
+  /* background: var(--color-background-primary); Header Container Transparency */
+ }
+html[data-scroll='0'] .ant-layout-header { /* Header Container */
+  background: var(--color-background-primary); 
+  color: var(--color-text-primary);
+}
+
+.ant-menu.ant-menu-dark {
+  background: rgba(255, 255, 255, 0.0); /* Header Menu Transparency */
+}
+
+html[data-scroll='0'] .ant-menu-item  {
+  color: var(--color-text-transparent) !important;
+}
+
+html[data-scroll='0'] .ant-menu-submenu-title {
+  color: var(--color-text-transparent) !important;
 }
