@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-
 
 // Components
 import SiteHeader from './Header'
+import PageHandler from './PageHandler'
 import MarkdownRenderer from './MarkdownRenderer'
 
 // UI Elements
@@ -73,7 +74,7 @@ export default class Main extends Component {
 		})
   }
   
-  PageHandler = ( prop ) => {
+  _PageHandler = ( prop ) => {
     console.log('Match:', prop)
     const page = prop.match.params.page
     const category = prop.match.params.category
@@ -97,7 +98,7 @@ export default class Main extends Component {
           <SiteHeader />
           <Content className='Content'>
             <div>This is a test</div>
-            <Route path="/:category/:page" component={this.PageHandler} />
+            <Route path="/:category/:page" component={PageHandler} />
           </Content>
           <Footer>Footer</Footer>
         </Layout>

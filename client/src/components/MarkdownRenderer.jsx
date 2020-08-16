@@ -1,6 +1,6 @@
 // ReactJS
 import React, { Component } from 'react'
-import ReactMarkdown from "react-markdown";
+import ReactMarkdown from "react-markdown"; // https://github.com/rexxars/react-markdown
 
 // Components
 import api from '../services/Api'
@@ -47,9 +47,9 @@ export default class MarkdownRenderer extends Component {
 
 	render() {
 		return (
-      <div>
+      // <div>
         <ReactMarkdown source={this.state.markdown} />
-      </div>
+      // </div>
 		)
 	}
 }

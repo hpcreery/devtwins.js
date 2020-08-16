@@ -43,7 +43,7 @@ module.exports = {
 
   },
 
-  getpageimage (req, res){
+  getpagefile (req, res){
     var page = req.params.page.replace(/%20/g, " ")
     var category = req.params.category.replace(/%20/g, " ")
     var path = config.dir.pages + '/' + category + '/' + page + '/' + req.params.file
