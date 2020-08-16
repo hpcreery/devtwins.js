@@ -1,11 +1,13 @@
 // ReactJS
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-router-dom";
 
 // Components
 import SiteHeader from './Header'
 
 // UI Elements
 import { Layout, Affix, Button } from 'antd'
+
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -68,21 +70,31 @@ export default class Main extends Component {
 			var value = nextTheme[key]
 			document.documentElement.style.setProperty(key, value)
 		})
-	}
+  }
+  
+  PageHandler = ( prop ) => {
+    console.log('Match:', prop)
+    const page = prop.match.params.page
+    const category = prop.match.params.category
+    
+    return <h1>{category} {page}</h1>
+  }
+
+  
 
 	render() {
 		console.log('rendering')
 		return (
-			<Layout className='SiteLayout'>
-				{/* <Affix offsetTop={0}> */}
-				{/* <MainHeader /> */}
-				<SiteHeader />
-				{/* </Affix> */}
-				<Content className='Content'>
-					<div>This is a test</div>
-				</Content>
-				<Footer>Footer</Footer>
-			</Layout>
+      <Router>
+        <Layout className='SiteLayout'>
+          <SiteHeader />
+          <Content className='Content'>
+            <div>This is a test</div>
+            <Route path="/:category/:page" component={this.PageHandler} />
+          </Content>
+          <Footer>Footer</Footer>
+        </Layout>
+      </Router>
 		)
 	}
 	componentDidMount() {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Affix, Button, Menu } from 'antd'
+import { BrowserRouter as Router, Route, Link, Switch, useHistory, Redirect } from "react-router-dom";
 import {
 	MailOutlined,
 	AppstoreOutlined,
@@ -18,7 +19,8 @@ export default class MainHeader extends Component {
     this.state = {
       date: new Date(),
       menuItems: null,
-      photopages: []
+      photopages: [],
+      redirect: null
     };
   }
   async componentDidMount() {
@@ -36,7 +38,7 @@ export default class MainHeader extends Component {
       }
     })
   }
-  populateMenuItems() {
+  populateMenuItems = () => {
     api.getPhotoItems().then((res) => {
       console.log('aye!', res.data)
       if (res.status === 200) {
@@ -47,9 +49,25 @@ export default class MainHeader extends Component {
     })
   }
 
+  goTo = (props) => {
+    console.log('Clicked:', props.key)
+    // history.push(props.id)
+    // this.props.history.push(props.key);
+    // return <Redirect to={props.key}/>
+    const dest = props.key.replace(/ /g,"%20")
+    this.setState({ redirect: dest });
+    // let history = useHistory();
+    // history.push(dest)
+  }
+
   
 
 	render() {
+    if (this.state.redirect) {
+      var dest = this.state.redirect
+      this.setState({ redirect: null });
+      return <Redirect to={dest} />
+    } 
 		return (
 			<div className='Header-Container'>
 				<Header className='Site-Header' style={{ position: 'fixed', width: '100%' }}>
@@ -78,7 +96,7 @@ export default class MainHeader extends Component {
             >
               {/* <Menu.Item key='photo:1'>Option 1</Menu.Item> */}
               {this.state.photopages.map((value, index) => {
-                return <Menu.Item key={"photo-" + index}>{value}</Menu.Item>
+                return <Menu.Item key={"/Photos/" + value} onClick={this.goTo}>{value}</Menu.Item>
               })}
             </SubMenu>
           </Menu>
