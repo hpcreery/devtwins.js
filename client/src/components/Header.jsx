@@ -3,7 +3,8 @@ import { Layout, Affix, Button, Menu } from 'antd'
 import {
 	MailOutlined,
 	AppstoreOutlined,
-	SettingOutlined,
+  SettingOutlined,
+  PictureOutlined
 } from '@ant-design/icons'
 
 const { SubMenu } = Menu
@@ -22,7 +23,7 @@ export default class MainHeader extends Component {
             <Menu.Item key="3" className='Header-Menu-Item'>nav 3</Menu.Item>
             <SubMenu
               icon={<SettingOutlined />}
-              title='Navigation Three - Submenu'
+              title='Projects'
               className='Header-Menu-Item'
             >
               <Menu.ItemGroup title='Item 1'>
@@ -33,6 +34,13 @@ export default class MainHeader extends Component {
                 <Menu.Item key='setting:3'>Option 3</Menu.Item>
                 <Menu.Item key='setting:4'>Option 4</Menu.Item>
               </Menu.ItemGroup>
+            </SubMenu>
+            <SubMenu
+              icon={<PictureOutlined />}
+              title='Photos'
+              className='Header-Menu-Item'
+            >
+              <Menu.Item key='photo:1'>Option 1</Menu.Item>
             </SubMenu>
           </Menu>
         </Header>
