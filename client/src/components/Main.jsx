@@ -2,8 +2,7 @@
 import React, { Component } from 'react'
 
 // Components
-import MainHeader from './MainHeader'
-import Header2 from './Header2'
+import SiteHeader from './Header'
 
 // UI Elements
 import { Layout, Affix, Button } from 'antd'
@@ -77,7 +76,7 @@ export default class Main extends Component {
 			<Layout className='SiteLayout'>
 				{/* <Affix offsetTop={0}> */}
 				{/* <MainHeader /> */}
-				<Header2 />
+				<SiteHeader />
 				{/* </Affix> */}
 				<Content className='Content'>
 					<div>This is a test</div>

@@ -16,7 +16,7 @@ export default class MainHeader extends Component {
 				<Header className='Site-Header' style={{ position: 'fixed', width: '100%' }}>
           {/* <div className="logo" /> */}
           <Menu theme="dark" mode="horizontal" className="Site-Header-Menu" defaultSelectedKeys={['2']} getPopupContainer={node => node.parentNode}>
-            {/*getPopupContainer submenu scroll bug */}
+            {/*getPopupContainer submenu scroll bug https://github.com/ant-design/ant-design/issues/10145*/}
             <Menu.Item key="1" className='Header-Menu-Item'>nav 1</Menu.Item>
             <Menu.Item key="2" className='Header-Menu-Item'>nav 2</Menu.Item>
             <Menu.Item key="3" className='Header-Menu-Item'>nav 3</Menu.Item>
