@@ -5,9 +5,9 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 
 ReactDOM.render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
+	// <React.StrictMode>
+		<App />,
+	// </React.StrictMode>, // https://github.com/ant-design/ant-design/issues/22493
 	document.getElementById('root')
 )
 
