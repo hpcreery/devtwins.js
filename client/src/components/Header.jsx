@@ -11,7 +11,7 @@ import {
 import api from '../services/Api'
 
 const { SubMenu } = Menu
-const { Header, Content, Footer } = Layout;
+const { Header, Content, Footer } = Layout
 
 class MainHeader extends Component {
   constructor(props) {

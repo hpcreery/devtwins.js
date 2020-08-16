@@ -17,18 +17,7 @@ const { Header, Footer, Sider, Content } = Layout
 export default class Main extends Component {
 	constructor(props) {
 		super(props)
-		this.lightTheme = {
-			'--color-text-primary': 'black',
-			'--color-text-secondary': 'white',
-			'--color-background-primary': 'rgba(0, 0, 0, 0)',
-			'--color-background-secondary': 'rgba(0, 0, 0, 1)',
-		}
-		this.darkTheme = {
-			'--color-text-primary': 'white',
-			'--color-text-secondary': 'black',
-			'--color-background-primary': 'rgba(255, 255, 255, 0)',
-			'--color-background-secondary': 'rgba(255, 255, 255, 1)',
-		}
+		document.documentElement.dataset.scroll = 0
 	}
 
 	state = {
@@ -49,11 +38,9 @@ export default class Main extends Component {
 		const windowHeight = window.innerHeight
 		const docHeight = this.getDocHeight()
 		const totalDocScrollLength = docHeight - windowHeight
-		const scrollPostion = Math.floor(
-			(scrollTop / totalDocScrollLength) * 100
-		)
+		this.scrollPostion = Math.floor((scrollTop / totalDocScrollLength) * 100)
 		//console.log(scrollPostion)
-		document.documentElement.dataset.scroll = scrollPostion
+		document.documentElement.dataset.scroll = this.scrollPostion
 	}
 
 	getDocHeight = () => {
