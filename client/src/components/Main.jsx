@@ -1,12 +1,14 @@
 // ReactJS
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-router-dom";
 
 // Components
 import SiteHeader from './Header'
-import FrontPage from './pages/FrontPage'
+import MarkdownRenderer from './MarkdownRenderer'
 
 // UI Elements
 import { Layout, Affix, Button } from 'antd'
+
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -19,7 +21,7 @@ export default class Main extends Component {
 
 	state = {
 		scrollPosition: 0,
-	}
+  }
 
 	listenToScrollEvent = () => {
 		document.addEventListener('scroll', () => {
@@ -56,18 +58,37 @@ export default class Main extends Component {
 			var value = nextTheme[key]
 			document.documentElement.style.setProperty(key, value)
 		})
-	}
+  }
+  
+  PageHandler = ( prop ) => {
+    console.log('Match:', prop)
+    const page = prop.match.params.page
+    const category = prop.match.params.category
+    
+    return (
+      <div>
+        <h1>{category} {page}</h1> 
+        <MarkdownRenderer category={category} page={page} />
+      </div>
+      )
+    // return <MarkdownRenderer />
+  }
+
+  
 
 	render() {
 		console.log('rendering')
 		return (
-			<Layout className='SiteLayout'>
-				<SiteHeader />
-				<Content className='Content'>
-					<FrontPage scrollPosition={this.scrollPosition} />
-				</Content>
-				<Footer>Footer</Footer>
-			</Layout>
+      <Router>
+        <Layout className='SiteLayout'>
+          <SiteHeader />
+          <Content className='Content'>
+            <div>This is a test</div>
+            <Route path="/:category/:page" component={this.PageHandler} />
+          </Content>
+          <Footer>Footer</Footer>
+        </Layout>
+      </Router>
 		)
 	}
 	componentDidMount() {

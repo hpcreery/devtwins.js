@@ -10,24 +10,30 @@ const instance = axios.create({
 });
 export default {
   getTestData: () => instance({
-      method: "GET",
-      url: "/test",
-    }),
+    method: "GET",
+    url: "/test",
+  }),
 
-  getPhotoItems: () => instance({
-      method: "GET",
-      url: "/pagelist/Photos",
-      params: {
-        search: "parameter",
-      },
-    }),
+  getPhotoPages: () => instance({
+    method: "GET",
+    url: "/pagelist/Photos",
+  }),
+  getProjectPages: () => instance({
+    method: "GET",
+    url: "/pagelist/Projects",
+  }),
 
-  postData: () => instance({
-      method: "POST",
-      url: "/api",
-      data: {
-        item1: "data1",
-        item2: "item2",
-      },
-    }),
+  // postData: () => instance({
+  //   method: "POST",
+  //   url: "/api",
+  //   data: {
+  //     item1: "data1",
+  //     item2: "item2",
+  //   },
+  // }),
+
+  getPageContent: (page, file) => instance({
+    method: "GET",
+    url: "/pagecontent/Projects/" + page + "/" + file,
+  }),
 };
