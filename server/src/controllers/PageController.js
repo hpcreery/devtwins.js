@@ -33,7 +33,7 @@ module.exports = {
       console.log('found one')
       console.log(config.dir.pages + '/' + staticfile)
       // res.status(200).sendFile(config.dir.pages + '/' + page + '/' + staticfile)
-      res.status(200).json({type: 'static', file: staticfile})
+      res.status(200).json({type: 'static', subtype: staticfile.split('.').pop(), file: staticfile})
     } else if (hasSupportedCollage(files)) {
       res.status(200).json({type: 'collage', images: supportedCollageFiles(files)})
     } else {

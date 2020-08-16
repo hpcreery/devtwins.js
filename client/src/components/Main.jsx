@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-
 
 // Components
 import SiteHeader from './Header'
+import MarkdownRenderer from './MarkdownRenderer'
 
 // UI Elements
 import { Layout, Affix, Button } from 'antd'
@@ -31,7 +32,7 @@ export default class Main extends Component {
 
 	state = {
 		scrollPosition: 0,
-	}
+  }
 
 	listenToScrollEvent = () => {
 		document.addEventListener('scroll', () => {
@@ -77,7 +78,13 @@ export default class Main extends Component {
     const page = prop.match.params.page
     const category = prop.match.params.category
     
-    return <h1>{category} {page}</h1>
+    return (
+      <div>
+        <h1>{category} {page}</h1> 
+        <MarkdownRenderer category={category} page={page} />
+      </div>
+      )
+    // return <MarkdownRenderer />
   }
 
   
