@@ -24,7 +24,7 @@ export default class MainHeader extends Component {
   async componentDidMount() {
     
     this.getTestData();
-    this.getPhotoItems()
+    this.populateMenuItems()
     // console.log(test)
   }
   getTestData() {
@@ -36,7 +36,7 @@ export default class MainHeader extends Component {
       }
     })
   }
-  getPhotoItems() {
+  populateMenuItems() {
     api.getPhotoItems().then((res) => {
       console.log('aye!', res.data)
       if (res.status === 200) {

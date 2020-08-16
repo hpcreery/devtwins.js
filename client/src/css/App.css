@@ -34,13 +34,8 @@ html[data-scroll='0'] .Header-Menu-Item:not(.ant-menu-item-selected) {
   color: var(--color-text-transparent) !important;
 }
 
-html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected {
+html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected, .Header-Menu-Item.ant-menu-submenu-active:not(.ant-menu-submenu-selected) .ant-menu-submenu-title {
   color: var(--color-text-transparent-selected) !important;
-}
-
-html[data-scroll='0'] .Header-Menu-Item.ant-menu-submenu-active:not(.ant-menu-submenu-selected) .ant-menu-submenu-title {
-  color: var(--color-text-transparent-selected) !important;
-  /* color: var(--color-accent) !important; */
 }
 
 html[data-scroll='0'] .Header-Menu-Item.ant-menu-submenu-selected .ant-menu-submenu-title {
