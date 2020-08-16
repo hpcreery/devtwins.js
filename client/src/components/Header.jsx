@@ -13,7 +13,7 @@ import api from '../services/Api'
 const { SubMenu } = Menu
 const { Header, Content, Footer } = Layout;
 
-export default withRouter(class MainHeader extends Component {
+class MainHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -103,4 +103,6 @@ export default withRouter(class MainHeader extends Component {
 			</div>
 		)
 	}
-})
+}
+
+export default withRouter(MainHeader)
