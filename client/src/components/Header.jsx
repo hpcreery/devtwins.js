@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Affix, Button, Menu } from 'antd'
-import { BrowserRouter as Router, Route, Link, Switch, useHistory, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Switch, useHistory, Redirect, withRouter } from "react-router-dom";
 import {
 	MailOutlined,
 	AppstoreOutlined,
@@ -13,7 +13,7 @@ import api from '../services/Api'
 const { SubMenu } = Menu
 const { Header, Content, Footer } = Layout;
 
-export default class MainHeader extends Component {
+export default withRouter(class MainHeader extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,11 +51,10 @@ export default class MainHeader extends Component {
 
   goTo = (props) => {
     console.log('Clicked:', props.key)
-    // history.push(props.id)
-    // this.props.history.push(props.key);
-    // return <Redirect to={props.key}/>
     const dest = props.key.replace(/ /g,"%20")
-    this.setState({ redirect: dest });
+    // history.push(props.id)
+    this.props.history.push(dest);
+    // this.setState({ redirect: dest });  // Use with redirect router method && remove withRouter from export
     // let history = useHistory();
     // history.push(dest)
   }
@@ -63,11 +62,11 @@ export default class MainHeader extends Component {
   
 
 	render() {
-    if (this.state.redirect) {
-      var dest = this.state.redirect
-      this.setState({ redirect: null });
-      return <Redirect to={dest} />
-    } 
+    // if (this.state.redirect) {  // Use with redirect router method && remove withRouter from export
+    //   var dest = this.state.redirect
+    //   this.setState({ redirect: null });
+    //   return <Redirect to={dest} />
+    // } 
 		return (
 			<div className='Header-Container'>
 				<Header className='Site-Header' style={{ position: 'fixed', width: '100%' }}>
@@ -104,4 +103,4 @@ export default class MainHeader extends Component {
 			</div>
 		)
 	}
-}
+})
