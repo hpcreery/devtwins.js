@@ -5,7 +5,9 @@ const config = require('../config/config')
 module.exports = {
 
   getpagelist (req, res) {
-    fs.readdir(config.dir.pages, function(err, items) {
+    var category = req.params.category.replace(/%20/g, " ")
+    console.log(config.dir.pages + '/' + category)
+    fs.readdir(config.dir.pages + '/' + category, function(err, items) {
       console.log(items)
       err ? res.status(500).send(err) : res.status(200).json(items);
     })
@@ -22,8 +24,9 @@ module.exports = {
     let hasSupportedCollage = (files) => supportedCollageFiles(files).length > 0
 
     var page = req.params.name.replace(/%20/g, " ")
+    var category = req.params.category.replace(/%20/g, " ")
     var files = []
-    files = fs.readdirSync(config.dir.pages + '/' + page)
+    files = fs.readdirSync(config.dir.pages + '/' + category + '/' + page)
     console.log("Files:", files)
     if (hasSupportedFile(files)) {
       var staticfile = parentFile(supportedFiles(files))
@@ -42,7 +45,8 @@ module.exports = {
 
   getpageimage (req, res){
     var page = req.params.page.replace(/%20/g, " ")
-    var path = config.dir.pages + '/' + page + '/' + req.params.file
+    var category = req.params.category.replace(/%20/g, " ")
+    var path = config.dir.pages + '/' + category + '/' + page + '/' + req.params.file
     console.log(path)
     if (fs.existsSync(path)) {
       res.status(200).sendFile(path);
