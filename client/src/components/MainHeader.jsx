@@ -11,7 +11,7 @@ const { SubMenu } = Menu
 export default class MainHeader extends Component {
 	render() {
 		return (
-			<div>
+			<div >
 				<Menu className='SiteHeader' mode='horizontal'>
 					<Menu.Item key='mail' icon={<MailOutlined />}>
 						Navigation One
