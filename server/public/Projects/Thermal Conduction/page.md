@@ -27,7 +27,15 @@ Occasionally, transient conduction problems may be considerably simplified if re
  - matplotlib
  - numpy
  
- ## Results
+## Script
+ 
+ ```
+ python main.py
+ ```
+ 
+ Inline `code`
+ 
+## Results
  
 Heat equation 
 

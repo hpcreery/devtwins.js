@@ -80,7 +80,7 @@ class MainHeader extends Component {
 			<div className='Header-Container'>
 				<Header className='Site-Header' style={{ position: 'fixed', width: '100%' }}>
           {/* <div className="logo" /> */}
-          <Menu theme="dark" mode="horizontal" className="Site-Header-Menu" defaultSelectedKeys={['2']} getPopupContainer={node => node.parentNode}>
+          <Menu theme="dark" mode="horizontal" className="Site-Header-Menu" defaultSelectedKeys={['/']} getPopupContainer={node => node.parentNode}>
             {/*getPopupContainer submenu scroll bug https://github.com/ant-design/ant-design/issues/10145*/}
             <Menu.Item key="/" className='Header-Menu-Item' onClick={this.goTo}>Home</Menu.Item>
             <SubMenu
