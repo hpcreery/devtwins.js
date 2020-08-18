@@ -9,8 +9,16 @@ import MarkdownRenderer from './MarkdownRenderer'
 import FrontPage from './pages/FrontPage'
 
 // UI Elements
-import { Layout, Affix, Button } from 'antd'
-
+import { Layout, Affix, Button, Row, Col } from 'antd'
+import {
+	MailOutlined,
+	AppstoreOutlined,
+  SettingOutlined,
+  PictureOutlined,
+  GithubOutlined,
+  YoutubeOutlined,
+  InstagramOutlined
+} from '@ant-design/icons'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -89,7 +97,18 @@ export default class Main extends Component {
             <Route path="/" exact component={FrontPage} />
             <Route path="/:category/:page" component={PageHandler} />
           </Content>
-          <Footer>Footer</Footer>
+          <Footer>
+          <Row justify="space-between">
+            <Col>Created by Hunter & Peyton Creery</Col>
+            <Col>
+              <GithubOutlined />
+              <YoutubeOutlined />
+              <InstagramOutlined />
+              Social
+            </Col>
+          </Row>
+            {/* Created by Hunter & Peyton Creery */}
+          </Footer>
         </Layout>
       </Router>
 		)
