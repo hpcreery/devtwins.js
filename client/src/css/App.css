@@ -88,5 +88,9 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected {
 }
 
 .Page-Container {
+	/* padding-top: 64px; */
+}
+
+.Page-Heading {
 	padding-top: 64px;
 }

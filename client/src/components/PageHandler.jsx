@@ -6,7 +6,7 @@ import api from '../services/Api'
 import MarkdownRenderer from './MarkdownRenderer'
 
 // UI Elements
-import { Layout, Affix, Button } from 'antd'
+import { Layout, Affix, Button, Row, Col } from 'antd'
 
 
 const { Header, Footer, Sider, Content } = Layout
@@ -69,6 +69,20 @@ export default class PageHandler extends Component {
 
   }
 
+  pageTitleRenderer = () => {
+    return (
+      <div className={"Page-Heading"}>
+      <Row justify="center"> {/* a row in a row, i know */}
+        <Col span={18}>
+          <h1 style={{fontSize: "xx-large", textAlign: "center"}}>
+            {this.state.category} / {this.state.page}
+          </h1>
+        </Col>
+      </Row>
+      </div>
+    )
+  }
+
   
 
   
@@ -78,6 +92,7 @@ export default class PageHandler extends Component {
       <div>
         {/* <h2>NewPageHandler</h2> */}
         {/* <h1>{this.state.category} {this.state.page} {this.state.pageFile}</h1>  */}
+        <this.pageTitleRenderer/>
         {/* <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFile} /> */}
         {/* {this.Selector} */}
         <this.Selector/>

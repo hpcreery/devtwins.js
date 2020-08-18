@@ -113,7 +113,7 @@ export default class MarkdownRenderer extends Component {
       <div className="Page-Container md-container">
         <Row justify="center">
           <Col span={18}>
-            <this.pageTitleRenderer/>
+            {/* <this.pageTitleRenderer/> */}
             <ReactMarkdown source={this.state.markdown} transformImageUri={this.imageUriFormatter} renderers={{image: this.imageRenderer, inlineCode: this.codeInlineRenderer, code: this.codeBlockRenderer}} />
           </Col>
         </Row>
