@@ -22,6 +22,10 @@ export default {
     method: "GET",
     url: "/pagelist/Projects",
   }),
+  getPageInfo: (category, page) => instance({
+    method: "GET",
+    url: "/pageinfo/" + category + "/" + page,
+  }),
 
   // postData: () => instance({
   //   method: "POST",
@@ -32,8 +36,8 @@ export default {
   //   },
   // }),
 
-  getPageContent: (page, file) => instance({
+  getPageContent: (category, page, file) => instance({
     method: "GET",
-    url: "/pagecontent/Projects/" + page + "/" + file,
+    url: "/pagecontent/" + category + "/" + page + "/" + file,
   }),
 };

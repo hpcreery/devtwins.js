@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 
 // Components
 import api from '../services/Api'
+import MarkdownRenderer from './MarkdownRenderer'
 
 // UI Elements
 import { Layout, Affix, Button } from 'antd'
@@ -11,34 +12,60 @@ import { Layout, Affix, Button } from 'antd'
 const { Header, Footer, Sider, Content } = Layout
 
 // Main Class
-export default class MarkdownRenderer extends Component {
+export default class PageHandler extends Component {
 	constructor(props) {
     super(props)
     this.state = {
+      category: null,
+      page: null,
       prevProps: null,
       pageType: null,
       pageSubtype: null,
-      pageBanner: null,
-      pageIcon: null,
-
+      // pageBanner: null,
+      // pageIcon: null,
+      pageFile: null
     }
+    this.baseState = this.state
 	}
 
-  componentWillMount() {
+  componentDidMount() {
     this.updateInfo()
   }
 
   componentDidUpdate(prevProps) {
-    // if(this.props !== prevProps) {
-    //   prevProps = this.props
-    //   this.updateInfo();
-    // }
+    if(this.props !== prevProps) {
+      console.log('New')
+      this.updateInfo();
+    }
   }
 
-  updateInfo () {
-    // this.page = this.props.match.params.page
-    // this.category = this.props.match.params.category
-    // console.log(this.page, this.category)
+  updateInfo = () => {
+    this.setState(this.baseState)
+    console.log("Updating Info..")
+    this.setState({ category: this.props.match.params.category, page: this.props.match.params.page })
+    console.log('Updated to:', this.props.match.params.category, this.props.match.params.page)
+    api.getPageInfo(this.props.match.params.category, this.props.match.params.page).then((res) => {
+      console.log('aye!', res.data)
+      if (res.status === 200) {
+        this.setState({ pageType: res.data.type, pageSubtype: res.data.subtype, pageFile: res.data.file})
+        console.log(res)
+        // this.$store.commit('stopLoading')
+      }
+    })
+
+
+  }
+
+  Selector = ( prop ) => {
+    if (this.state.page) {
+      if (this.state.pageSubtype == "md") {
+        return <div><h3> Below this line is the page </h3><MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFile} /></div>
+      } else {
+        return <h3> this page aint no good ... (yet?) </h3>
+      }
+    } else {
+      return <h3>loading or somethin aint right </h3>
+    }
 
   }
 
@@ -50,8 +77,10 @@ export default class MarkdownRenderer extends Component {
 		return (
       <div>
         <h2>NewPageHandler</h2>
-        <h1>{this.props.match.params.category} {this.props.match.params.page}</h1> 
-        {/* <MarkdownRenderer category={category} page={page} /> */}
+        <h1>{this.state.category} {this.state.page} {this.state.pageFile}</h1> 
+        {/* <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFile} /> */}
+        {/* {this.Selector} */}
+        <this.Selector/>
       </div>
 		)
 	}

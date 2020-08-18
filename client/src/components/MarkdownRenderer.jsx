@@ -19,21 +19,24 @@ export default class MarkdownRenderer extends Component {
       markdown: '# NULL',
       prevProps: null
     }
-	}
+    this.baseState = this.state
+  }
+  
 
   componentWillMount() {
     // console.log(this.props.match.params.id, this.props.page)
+    this.setState(this.baseState)
     this.updateInfo()
   }
   componentDidUpdate(prevProps) {
     if(this.props !== prevProps) {
-      prevProps = this.props
       this.updateInfo();
     }
   }
 
   updateInfo () {
-    api.getPageContent(this.props.page, 'index.md').then((res) => {
+    console.log('Getting page data...')
+    api.getPageContent(this.props.category, this.props.page, this.props.file).then((res) => {
       console.log('Got Markdown Data: ', res)
       if (res.status === 200) {
         console.log(res)
