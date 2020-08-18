@@ -57,6 +57,11 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-submenu-selected .ant-menu-subm
   color: var(--color-accent) !important;
 }
 
+html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected {
+	/* color: var(--color-text-transparent-selected) !important; */
+	color: var(--color-accent) !important;
+	background-color: rgba(255, 255, 255, 0) !important; /* Header Menu Transparency */
+}
 
 .page-banner-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
