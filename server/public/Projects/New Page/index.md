@@ -2,4 +2,4 @@
 
 This is the second
 
-![This is us](banner.jpg)
+![This is us](content/banner.jpg)

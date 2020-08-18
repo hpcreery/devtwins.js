@@ -12,7 +12,7 @@ export class FrontPage extends Component {
 	}
 
 	render() {
-		return <div>{this.props.scrollPosition}</div>
+		return <div>FrontPage{this.props.scrollPosition}</div>
 	}
 }
 

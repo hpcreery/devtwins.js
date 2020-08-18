@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-
 import SiteHeader from './Header'
 import PageHandler from './PageHandler'
 import MarkdownRenderer from './MarkdownRenderer'
+import FrontPage from './pages/FrontPage'
 
 // UI Elements
 import { Layout, Affix, Button } from 'antd'
@@ -85,6 +86,7 @@ export default class Main extends Component {
           <SiteHeader />
           <Content className='Content'>
             {/* <div>This is a test</div> */}
+            <Route path="/" exact component={FrontPage} />
             <Route path="/:category/:page" component={PageHandler} />
           </Content>
           <Footer>Footer</Footer>
