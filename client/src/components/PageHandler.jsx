@@ -45,10 +45,10 @@ export default class PageHandler extends Component {
     this.setState({ category: this.props.match.params.category, page: this.props.match.params.page })
     console.log('Updated to:', this.props.match.params.category, this.props.match.params.page)
     api.getPageInfo(this.props.match.params.category, this.props.match.params.page).then((res) => {
-      console.log('aye!', res.data)
+      console.log('Page Info: ', res)
       if (res.status === 200) {
         this.setState({ pageType: res.data.type, pageSubtype: res.data.subtype, pageFile: res.data.file})
-        console.log(res)
+        // console.log(res)
         // this.$store.commit('stopLoading')
       }
     })
@@ -59,7 +59,7 @@ export default class PageHandler extends Component {
   Selector = ( prop ) => {
     if (this.state.page) {
       if (this.state.pageSubtype == "md") {
-        return <div><h3> Below this line is the page </h3><MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFile} /></div>
+        return <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFile} />
       } else {
         return <h3> this page aint no good ... (yet?) </h3>
       }
@@ -76,8 +76,8 @@ export default class PageHandler extends Component {
 	render() {
 		return (
       <div>
-        <h2>NewPageHandler</h2>
-        <h1>{this.state.category} {this.state.page} {this.state.pageFile}</h1> 
+        {/* <h2>NewPageHandler</h2> */}
+        {/* <h1>{this.state.category} {this.state.page} {this.state.pageFile}</h1>  */}
         {/* <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFile} /> */}
         {/* {this.Selector} */}
         <this.Selector/>

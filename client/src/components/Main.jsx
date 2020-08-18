@@ -84,7 +84,7 @@ export default class Main extends Component {
         <Layout className='SiteLayout'>
           <SiteHeader />
           <Content className='Content'>
-            <div>This is a test</div>
+            {/* <div>This is a test</div> */}
             <Route path="/:category/:page" component={PageHandler} />
           </Content>
           <Footer>Footer</Footer>

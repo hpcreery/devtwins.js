@@ -7,7 +7,7 @@ const PageController = require('./controllers/PageController')
 // const NewAuthenticationController = require('./controllers/NewAuthenticationController')
 // const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 
-// const express = require('express');
+const express = require('express');
 // const config = require('./config/config')
 
 
@@ -32,7 +32,9 @@ module.exports = (app) => {
 
   app.get('/pageinfo/:category/:name', PageController.getpagedata) // (page) => return page: type, content, ...
 
-  app.get('/pagecontent/:category/:page/:file', PageController.getpagefile) // (page, image) => return image ...
+  // app.get('/pagecontent/:category/:page/:file', PageController.getpagefile) // (page, image) => return image ...
+
+  app.use('/pagecontent/', express.static(process.cwd() + '/public'))
 
   // app.get('/pagebanner/:category/:page', PageController.getpageimage) // (page, image) => return image ...
 

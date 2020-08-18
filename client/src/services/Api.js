@@ -40,4 +40,7 @@ export default {
     method: "GET",
     url: "/pagecontent/" + category + "/" + page + "/" + file,
   }),
+  getPageContentBaseUrl: (category, page) => {
+    return instance.defaults.baseURL + "/pagecontent/" + category + "/" + page
+  }
 };

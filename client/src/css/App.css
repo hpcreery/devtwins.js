@@ -19,6 +19,7 @@
 
 .Site-Header {
 	transition-duration: 0.5s;
+	z-index: 100;
 }
 
 html[data-scroll='0'] .Site-Header {
@@ -79,4 +80,8 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-submenu-selected .ant-menu-subm
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+}
+
+.Page-Container {
+	padding-top: 64px;
 }
