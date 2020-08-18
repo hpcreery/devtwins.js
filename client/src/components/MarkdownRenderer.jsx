@@ -61,8 +61,9 @@ export default class MarkdownRenderer extends Component {
           <Card
             hoverable
             cover={<img src={props.src} />}
+            style={{ marginTop: 10 }}
           >
-            <Meta title={props.alt} />
+            <Meta style={{fontStyle: "italic"}} description={props.alt} />
           </Card>
         </Col>
       </Row>

@@ -99,13 +99,19 @@ export default class Main extends Component {
           </Content>
           <Footer>
           <Row justify="space-between">
-            <Col>Created by Hunter & Peyton Creery</Col>
-            <Col>
+            <Col span={20}>Created by Hunter & Peyton Creery</Col>
+            {/* <Col> */}
+              <Col>
               <GithubOutlined />
+              </Col>
+              <Col>
               <YoutubeOutlined />
+              </Col>
+              <Col>
               <InstagramOutlined />
+              </Col>
               Social
-            </Col>
+            {/* </Col> */}
           </Row>
             {/* Created by Hunter & Peyton Creery */}
           </Footer>
