@@ -22,6 +22,7 @@ module.exports = {
     let isSupportedCollage = (file) => config.dir.supportedCollageFormats.map(format => file.endsWith(format)).includes(true)
     let supportedCollageFiles = (files) => files.filter(file => isSupportedCollage(file))
     let hasSupportedCollage = (files) => supportedCollageFiles(files).length > 0
+    
     let addSize = (files) => files.map((file) => {
       var dimensions = sizeOf(config.dir.pages + '/' + category + '/' + page + "/" + file);
       return {name: file, width: dimensions.width, height: dimensions.height}
