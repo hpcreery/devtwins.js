@@ -40,7 +40,23 @@ class MainHeader extends Component {
     })
   }
   populateMenuItems = () => {
-    api.getPhotoPages().then((res) => {
+    // api.getPhotoPages().then((res) => {
+    //   console.log('aye!', res.data)
+    //   if (res.status === 200) {
+    //     console.log(res)
+    //     this.setState({ photopages: res.data })
+    //     // this.$store.commit('stopLoading')
+    //   }
+    // })
+    // api.getProjectPages().then((res) => {
+    //   console.log('aye!', res.data)
+    //   if (res.status === 200) {
+    //     console.log(res)
+    //     this.setState({ projectpages: res.data })
+    //     // this.$store.commit('stopLoading')
+    //   }
+    // })
+    api.getPageListOfCategory("Photos").then((res) => {
       console.log('aye!', res.data)
       if (res.status === 200) {
         console.log(res)
@@ -48,7 +64,7 @@ class MainHeader extends Component {
         // this.$store.commit('stopLoading')
       }
     })
-    api.getProjectPages().then((res) => {
+    api.getPageListOfCategory("Projects").then((res) => {
       console.log('aye!', res.data)
       if (res.status === 200) {
         console.log(res)
@@ -56,6 +72,7 @@ class MainHeader extends Component {
         // this.$store.commit('stopLoading')
       }
     })
+    
   }
 
   goTo = (props) => {

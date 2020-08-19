@@ -14,14 +14,14 @@ export default {
     url: "/test",
   }),
 
-  getPhotoPages: () => instance({
+  getPageListOfCategory: (category) => instance({
     method: "GET",
-    url: "/pagelist/Photos",
+    url: "/pagelist/" + category,
   }),
-  getProjectPages: () => instance({
-    method: "GET",
-    url: "/pagelist/Projects",
-  }),
+  // getProjectPages: () => instance({
+  //   method: "GET",
+  //   url: "/pagelist/Projects",
+  // }),
   getPageInfo: (category, page) => instance({
     method: "GET",
     url: "/pageinfo/" + category + "/" + page,

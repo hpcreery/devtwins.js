@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import ReactMarkdown from "react-markdown"; // https://github.com/rexxars/react-markdown
 
 // Components
-import api from '../services/Api'
+import api from '../../services/Api'
 
 // UI Elements
 import { Layout, Affix, Button, Row, Col, Card, Typography, Space } from 'antd'
@@ -18,7 +18,8 @@ export default class MarkdownRenderer extends Component {
 	constructor(props) {
     super(props)
     this.state = {
-      markdown: '# NULL',
+      // markdown: '### Loading page contents...',
+      markdown: '',
       prevProps: null
     }
     this.baseState = this.state
@@ -77,6 +78,7 @@ export default class MarkdownRenderer extends Component {
     return (
           <Card
             hoverable
+            bordered={true}
             style={{ marginTop: 10, marginBottom: 10 }}
           >
             <p style={{ marginBottom: 0, fontFamily: "monospace" }}>{props.value}</p>

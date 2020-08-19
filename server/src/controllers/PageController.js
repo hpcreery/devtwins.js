@@ -1,6 +1,6 @@
 const fs = require('fs');
 const config = require('../config/config')
-
+const sizeOf = require('image-size');
 
 module.exports = {
 
@@ -22,6 +22,10 @@ module.exports = {
     let isSupportedCollage = (file) => config.dir.supportedCollageFormats.map(format => file.endsWith(format)).includes(true)
     let supportedCollageFiles = (files) => files.filter(file => isSupportedCollage(file))
     let hasSupportedCollage = (files) => supportedCollageFiles(files).length > 0
+    let addSize = (files) => files.map((file) => {
+      var dimensions = sizeOf(config.dir.pages + '/' + category + '/' + page + "/" + file);
+      return {name: file, width: dimensions.width, height: dimensions.height}
+    })
 
     var page = req.params.name.replace(/%20/g, " ")
     var category = req.params.category.replace(/%20/g, " ")
@@ -33,9 +37,9 @@ module.exports = {
       console.log('found one')
       console.log(config.dir.pages + '/' + staticfile)
       // res.status(200).sendFile(config.dir.pages + '/' + page + '/' + staticfile)
-      res.status(200).json({type: 'static', subtype: staticfile.split('.').pop(), file: staticfile})
+      res.status(200).json({type: 'static', subtype: staticfile.split('.').pop(), files: staticfile})
     } else if (hasSupportedCollage(files)) {
-      res.status(200).json({type: 'collage', images: supportedCollageFiles(files)})
+      res.status(200).json({ type: 'collage', subtype: "none", files: addSize(supportedCollageFiles(files)) })
     } else {
       res.status(404).send('No file found')
       console.log('Err 404: No file found')

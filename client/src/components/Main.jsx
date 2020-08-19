@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-
 // Components
 import SiteHeader from './Header'
 import PageHandler from './PageHandler'
-import MarkdownRenderer from './MarkdownRenderer'
+import MarkdownRenderer from './Renderers/MarkdownRenderer'
 import FrontPage from './pages/FrontPage'
 
 // UI Elements
@@ -90,7 +90,7 @@ export default class Main extends Component {
 		console.log('rendering')
 		return (
       <Router>
-        <Layout className='SiteLayout'>
+        <Layout className='Site-Layout'>
           <SiteHeader />
           <Content className='Content'>
             {/* <div>This is a test</div> */}
