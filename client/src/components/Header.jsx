@@ -40,7 +40,23 @@ class MainHeader extends Component {
     })
   }
   populateMenuItems = () => {
-    api.getPhotoPages().then((res) => {
+    // api.getPhotoPages().then((res) => {
+    //   console.log('aye!', res.data)
+    //   if (res.status === 200) {
+    //     console.log(res)
+    //     this.setState({ photopages: res.data })
+    //     // this.$store.commit('stopLoading')
+    //   }
+    // })
+    // api.getProjectPages().then((res) => {
+    //   console.log('aye!', res.data)
+    //   if (res.status === 200) {
+    //     console.log(res)
+    //     this.setState({ projectpages: res.data })
+    //     // this.$store.commit('stopLoading')
+    //   }
+    // })
+    api.getPageListOfCategory("Photos").then((res) => {
       console.log('aye!', res.data)
       if (res.status === 200) {
         console.log(res)
@@ -48,7 +64,7 @@ class MainHeader extends Component {
         // this.$store.commit('stopLoading')
       }
     })
-    api.getProjectPages().then((res) => {
+    api.getPageListOfCategory("Projects").then((res) => {
       console.log('aye!', res.data)
       if (res.status === 200) {
         console.log(res)
@@ -56,6 +72,7 @@ class MainHeader extends Component {
         // this.$store.commit('stopLoading')
       }
     })
+    
   }
 
   goTo = (props) => {
@@ -80,7 +97,7 @@ class MainHeader extends Component {
 			<div className='Header-Container'>
 				<Header className='Site-Header' style={{ position: 'fixed', width: '100%' }}>
           {/* <div className="logo" /> */}
-          <Menu theme="dark" mode="horizontal" className="Site-Header-Menu" defaultSelectedKeys={['2']} getPopupContainer={node => node.parentNode}>
+          <Menu theme="dark" mode="horizontal" className="Site-Header-Menu" defaultSelectedKeys={['/']} getPopupContainer={node => node.parentNode}>
             {/*getPopupContainer submenu scroll bug https://github.com/ant-design/ant-design/issues/10145*/}
             <Menu.Item key="/" className='Header-Menu-Item' onClick={this.goTo}>Home</Menu.Item>
             <SubMenu

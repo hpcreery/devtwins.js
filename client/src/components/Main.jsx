@@ -4,11 +4,21 @@ import { BrowserRouter as Router, Route, Link, Switch, useHistory } from "react-
 
 // Components
 import SiteHeader from './Header'
-import MarkdownRenderer from './MarkdownRenderer'
+import PageHandler from './PageHandler'
+import MarkdownRenderer from './Renderers/MarkdownRenderer'
+import FrontPage from './pages/FrontPage'
 
 // UI Elements
-import { Layout, Affix, Button } from 'antd'
-
+import { Layout, Affix, Button, Row, Col } from 'antd'
+import {
+	MailOutlined,
+	AppstoreOutlined,
+  SettingOutlined,
+  PictureOutlined,
+  GithubOutlined,
+  YoutubeOutlined,
+  InstagramOutlined
+} from '@ant-design/icons'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -60,7 +70,7 @@ export default class Main extends Component {
 		})
   }
   
-  PageHandler = ( prop ) => {
+  _PageHandler = ( prop ) => {
     console.log('Match:', prop)
     const page = prop.match.params.page
     const category = prop.match.params.category
@@ -80,13 +90,31 @@ export default class Main extends Component {
 		console.log('rendering')
 		return (
       <Router>
-        <Layout className='SiteLayout'>
+        <Layout className='Site-Layout'>
           <SiteHeader />
           <Content className='Content'>
-            <div>This is a test</div>
-            <Route path="/:category/:page" component={this.PageHandler} />
+            {/* <div>This is a test</div> */}
+            <Route path="/" exact component={FrontPage} />
+            <Route path="/:category/:page" component={PageHandler} />
           </Content>
-          <Footer>Footer</Footer>
+          <Footer>
+          <Row justify="space-between">
+            <Col span={20}>Created by Hunter & Peyton Creery</Col>
+            {/* <Col> */}
+              <Col>
+              <GithubOutlined />
+              </Col>
+              <Col>
+              <YoutubeOutlined />
+              </Col>
+              <Col>
+              <InstagramOutlined />
+              </Col>
+              Social
+            {/* </Col> */}
+          </Row>
+            {/* Created by Hunter & Peyton Creery */}
+          </Footer>
         </Layout>
       </Router>
 		)

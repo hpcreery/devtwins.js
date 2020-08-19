@@ -14,13 +14,17 @@ export default {
     url: "/test",
   }),
 
-  getPhotoPages: () => instance({
+  getPageListOfCategory: (category) => instance({
     method: "GET",
-    url: "/pagelist/Photos",
+    url: "/pagelist/" + category,
   }),
-  getProjectPages: () => instance({
+  // getProjectPages: () => instance({
+  //   method: "GET",
+  //   url: "/pagelist/Projects",
+  // }),
+  getPageInfo: (category, page) => instance({
     method: "GET",
-    url: "/pagelist/Projects",
+    url: "/pageinfo/" + category + "/" + page,
   }),
 
   // postData: () => instance({
@@ -32,8 +36,11 @@ export default {
   //   },
   // }),
 
-  getPageContent: (page, file) => instance({
+  getPageContent: (category, page, file) => instance({
     method: "GET",
-    url: "/pagecontent/Projects/" + page + "/" + file,
+    url: "/pagecontent/" + category + "/" + page + "/" + file,
   }),
+  getPageContentBaseUrl: (category, page) => {
+    return instance.defaults.baseURL + "/pagecontent/" + category + "/" + page
+  }
 };
