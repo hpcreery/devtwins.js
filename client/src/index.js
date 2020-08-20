@@ -2,8 +2,19 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+import { ThemeSwitcherProvider } from "react-css-theme-switcher";
 
-ReactDOM.render(<App />, document.getElementById('root'))
+const themes = {
+  dark: `${process.env.PUBLIC_URL}/dark-theme.css`,
+  light: `${process.env.PUBLIC_URL}/light-theme.css`,
+};
+
+ReactDOM.render(
+  <ThemeSwitcherProvider themeMap={themes} defaultTheme="dark" insertionPoint="styles-insertion-point">
+    <App />
+  </ThemeSwitcherProvider>, 
+  document.getElementById('root')
+)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
