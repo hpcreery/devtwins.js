@@ -43,13 +43,8 @@ export default class GalleryRenderer extends Component {
 
   updateInfo () {
     console.log('Getting page data...', this.props.files)
-    Promise.all(this.props.files.map((image) => {
-      this.setState((prevState) => ({ photos: [...prevState.photos, {src: api.getPageContentBaseUrl(this.props.category, this.props.page) + "/" + image.name, width: image.width, height: image.height}] }))
-      
-    })).then(() => {
-      console.log("Done, here are the photos:", this.state.photos)
-      this.setState({ photosReady: true })
-    })
+
+    this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + "/" + this.props.file })
     
 
   }
@@ -65,7 +60,7 @@ export default class GalleryRenderer extends Component {
       Array.from(
         new Array(this.state.numPages),
         (el, index) => (
-          <Card style={{ marginTop: 10, marginBottom: 10 }} >
+          <Card hoverable style={{ marginTop: 10, marginBottom: 10 }} >
           <Page
             key={`page_${index + 1}`}
             pageNumber={index + 1}
