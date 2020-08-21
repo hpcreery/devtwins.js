@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import api from '../services/Api'
 import MarkdownRenderer from './Renderers/MarkdownRenderer'
 import CollageRenderer from './Renderers/GalleryRenderer'
+import PDF from './Renderers/PDF'
 
 // UI Elements
 import { Layout, Affix, Button, Row, Col } from 'antd'
@@ -64,6 +65,8 @@ export default class PageHandler extends Component {
       if (this.state.pageType == "static") {
         if (this.state.pageSubtype == "md") {
           return <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFiles} />
+        } else if (this.state.pageSubtype == "pdf") {
+          return <PDF category={this.state.category} page={this.state.page} file={this.state.pageFiles}/>
         } else {
           return <h3> this page is unsupported </h3>
         }

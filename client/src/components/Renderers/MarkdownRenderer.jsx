@@ -1,6 +1,7 @@
 // ReactJS
 import React, { Component } from 'react'
 import ReactMarkdown from "react-markdown"; // https://github.com/rexxars/react-markdown
+// https://github.com/rexxars/commonmark-react-renderer#type-renderer-options
 
 // Components
 import api from '../../services/Api'
