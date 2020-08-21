@@ -1,6 +1,7 @@
 /* @import '~antd/dist/antd.css'; */
-/* @import '~antd/dist/antd.dark.less'; */
 /* @import '~antd/dist/antd.dark.css'; */
+/* @import '../../public/light-theme.css'; */
+
 
 :root {
 	--color-text-transparent: rgba(0, 0, 0, 0.65);

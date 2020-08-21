@@ -19,6 +19,7 @@ import {
   YoutubeOutlined,
   InstagramOutlined
 } from '@ant-design/icons'
+import { useThemeSwitcher } from "react-css-theme-switcher";
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -26,7 +27,10 @@ const { Header, Footer, Sider, Content } = Layout
 export default class Main extends Component {
 	constructor(props) {
 		super(props)
-		document.documentElement.dataset.scroll = 0
+    document.documentElement.dataset.scroll = 0
+    this.state = {
+      // isDarkMode: false,
+    }
 	}
 
 	state = {
@@ -84,6 +88,29 @@ export default class Main extends Component {
     // return <MarkdownRenderer />
   }
 
+  ThemeSwitchComponent = () => {
+    const { switcher, themes, currentTheme, status } = useThemeSwitcher();
+    const [isDarkMode, setIsDarkMode] = React.useState(false);
+  
+    if (status === 'loading') {
+      return <div>Loading styles...</div>;
+    }
+  
+    const toggleDarkMode = () => {
+      setIsDarkMode(previous => {
+        switcher({ theme: previous ? themes.light : themes.dark });
+        return !previous;
+      });
+    };
+  
+    return (
+      <div>
+        <h2>Current theme: {currentTheme}</h2>
+        <button onClick={toggleDarkMode} > swith the theme </button>
+      </div>
+    );
+  };
+
   
 
 	render() {
@@ -93,6 +120,8 @@ export default class Main extends Component {
         <Layout className='Site-Layout'>
           <SiteHeader />
           <Content className='Content'>
+            {/* <this.ThemeSwitchComponent/> */}
+            {/* <h2>Current status: {this.ThemeSwitchComponent.status}</h2> */}
             {/* <div>This is a test</div> */}
             <Route path="/" exact component={FrontPage} />
             <Route path="/:category/:page" component={PageHandler} />

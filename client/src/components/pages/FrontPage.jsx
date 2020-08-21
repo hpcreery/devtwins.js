@@ -54,7 +54,7 @@ export class FrontPage extends Component {
           style={{ width: 300, marginTop: 30 }}
           placeholder="I will change with the theme!"
         /> */}
-        <this.ThemeComponent/>
+        {/* <this.ThemeComponent/> */}
       </div>
     )
 	}

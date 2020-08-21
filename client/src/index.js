@@ -10,9 +10,9 @@ const themes = {
 };
 
 ReactDOM.render(
-  <ThemeSwitcherProvider themeMap={themes} defaultTheme="dark" insertionPoint="styles-insertion-point">
+  <ThemeSwitcherProvider themeMap={themes} defaultTheme="light" insertionPoint="styles-insertion-point">
     <App />
-  </ThemeSwitcherProvider>, 
+  </ThemeSwitcherProvider>,
   document.getElementById('root')
 )
 
