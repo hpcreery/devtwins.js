@@ -12,39 +12,30 @@ import api from '../../services/Api'
 export default class GalleryRenderer extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      currentImage: 0,
-      // setCurrentImage: 0,
-      viewerIsOpen: false,
-      // setViewerIsOpen: false
-      // photos: [{src: 'http://localhost:8081/pagecontent/Photos/First%20Gallery/IMG_8667.jpg', width: 2, hieght: 4}]
-      photos: [],
-      photosReady: false,
-    }
-    this.baseState = this.state
   }
 
-  updateInfo() {
-    console.log('Getting page data...', this.props.files)
-    Promise.all(
-      this.props.files.map((image) => {
-        this.setState((prevState) => ({
-          photos: [
-            ...prevState.photos,
-            {
-              src: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + image.name,
-              width: image.width,
-              height: image.height,
-            },
-          ],
-        }))
-      })
-    ).then(() => {
-      console.log('Done, here are the photos:', this.state.photos)
-      this.setState({ photosReady: true })
-    })
+  state = {
+    currentImage: 0,
+    // setCurrentImage: 0,
+    viewerIsOpen: false,
+    // setViewerIsOpen: false
+    // photos: [{src: 'http://localhost:8081/pagecontent/Photos/First%20Gallery/IMG_8667.jpg', width: 2, hieght: 4}]
+    photos: [],
+    photosReady: false,
+  }
 
-    console.log('Photos are:', this.state.photos)
+  updateInfo = async () => {
+    let newState = { ...this.state }
+    console.log('Getting page data...', this.props.files)
+
+    newState.photos = await this.props.files.map((image) => ({
+      src: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + image.name,
+      ...image,
+    }))
+    newState.photosReady = true
+
+    console.log('Photos are:', newState.photos)
+    this.setState({ ...newState })
   }
 
   openLightbox = (event, { photo, index }) => {
@@ -82,9 +73,13 @@ export default class GalleryRenderer extends Component {
     )
   }
 
-  componentWillMount() {
-    // console.log(this.props.match.params.id, this.props.page)
-    // this.setState(this.baseState)
+  componentDidMount() {
     this.updateInfo()
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      this.updateInfo()
+    }
+    //this.updateInfo()
   }
 }
