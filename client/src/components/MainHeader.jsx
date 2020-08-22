@@ -65,9 +65,9 @@ class MainHeader extends Component {
     })
   }
 
-  goTo = (props) => {
-    console.log('Clicked:', props.key)
-    const dest = props.key.replace(/ /g, '%20')
+  goTo = ({ key }) => {
+    console.log('Clicked:', key)
+    const dest = key.replace(/ /g, '%20')
     // history.push(props.id)
     this.props.history.push(dest)
     // this.setState({ redirect: dest });  // Use with redirect router method && remove withRouter from export
@@ -93,13 +93,13 @@ class MainHeader extends Component {
             getPopupContainer={(node) => node.parentNode}
           >
             {/*getPopupContainer submenu scroll bug https://github.com/ant-design/ant-design/issues/10145*/}
-            <Menu.Item key='/' className='Header-Menu-Item' onClick={this.goTo}>
+            <Menu.Item key='/' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
               Home
             </Menu.Item>
             <SubMenu icon={<SettingOutlined />} title='Projects' className='Header-Menu-Item'>
               {this.state.projectpages.map((value, index) => {
                 return (
-                  <Menu.Item key={'/Projects/' + value} onClick={this.goTo}>
+                  <Menu.Item key={'/Projects/' + value} onClick={(...props) => this.goTo(...props)}>
                     {value}
                   </Menu.Item>
                 )
@@ -109,7 +109,7 @@ class MainHeader extends Component {
               {/* <Menu.Item key='photo:1'>Option 1</Menu.Item> */}
               {this.state.photopages.map((value, index) => {
                 return (
-                  <Menu.Item key={'/Photos/' + value} onClick={this.goTo}>
+                  <Menu.Item key={'/Photos/' + value} onClick={(...props) => this.goTo(...props)}>
                     {value}
                   </Menu.Item>
                 )
@@ -124,7 +124,6 @@ class MainHeader extends Component {
   async componentDidMount() {
     this.getTestData()
     this.populateMenuItems()
-    // console.log(test)
   }
 }
 

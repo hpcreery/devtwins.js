@@ -28,14 +28,9 @@ export default class Main extends Component {
   constructor(props) {
     super(props)
     document.documentElement.dataset.scroll = 0
-    this.state = {
-      // isDarkMode: false,
-    }
   }
 
-  state = {
-    scrollPosition: 0,
-  }
+  state = {}
 
   listenToScrollEvent = () => {
     document.addEventListener('scroll', () => {
@@ -74,45 +69,6 @@ export default class Main extends Component {
     })
   }
 
-  _PageHandler = (prop) => {
-    console.log('Match:', prop)
-    const page = prop.match.params.page
-    const category = prop.match.params.category
-
-    return (
-      <div>
-        <h1>
-          {category} {page}
-        </h1>
-        <MarkdownRenderer category={category} page={page} />
-      </div>
-    )
-    // return <MarkdownRenderer />
-  }
-
-  ThemeSwitchComponent = () => {
-    const { switcher, themes, currentTheme, status } = useThemeSwitcher()
-    const [isDarkMode, setIsDarkMode] = React.useState(false)
-
-    if (status === 'loading') {
-      return <div>Loading styles...</div>
-    }
-
-    const toggleDarkMode = () => {
-      setIsDarkMode((previous) => {
-        switcher({ theme: previous ? themes.light : themes.dark })
-        return !previous
-      })
-    }
-
-    return (
-      <div>
-        <h2>Current theme: {currentTheme}</h2>
-        <button onClick={toggleDarkMode}> swith the theme </button>
-      </div>
-    )
-  }
-
   render() {
     console.log('rendering')
     return (
@@ -120,9 +76,6 @@ export default class Main extends Component {
         <Layout className='Site-Layout'>
           <SiteHeader />
           <Content className='Content'>
-            {/* <this.ThemeSwitchComponent/> */}
-            {/* <h2>Current status: {this.ThemeSwitchComponent.status}</h2> */}
-            {/* <div>This is a test</div> */}
             <Route path='/' exact component={FrontPage} />
             <Route path='/:category/:page' component={PageHandler} />
           </Content>

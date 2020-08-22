@@ -16,49 +16,54 @@ const { Header, Footer, Sider, Content } = Layout
 export default class PageHandler extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      category: null,
-      page: null,
-      prevProps: null,
-      pageType: null,
-      pageSubtype: null,
-      // pageBanner: null,
-      // pageIcon: null,
-      pageFiles: null,
-    }
-    this.baseState = this.state
   }
 
-  componentDidMount() {
-    this.updateInfo()
+  state = {
+    category: null,
+    page: null,
+    pageType: null,
+    pageSubtype: null,
+    // pageBanner: null,
+    // pageIcon: null,
+    pageFiles: null,
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-      console.log('New')
-      this.updateInfo()
-    }
-  }
-
-  updateInfo = () => {
-    this.setState(this.baseState)
+  updateInfo = async () => {
+    let newState = { ...this.state }
     console.log('Updating Info..')
-    this.setState({ category: this.props.match.params.category, page: this.props.match.params.page })
-    console.log('Updated to:', this.props.match.params.category, this.props.match.params.page)
-    api.getPageInfo(this.props.match.params.category, this.props.match.params.page).then((res) => {
-      console.log('Page Info: ', res)
-      if (res.status === 200) {
-        this.setState({ pageType: res.data.type, pageSubtype: res.data.subtype, pageFiles: res.data.files })
-        // console.log(res)
-        // this.$store.commit('stopLoading')
-      } else {
-        console.log('server error')
-      }
-    })
+    // this.setState({ category: this.props.match.params.category, page: this.props.match.params.page })
+    newState.category = this.props.match.params.category
+    newState.page = this.props.match.params.page
+    var res = await api.getPageInfo(newState.category, newState.page)
+    console.log('New Page Info: ', res)
+    if (res.status === 200) {
+      newState.pageType = res.data.type
+      newState.pageSubtype = res.data.subtype
+      newState.pageFiles = res.data.files
+    } else {
+      console.log('Server Error')
+    }
+    this.setState({ ...newState })
   }
 
-  Selector = (prop) => {
-    if (this.props.match.params.page) {
+  PageTitle = () => {
+    return (
+      <div className={'Page-Heading'}>
+        <Row justify='center'>
+          {' '}
+          {/* a row in a row, i know */}
+          <Col span={18}>
+            <h1 style={{ fontSize: 'xx-large', textAlign: 'center' }}>
+              {this.state.category} / {this.state.page}
+            </h1>
+          </Col>
+        </Row>
+      </div>
+    )
+  }
+
+  PageBody = () => {
+    if (this.state.page) {
       if (this.state.pageType == 'static') {
         if (this.state.pageSubtype == 'md') {
           return <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFiles} />
@@ -78,7 +83,7 @@ export default class PageHandler extends Component {
     }
   }
 
-  Loader = (prop) => {
+  Loader = () => {
     return (
       // <h3>Loading page details...</h3>
       <Row justify='center'>
@@ -91,32 +96,22 @@ export default class PageHandler extends Component {
     )
   }
 
-  pageTitleRenderer = () => {
+  render() {
     return (
-      <div className={'Page-Heading'}>
-        <Row justify='center'>
-          {' '}
-          {/* a row in a row, i know */}
-          <Col span={18}>
-            <h1 style={{ fontSize: 'xx-large', textAlign: 'center' }}>
-              {this.state.category} / {this.state.page}
-            </h1>
-          </Col>
-        </Row>
+      <div>
+        <this.PageTitle />
+        <this.PageBody />
       </div>
     )
   }
 
-  render() {
-    return (
-      <div>
-        {/* <h2>NewPageHandler</h2> */}
-        {/* <h1>{this.state.category} {this.state.page} {this.state.pageFile}</h1>  */}
-        <this.pageTitleRenderer />
-        {/* <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFiles} /> */}
-        {/* {this.Selector} */}
-        <this.Selector />
-      </div>
-    )
+  componentDidMount() {
+    this.updateInfo()
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props !== prevProps) {
+      this.updateInfo()
+    }
   }
 }
