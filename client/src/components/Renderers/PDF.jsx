@@ -24,8 +24,8 @@ export default class GalleryRenderer extends Component {
 
   componentWillMount() {
     // console.log(this.props.match.params.id, this.props.page)
-    // this.setState(this.baseState)
-    // this.updateInfo()
+    this.setState(this.baseState)
+    this.updateInfo()
   }
 
   componentDidMount() {
@@ -60,7 +60,7 @@ export default class GalleryRenderer extends Component {
       Array.from(
         new Array(this.state.numPages),
         (el, index) => (
-          <Card hoverable style={{ marginTop: 10, marginBottom: 10 }} >
+          <Card style={{ marginTop: 10, marginBottom: 10 }} >
           <Page
             key={`page_${index + 1}`}
             pageNumber={index + 1}
@@ -83,7 +83,7 @@ export default class GalleryRenderer extends Component {
             </Document> */}
             
             <Document
-              file="http://localhost:8081/pagecontent/Projects/Sample%20Report/91697_04.pdf"
+              file={this.state.file}
               onLoadSuccess={this.onDocumentLoadSuccess}
             >              
               <this.PageViewer/>
