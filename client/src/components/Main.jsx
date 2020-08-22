@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link, Switch, useHistory } from 'react-
 // Components
 import SiteHeader from './MainHeader'
 import PageHandler from './PageHandler'
-import MarkdownRenderer from './renderers/MarkdownRenderer'
+// import MarkdownRenderer from './Renderers/MarkdownRenderer'
 import FrontPage from './pages/FrontPage'
 
 // UI Elements

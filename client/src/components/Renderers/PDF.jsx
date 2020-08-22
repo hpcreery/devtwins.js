@@ -25,21 +25,21 @@ export default class GalleryRenderer extends Component {
 
   componentWillMount() {
     // console.log(this.props.match.params.id, this.props.page)
-    this.setState(this.baseState)
+    // this.setState(this.baseState)
     this.updateInfo()
   }
 
   componentDidMount() {
-    this.updateWindowDimensions();
-    window.addEventListener('resize', this.updateWindowDimensions);
+    this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions)
   }
-  
+
   componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions);
+    window.removeEventListener('resize', this.updateWindowDimensions)
   }
-  
+
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight });
+    this.setState({ width: window.innerWidth, height: window.innerHeight })
   }
 
   updateInfo () {
@@ -98,22 +98,5 @@ export default class GalleryRenderer extends Component {
     )
   }
 
-  componentWillMount() {
-    // console.log(this.props.match.params.id, this.props.page)
-    // this.setState(this.baseState)
-    // this.updateInfo()
-  }
 
-  componentDidMount() {
-    this.updateWindowDimensions()
-    window.addEventListener('resize', this.updateWindowDimensions)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions)
-  }
-
-  updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight })
-  }
 }
