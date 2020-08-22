@@ -116,13 +116,22 @@ class JupViewer extends React.Component {
 					new_source = new_source.replace(s2[2], this.state.fbase_path + s2[2])
 				}
       }
-      var eqBeginRE = new RegExp(/\\begin{equation}/)
-      var eqEndRE = new RegExp(/\\end{equation}/)
+      var eqBeginRE = new RegExp(/\\begin{equation\**}/)
+      var eqEndRE = new RegExp(/\\end{equation\**}/)
       if (source[code].match(eqBeginRE)) {
-        new_source = "\n$$\n\n"
+        new_source = "\n$$\n"
         // console.log(source[code].match(eqBeginRE), new_source)
       } else if (source[code].match(eqEndRE)) {
         new_source = "$$\n\n"
+      }
+
+      var eqBeginRE = new RegExp(/\\begin{align.*}/)
+      var eqEndRE = new RegExp(/\\end{align.*}/)
+      if (source[code].match(eqBeginRE)) {
+        new_source = "\n$$\n\n\\begin{aligned}\n"
+        // console.log(source[code].match(eqBeginRE), new_source)
+      } else if (source[code].match(eqEndRE)) {
+        new_source = "\\end{aligned}\n$$\n\n"
       }
 			//
 			cell_content += new_source
