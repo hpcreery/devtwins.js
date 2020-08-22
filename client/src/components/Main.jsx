@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link, Switch, useHistory } from 'react-router-dom'
 
 // Components
-import SiteHeader from './Header'
+import SiteHeader from './MainHeader'
 import PageHandler from './PageHandler'
 import MarkdownRenderer from './renderers/MarkdownRenderer'
 import FrontPage from './pages/FrontPage'
