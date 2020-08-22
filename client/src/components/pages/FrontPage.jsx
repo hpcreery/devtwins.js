@@ -7,7 +7,7 @@ import { Switch, Input } from 'antd'
 
 // UX Elements
 
-export class FrontPage extends Component {
+export default class FrontPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -55,5 +55,3 @@ export class FrontPage extends Component {
     )
   }
 }
-
-export default FrontPage

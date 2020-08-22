@@ -1,11 +1,11 @@
-import React, { useState, useCallback, Component } from './node_modules/react'
+import React, { useState, useCallback, Component } from 'react'
 // import { render } from "react-dom";
 // import Gallery from "react-photo-gallery";
 // import Carousel, { Modal, ModalGateway } from "react-images";
 // import { photos } from "./photos-temp";
-import { Document, Page } from './node_modules/react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
+import { Document, Page } from 'react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
 
-import { Layout, Affix, Button, Row, Col, Card, Typography, Space } from './node_modules/antd'
+import { Layout, Affix, Button, Row, Col, Card, Typography, Space } from 'antd'
 
 // Components
 import api from '../../services/Api'
@@ -23,26 +23,7 @@ export default class GalleryRenderer extends Component {
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
-  componentWillMount() {
-    // console.log(this.props.match.params.id, this.props.page)
-    // this.setState(this.baseState)
-    // this.updateInfo()
-  }
-
-  componentDidMount() {
-    this.updateWindowDimensions()
-    window.addEventListener('resize', this.updateWindowDimensions)
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindowDimensions)
-  }
-
-  updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight })
-  }
-
-  updateInfo() {
+  updateInfo = () => {
     console.log('Getting page data...', this.props.files)
 
     this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file })
@@ -86,5 +67,24 @@ export default class GalleryRenderer extends Component {
         </Row>
       </div>
     )
+  }
+
+  componentWillMount() {
+    // console.log(this.props.match.params.id, this.props.page)
+    // this.setState(this.baseState)
+    // this.updateInfo()
+  }
+
+  componentDidMount() {
+    this.updateWindowDimensions()
+    window.addEventListener('resize', this.updateWindowDimensions)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateWindowDimensions)
+  }
+
+  updateWindowDimensions() {
+    this.setState({ width: window.innerWidth, height: window.innerHeight })
   }
 }

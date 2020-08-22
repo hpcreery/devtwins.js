@@ -1,13 +1,13 @@
 // ReactJS
-import React, { Component } from './node_modules/react'
-import ReactMarkdown from './node_modules/react-markdown' // https://github.com/rexxars/react-markdown
+import React, { Component } from 'react'
+import ReactMarkdown from 'react-markdown' // https://github.com/rexxars/react-markdown
 // https://github.com/rexxars/commonmark-react-renderer#type-renderer-options
 
 // Components
 import api from '../../services/Api'
 
 // UI Elements
-import { Layout, Affix, Button, Row, Col, Card, Typography, Space } from './node_modules/antd'
+import { Layout, Affix, Button, Row, Col, Card, Typography, Space } from 'antd'
 
 const { Header, Footer, Sider, Content } = Layout
 const { Meta } = Card
@@ -25,18 +25,7 @@ export default class MarkdownRenderer extends Component {
     this.baseState = this.state
   }
 
-  componentWillMount() {
-    // console.log(this.props.match.params.id, this.props.page)
-    this.setState(this.baseState)
-    this.updateInfo()
-  }
-  componentDidUpdate(prevProps) {
-    // if(this.props !== prevProps) {
-    //   this.updateInfo();
-    // }
-  }
-
-  updateInfo() {
+  updateInfo = () => {
     console.log('Getting page data...')
     api.getPageContent(this.props.category, this.props.page, this.props.file).then((res) => {
       console.log('Got Markdown Data: ', res)
@@ -121,5 +110,17 @@ export default class MarkdownRenderer extends Component {
         </Row>
       </div>
     )
+  }
+
+  componentWillMount() {
+    // console.log(this.props.match.params.id, this.props.page)
+    this.setState(this.baseState)
+    this.updateInfo()
+  }
+
+  componentDidUpdate(prevProps) {
+    // if(this.props !== prevProps) {
+    //   this.updateInfo();
+    // }
   }
 }

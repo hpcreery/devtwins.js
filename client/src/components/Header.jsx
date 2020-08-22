@@ -19,12 +19,8 @@ class MainHeader extends Component {
       redirect: null,
     }
   }
-  async componentDidMount() {
-    this.getTestData()
-    this.populateMenuItems()
-    // console.log(test)
-  }
-  getTestData() {
+
+  getTestData = () => {
     api.getTestData().then((res) => {
       console.log('aye!', res.data)
       if (res.status === 200) {
@@ -33,6 +29,7 @@ class MainHeader extends Component {
       }
     })
   }
+
   populateMenuItems = () => {
     // api.getPhotoPages().then((res) => {
     //   console.log('aye!', res.data)
@@ -122,6 +119,12 @@ class MainHeader extends Component {
         </Header>
       </div>
     )
+  }
+
+  async componentDidMount() {
+    this.getTestData()
+    this.populateMenuItems()
+    // console.log(test)
   }
 }
 
