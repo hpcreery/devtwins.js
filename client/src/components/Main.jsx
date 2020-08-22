@@ -9,7 +9,7 @@ import MarkdownRenderer from './Renderers/MarkdownRenderer'
 import FrontPage from './pages/FrontPage'
 
 // UI Elements
-import { Layout, Affix, Button, Row, Col } from 'antd'
+import { Layout, Affix, Button, Row, Col, BackTop } from 'antd'
 import {
 	MailOutlined,
 	AppstoreOutlined,
@@ -126,6 +126,9 @@ export default class Main extends Component {
             <Route path="/" exact component={FrontPage} />
             <Route path="/:category/:page" component={PageHandler} />
           </Content>
+          <BackTop>
+            <div className="Back-Up">UP</div>
+          </BackTop>
           <Footer>
           <Row justify="space-between">
             <Col span={20}>Created by Hunter & Peyton Creery</Col>

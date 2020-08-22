@@ -1,7 +1,7 @@
 /* @import '~antd/dist/antd.css'; */
 /* @import '~antd/dist/antd.dark.css'; */
 /* @import '../../public/light-theme.css'; */
-
+@import 'light-theme.css';
 
 :root {
 	--color-text-transparent: rgba(0, 0, 0, 0.65);
@@ -100,3 +100,14 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected {
 .Page-Heading {
 	padding-top: 64px;
 }
+
+.Back-Up {
+	height: 40px;
+	width: 40px;
+	line-height: 40px;
+	border-radius: 4px;
+	background-color: #1088e9;
+	color: #fff;
+	text-align: center;
+	font-size: 14;
+  };
