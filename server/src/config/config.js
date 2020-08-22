@@ -16,7 +16,7 @@ module.exports = {
 
   dir: {
     pages: process.env.DIR_PUBLIC || process.cwd() + '/public',
-    supportedPageFormats: ['.md', '.html', '.pdf'],
-    supportedCollageFormats: ['.png', '.jpg', '.jpeg', '.gif', '.mp4', '.mp3']
+    supportedPageFormats: ['.md', '.html', '.pdf', '.ipynb'],
+    supportedCollageFormats: ['.png', '.jpg', '.jpeg']  //, '.gif', '.mp4', '.mp3'
   }
 }

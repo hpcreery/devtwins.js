@@ -3,7 +3,7 @@ import React, { useState, useCallback, Component } from "react";
 // import Gallery from "react-photo-gallery";
 // import Carousel, { Modal, ModalGateway } from "react-images";
 // import { photos } from "./photos-temp";
-import { Document, Page } from 'react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
+import { Document, Page, Outline } from 'react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
 
 import { Layout, Affix, Button, Row, Col, Card, Typography, Space } from 'antd'
 
@@ -86,6 +86,7 @@ export default class GalleryRenderer extends Component {
               file={this.state.file}
               onLoadSuccess={this.onDocumentLoadSuccess}
             >              
+              {/* <Outline /> */}
               <this.PageViewer/>
             </Document>
             
