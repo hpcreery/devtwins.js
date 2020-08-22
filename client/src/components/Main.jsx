@@ -148,6 +148,7 @@ export default class Main extends Component {
       </Router>
     )
   }
+
   componentDidMount() {
     this.listenToScrollEvent()
   }
