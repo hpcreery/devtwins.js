@@ -44,7 +44,6 @@ export default class GalleryRenderer extends Component {
 
   updateInfo () {
     console.log('Getting page data...', this.props.files)
-
     this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file })
   }
 

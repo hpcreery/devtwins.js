@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 
 // Components
 import api from '../services/Api'
-import MarkdownRenderer from './renderers/MarkdownRenderer'
-import CollageRenderer from './renderers/GalleryRenderer'
-import PDF from './renderers/PDF'
-import IPYNB from './renderers/ipynb'
+import MarkdownRenderer from './Renderers/MarkdownRenderer'
+import CollageRenderer from './Renderers/GalleryRenderer'
+import PDF from './Renderers/PDF'
+import IPYNB from './Renderers/ipynb'
 
 // UI Elements
 import { Layout, Affix, Button, Row, Col } from 'antd'
