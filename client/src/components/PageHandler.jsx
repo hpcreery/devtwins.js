@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 
 // Components
 import api from '../services/Api'
-import MarkdownRenderer from './Renderers/MarkdownRenderer'
-import CollageRenderer from './Renderers/GalleryRenderer'
-import PDF from './Renderers/PDF'
-import IPYNB from './Renderers/ipynb'
+import MarkdownRenderer from './renderers/MarkdownRenderer'
+import CollageRenderer from './renderers/GalleryRenderer'
+import PDF from './renderers/PDF'
+import IPYNB from './renderers/ipynb'
 
 // UI Elements
 import { Layout, Affix, Button, Row, Col } from 'antd'
@@ -68,10 +68,10 @@ export default class PageHandler extends Component {
       if (this.state.pageType == 'static') {
         if (this.state.pageSubtype == 'md') {
           return <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFiles} />
-        } else if (this.state.pageSubtype == "pdf") {
-          return <PDF category={this.state.category} page={this.state.page} file={this.state.pageFiles}/>
-        } else if (this.state.pageSubtype == "ipynb") {
-          return <IPYNB category={this.state.category} page={this.state.page} file={this.state.pageFiles}/>
+        } else if (this.state.pageSubtype == 'pdf') {
+          return <PDF category={this.state.category} page={this.state.page} file={this.state.pageFiles} />
+        } else if (this.state.pageSubtype == 'ipynb') {
+          return <IPYNB category={this.state.category} page={this.state.page} file={this.state.pageFiles} />
         } else {
           return <h3> this page is unsupported </h3>
         }
@@ -90,8 +90,6 @@ export default class PageHandler extends Component {
     return (
       // <h3>Loading page details...</h3>
       <Row justify='center'>
-        {' '}
-        {/* a row in a row, i know */}
         <Col span={18}>
           <h3 style={{ fontSize: 'small', textAlign: 'center' }}>{/* Loading page details... */}</h3>
         </Col>
