@@ -78,7 +78,8 @@ export default class PageHandler extends Component {
         } else if (this.state.pageSubtype == 'pdf') {
           return <PDF category={this.state.category} page={this.state.page} file={this.state.pageFiles} doneLoading={this.doneLoading}/>
         } else if (this.state.pageSubtype == 'ipynb') {
-          return <IPYNB category={this.state.category} page={this.state.page} file={this.state.pageFiles} />
+          // this.doneLoading() // !! need to impliment correctly
+          return <IPYNB category={this.state.category} page={this.state.page} file={this.state.pageFiles} doneLoading={this.doneLoading}/>
         } else {
           return <h3> this page is unsupported <br/> error: {this.state.page} {this.state.pageType} {this.state.pageSubtype}</h3>
         }

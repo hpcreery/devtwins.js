@@ -17,25 +17,29 @@ export default class GalleryRenderer extends Component {
     this.baseState = this.state
   }
 
-  componentWillMount() {
+  // componentWillMount() { // legacy/unsafe
     // console.log(this.props.match.params.id, this.props.page)
     // this.setState(this.baseState)
+    // this.updateInfo()
+  // }
+
+  componentDidMount () {
+    console.log('ipynb mounted')
     this.updateInfo()
   }
 
   componentDidUpdate(prevProps) {
     console.log('debug: ipynbRenderer, componentDidUpdate()', prevProps, this.props)
     if(JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
+      console.log('ipynb new prop-base update')
       this.updateInfo();
     }
   }
 
   updateInfo () {
     console.log('Getting page data...', this.props.file)
-
-    this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + "/" + this.props.file, baseUrl: api.getPageContentBaseUrl(this.props.category, this.props.page) })
-    
-
+    this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + "/" + this.props.file, baseUrl: api.getPageContentBaseUrl(this.props.category, this.props.page) }, () => console.log(this.state))
+    this.props.doneLoading()
   }
 
 
@@ -45,14 +49,14 @@ export default class GalleryRenderer extends Component {
         <Row justify="center">
           <Col >
             {/* <Card> */}
-            <JupViewer
+            {this.state.file !== null ?  <JupViewer
               // title="Jupyter as a Blog!"
               // subtitle="I've always wanted to publish my jupyter notebooks as blogs. Finally I can."
               // coverImg="https://notionpress.com/blog/wp-content/uploads/2018/06/Cover-design.png"
               file={this.state.file} 
               // file="http://localhost:8081/pagecontent/Projects/Jupyter%20Notebook/Transformation2D.ipynb"
               // baseURL="http://localhost:8081/pagecontent/Projects/Jupyter%20Notebook"
-            />
+            /> : null}
             
             {/* </Card> */}
           </Col>

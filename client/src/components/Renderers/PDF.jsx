@@ -23,11 +23,11 @@ export default class GalleryRenderer extends Component {
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
-  componentWillMount() {
+  // componentWillMount() { // legacy/unsafe
     // console.log(this.props.match.params.id, this.props.page)
     // this.setState(this.baseState)
-    this.updateInfo()
-  }
+    // this.updateInfo()
+  // }
 
   componentDidUpdate(prevProps) {
     console.log('debug: PDFrenderer, componentDidUpdate()', prevProps, this.props)
@@ -36,9 +36,15 @@ export default class GalleryRenderer extends Component {
     }
   }
 
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return nextProps.id !== this.props.id;
+  // }
+
   componentDidMount() {
+    console.log('PDF component moutned')
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
+    this.updateInfo()
   }
 
   componentWillUnmount() {
@@ -50,7 +56,7 @@ export default class GalleryRenderer extends Component {
   }
 
   updateInfo () {
-    console.log('Getting page data...', this.props.files)
+    console.log('Getting PDF page data...', this.props.files)
     this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file })
   }
 

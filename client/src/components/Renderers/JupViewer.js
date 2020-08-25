@@ -366,7 +366,7 @@ class JupViewer extends React.Component {
   }
 
   render() {
-    console.log(this.props.file)
+    console.log('JupViewer rendering:', this.props.file)
     return (
       <div>
         {/* <br></br> */}

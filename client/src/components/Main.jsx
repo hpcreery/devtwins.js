@@ -70,7 +70,7 @@ export default class Main extends Component {
   }
 
   render() {
-    console.log('rendering')
+    // console.log('rendering')
     return (
       <Router>
         <Layout className='Site-Layout'>

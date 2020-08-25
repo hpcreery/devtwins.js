@@ -7,9 +7,9 @@ import ReactMarkdown from 'react-markdown' // https://github.com/rexxars/react-m
 import api from '../../services/Api'
 
 // UI Elements
-import { Layout, Affix, Button, Row, Col, Card, Typography, Image } from 'antd'
+import { Layout, Row, Col, Card, Typography, Image } from 'antd'
 
-const { Header, Footer, Sider, Content } = Layout
+// const { Header, Footer, Sider, Content } = Layout
 const { Meta } = Card
 const { Text, Link } = Typography
 
@@ -124,6 +124,8 @@ export default class MarkdownRenderer extends Component {
     // this.setState(this.baseState)
     this.updateInfo()
   }
+
+
 
   componentDidUpdate(prevProps) {
     console.log('debug: MDrenderer, componentDidUpdate()', prevProps, this.props)
