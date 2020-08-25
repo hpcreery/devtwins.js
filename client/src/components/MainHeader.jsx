@@ -69,7 +69,10 @@ class MainHeader extends Component {
     console.log('Clicked:', key)
     const dest = key.replace(/ /g, '%20')
     // history.push(props.id)
-    this.props.history.push(dest)
+    // this.props.history.push(dest)
+    setTimeout(() => {  //  to prevent menubar animation from freezing
+      this.props.history.push(dest)
+    }, 300)
     // this.setState({ redirect: dest });  // Use with redirect router method && remove withRouter from export
     // let history = useHistory();
     // history.push(dest)
