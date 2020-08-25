@@ -2,10 +2,12 @@ import React from 'react'
 import { Card, Spin, Tag, Col, Row, Typography, Switch } from 'antd'
 import { render } from 'react-dom'
 import AceEditor from 'react-ace'
-// import "ace-builds/src-noconflict/mode-python";
-// import "ace-builds/src-noconflict/theme-monokai";
-// import "ace-builds/src-noconflict/theme-kuroir";
-// import "ace-builds/src-noconflict/theme-terminal";
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-markdown";
+import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-kuroir";
+import "ace-builds/src-noconflict/theme-terminal";
+import "ace-builds/src-noconflict/theme-iplastic";
 import { InlineMath, BlockMath } from 'react-katex'
 import RemarkMathPlugin from 'remark-math'
 import 'katex/dist/katex.min.css'
@@ -30,7 +32,7 @@ class JupViewer extends React.Component {
 
     // Editor Theme
     ed_theme: 'lightTheme',
-    text_ed_theme: 'kuroir',
+    text_ed_theme: 'iplastic',
     //themes:
     background_theme: 'white',
     background_text_theme: 'black',

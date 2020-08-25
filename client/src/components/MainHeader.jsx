@@ -48,7 +48,7 @@ class MainHeader extends Component {
     //   }
     // })
     api.getPageListOfCategory('Photos').then((res) => {
-      console.log('aye!', res.data)
+      // console.log('aye!', res.data)
       if (res.status === 200) {
         console.log(res)
         this.setState({ photopages: res.data })
@@ -56,7 +56,7 @@ class MainHeader extends Component {
       }
     })
     api.getPageListOfCategory('Projects').then((res) => {
-      console.log('aye!', res.data)
+      // console.log('aye!', res.data)
       if (res.status === 200) {
         console.log(res)
         this.setState({ projectpages: res.data })
@@ -106,7 +106,6 @@ class MainHeader extends Component {
               })}
             </SubMenu>
             <SubMenu icon={<PictureOutlined />} title='Photos' className='Header-Menu-Item'>
-              {/* <Menu.Item key='photo:1'>Option 1</Menu.Item> */}
               {this.state.photopages.map((value, index) => {
                 return (
                   <Menu.Item key={'/Photos/' + value} onClick={(...props) => this.goTo(...props)}>
@@ -122,7 +121,7 @@ class MainHeader extends Component {
   }
 
   async componentDidMount() {
-    this.getTestData()
+    // this.getTestData()
     this.populateMenuItems()
   }
 }

@@ -29,6 +29,13 @@ export default class GalleryRenderer extends Component {
     this.updateInfo()
   }
 
+  componentDidUpdate(prevProps) {
+    console.log('debug: PDFrenderer, componentDidUpdate()', prevProps, this.props)
+    if(JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
+      this.updateInfo();
+    }
+  }
+
   componentDidMount() {
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
@@ -52,6 +59,7 @@ export default class GalleryRenderer extends Component {
     console.log(numPages, 'pages')
     this.setState({ numPages }, () => {
       console.log(this.state.numPages)
+      this.props.doneLoading()
     })
   }
 
@@ -77,11 +85,6 @@ export default class GalleryRenderer extends Component {
       <div>
         <Row justify='center'>
           <Col>
-            {/* <Card> */}
-            {/* <Document file="http://localhost:8081/pagecontent/Projects/Sample%20Report/91697_04.pdf" >
-            <Page />
-            </Document> */}
-
             <Document
               file={this.state.file}
               onLoadSuccess={this.onDocumentLoadSuccess}
@@ -89,8 +92,6 @@ export default class GalleryRenderer extends Component {
               {/* <Outline /> */}
               <this.PageViewer/>
             </Document>
-
-            {/* </Card> */}
           </Col>
         </Row>
       </div>

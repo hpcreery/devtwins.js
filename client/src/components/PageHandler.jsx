@@ -9,7 +9,7 @@ import PDF from './Renderers/PDF'
 import IPYNB from './Renderers/ipynb'
 
 // UI Elements
-import { Layout, Affix, Button, Row, Col } from 'antd'
+import { Layout, Affix, Button, Row, Col, Spin } from 'antd'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -17,26 +17,30 @@ const { Header, Footer, Sider, Content } = Layout
 export default class PageHandler extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      category: null,
+      page: null,
+      pageType: null,
+      pageSubtype: null,
+      // pageBanner: null,
+      // pageIcon: null,
+      pageFiles: null,
+      isLoading: true
+    }
+    this.baseState = this.state
   }
 
-  state = {
-    category: null,
-    page: null,
-    pageType: null,
-    pageSubtype: null,
-    // pageBanner: null,
-    // pageIcon: null,
-    pageFiles: null,
-  }
+  
 
   updateInfo = async () => {
     let newState = { ...this.state }
-    console.log('Updating Info..')
+    console.log('Updating Page Handler Info..')
     // this.setState({ category: this.props.match.params.category, page: this.props.match.params.page })
     newState.category = this.props.match.params.category
     newState.page = this.props.match.params.page
+    // newState.isLoading = true
     var res = await api.getPageInfo(newState.category, newState.page)
-    console.log('New Page Info: ', res)
+    // console.log('New Page Info: ', res)
     if (res.status === 200) {
       newState.pageType = res.data.type
       newState.pageSubtype = res.data.subtype
@@ -51,8 +55,6 @@ export default class PageHandler extends Component {
     return (
       <div className={'Page-Heading'}>
         <Row justify='center'>
-          {' '}
-          {/* a row in a row, i know */}
           <Col span={18}>
             <h1 style={{ fontSize: 'xx-large', textAlign: 'center' }}>
               {this.state.category} / {this.state.page}
@@ -63,26 +65,31 @@ export default class PageHandler extends Component {
     )
   }
 
+  doneLoading = () => {
+    console.log('Done Loading Child Component')
+    this.setState({ isLoading: false })
+  }
+
   PageBody = () => {
     if (this.state.page) {
       if (this.state.pageType == 'static') {
         if (this.state.pageSubtype == 'md') {
-          return <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFiles} />
+          return <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFiles} doneLoading={this.doneLoading}/>
         } else if (this.state.pageSubtype == 'pdf') {
-          return <PDF category={this.state.category} page={this.state.page} file={this.state.pageFiles} />
+          return <PDF category={this.state.category} page={this.state.page} file={this.state.pageFiles} doneLoading={this.doneLoading}/>
         } else if (this.state.pageSubtype == 'ipynb') {
           return <IPYNB category={this.state.category} page={this.state.page} file={this.state.pageFiles} />
         } else {
-          return <h3> this page is unsupported </h3>
+          return <h3> this page is unsupported <br/> error: {this.state.page} {this.state.pageType} {this.state.pageSubtype}</h3>
         }
       } else if (this.state.pageType == 'collage') {
         return <CollageRenderer category={this.state.category} page={this.state.page} files={this.state.pageFiles} />
       } else {
-        return <h3> gathering pagetype or this page aint no good ... (yet?) </h3>
+        return <h3> gathering pagetype or this page aint no good ... (yet?) <br/> IDK what kinda page this is </h3>
         // return <this.Loader/>
       }
     } else {
-      return <h3> somethin aint right </h3>
+      return <h3> somethin aint right. <br/> I received no page to render from my component properties </h3>
     }
   }
 
@@ -100,8 +107,11 @@ export default class PageHandler extends Component {
   render() {
     return (
       <div>
-        <this.PageTitle />
-        <this.PageBody />
+        {/* <Spin spinning={this.state.isLoading}> */}
+        {this.state.isLoading ? <Spin /> : null}
+          <this.PageTitle />
+          <this.PageBody />
+        {/* </Spin> */}
       </div>
     )
   }
@@ -111,7 +121,8 @@ export default class PageHandler extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
+    if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
+      // this.setState(this.baseState)
       this.updateInfo()
     }
   }

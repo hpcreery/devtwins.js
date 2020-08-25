@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown' // https://github.com/rexxars/react-m
 import api from '../../services/Api'
 
 // UI Elements
-import { Layout, Affix, Button, Row, Col, Card, Typography, Space } from 'antd'
+import { Layout, Affix, Button, Row, Col, Card, Typography, Image } from 'antd'
 
 const { Header, Footer, Sider, Content } = Layout
 const { Meta } = Card
@@ -20,21 +20,25 @@ export default class MarkdownRenderer extends Component {
     this.state = {
       // markdown: '### Loading page contents...',
       markdown: '',
-      prevProps: null,
+      // prevProps: null,
     }
     this.baseState = this.state
   }
 
   updateInfo = () => {
-    console.log('Getting page data...')
+    console.log('Updating Markdown Renderer:', this.props.category, this.props.page, this.props.file)
+    // console.log('Getting page data...')
     api.getPageContent(this.props.category, this.props.page, this.props.file).then((res) => {
       console.log('Got Markdown Data: ', res)
       if (res.status === 200) {
         // console.log(res)
         // this.$store.commit('stopLoading')
-        this.setState({ markdown: res.data })
+        this.setState({ markdown: res.data }, () => {
+          this.props.doneLoading()
+        })
       }
     })
+    
   }
 
   imageUriFormatter = (Uri) => {
@@ -44,15 +48,19 @@ export default class MarkdownRenderer extends Component {
 
   imageRenderer = (props) => {
     // pros: {src, title, alt}
-    console.log('image source:', props.src)
+    // console.log('image source:', props.src)
     return (
       <Row justify='center'>
-        {' '}
         {/* a row in a row, i know */}
-        <Col span={8} justify='center'>
+        <Col span={10} justify='center'>
           <Card hoverable cover={<img src={props.src} />} style={{ marginTop: 10 }}>
             <Meta style={{ fontStyle: 'italic' }} description={props.alt} />
           </Card>
+          {/* // <Image
+          //   width="200px"
+          //   height={200}
+          //   src={props.src}
+          // /> */}
         </Col>
       </Row>
     )
@@ -60,7 +68,7 @@ export default class MarkdownRenderer extends Component {
 
   codeBlockRenderer = (props) => {
     // pros: {literal: String, language: ex. JS}
-    console.log('code:', props)
+    // console.log('code:', props)
     return (
       <Card hoverable bordered={true} style={{ marginTop: 10, marginBottom: 10 }}>
         <p style={{ marginBottom: 0, fontFamily: 'monospace' }}>{props.value}</p>
@@ -70,7 +78,7 @@ export default class MarkdownRenderer extends Component {
 
   codeInlineRenderer = (props) => {
     // pros: {literal: String, inline: Boolean}
-    console.log('code:', props)
+    // console.log('code:', props)
     return (
       // <span style={{ marginBottom: 0, fontFamily: "monospace", backgroundColor: "white" }}>{props.value}</span>
       <Text code>{props.value}</Text>
@@ -80,7 +88,6 @@ export default class MarkdownRenderer extends Component {
   pageTitleRenderer = () => {
     return (
       <Row justify='center'>
-        {' '}
         {/* a row in a row, i know */}
         <Col justify='center'>
           <h1 style={{ fontSize: 'xx-large' }}>
@@ -112,15 +119,16 @@ export default class MarkdownRenderer extends Component {
     )
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // console.log(this.props.match.params.id, this.props.page)
-    this.setState(this.baseState)
+    // this.setState(this.baseState)
     this.updateInfo()
   }
 
   componentDidUpdate(prevProps) {
-    // if(this.props !== prevProps) {
-    //   this.updateInfo();
-    // }
+    console.log('debug: MDrenderer, componentDidUpdate()', prevProps, this.props)
+    if(JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
+      this.updateInfo();
+    }
   }
 }
