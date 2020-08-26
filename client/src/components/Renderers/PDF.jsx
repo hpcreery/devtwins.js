@@ -16,12 +16,14 @@ export default class GalleryRenderer extends Component {
     this.state = {
       file: null,
       numPages: null,
+      
       width: 0,
       height: 0,
     }
     this.baseState = this.state
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
+  numRenderedPages = 0
 
   // componentWillMount() { // legacy/unsafe
     // console.log(this.props.match.params.id, this.props.page)
@@ -56,6 +58,7 @@ export default class GalleryRenderer extends Component {
   }
 
   updateInfo () {
+    this.numRenderedPages = 0
     console.log('Getting PDF page data...', this.props.files)
     this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file })
   }
@@ -65,8 +68,20 @@ export default class GalleryRenderer extends Component {
     console.log(numPages, 'pages')
     this.setState({ numPages }, () => {
       console.log(this.state.numPages)
-      this.props.doneLoading()
+      // this.props.doneLoading()
     })
+  }
+
+  countLoadedPages = () => {
+    
+    // this.setState({})
+    this.numRenderedPages = this.numRenderedPages + 1
+    console.log('rendered new page', this.numRenderedPages)
+    if (this.numRenderedPages == this.state.numPages) {
+      this.props.doneLoading()
+      console.log('Done loading')
+    }
+
   }
 
   PageViewer = (props) => {
@@ -79,6 +94,7 @@ export default class GalleryRenderer extends Component {
             key={`page_${index + 1}`}
             pageNumber={index + 1}
             height={this.state.height}
+            onRenderSuccess={this.countLoadedPages}
           />
           </Card>
         ),
@@ -94,6 +110,7 @@ export default class GalleryRenderer extends Component {
             <Document
               file={this.state.file}
               onLoadSuccess={this.onDocumentLoadSuccess}
+              // renderMode="svg"
             >              
               {/* <Outline /> */}
               <this.PageViewer/>
