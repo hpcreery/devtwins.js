@@ -84,7 +84,7 @@ export default class PageHandler extends Component {
           return <h3> this page is unsupported <br/> error: {this.state.page} {this.state.pageType} {this.state.pageSubtype}</h3>
         }
       } else if (this.state.pageType == 'collage') {
-        return <CollageRenderer category={this.state.category} page={this.state.page} files={this.state.pageFiles} />
+        return <CollageRenderer category={this.state.category} page={this.state.page} files={this.state.pageFiles} doneLoading={this.doneLoading}/>
       } else {
         return <h3> gathering pagetype or this page aint no good ... (yet?) <br/> IDK what kinda page this is </h3>
         // return <this.Loader/>

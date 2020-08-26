@@ -103,6 +103,7 @@ export default class MarkdownRenderer extends Component {
       <div className='Page-Container md-container'>
         <Row justify='center'>
           <Col span={18}>
+            {/* <Card> */}
             {/* <this.pageTitleRenderer/> */}
             <ReactMarkdown
               source={this.state.markdown}
@@ -113,6 +114,7 @@ export default class MarkdownRenderer extends Component {
                 code: this.codeBlockRenderer,
               }}
             />
+            {/* </Card> */}
           </Col>
         </Row>
       </div>
