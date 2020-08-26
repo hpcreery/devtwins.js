@@ -3,10 +3,10 @@ import React, { Component } from 'react'
 
 // Components
 import api from '../services/Api'
-import MarkdownRenderer from './Renderers/MarkdownRenderer'
-import CollageRenderer from './Renderers/GalleryRenderer'
-import PDF from './Renderers/PDF'
-import IPYNB from './Renderers/ipynb'
+import MarkdownRenderer from './renderers/MarkdownRenderer'
+import CollageRenderer from './renderers/GalleryRenderer'
+import PDF from './renderers/PDF'
+import IPYNB from './renderers/ipynb'
 
 // UI Elements
 import { Layout, Affix, Button, Row, Col, Spin } from 'antd'
@@ -25,14 +25,13 @@ export default class PageHandler extends Component {
       // pageBanner: null,
       // pageIcon: null,
       pageFiles: null,
-      isLoading: true
+      isLoading: true,
     }
     this.baseState = this.state
   }
 
-  
-
   updateInfo = async () => {
+    console.log('THESE ARE THE KEYS ', this.props.match.params)
     let newState = { ...this.state }
     console.log('Updating Page Handler Info..')
     // this.setState({ category: this.props.match.params.category, page: this.props.match.params.page })
@@ -74,23 +73,69 @@ export default class PageHandler extends Component {
     if (this.state.page) {
       if (this.state.pageType == 'static') {
         if (this.state.pageSubtype == 'md') {
-          return <MarkdownRenderer category={this.state.category} page={this.state.page} file={this.state.pageFiles} doneLoading={this.doneLoading}/>
+          return (
+            <MarkdownRenderer
+              key={this.state.page}
+              category={this.state.category}
+              page={this.state.page}
+              file={this.state.pageFiles}
+              doneLoading={this.doneLoading}
+            />
+          )
         } else if (this.state.pageSubtype == 'pdf') {
-          return <PDF category={this.state.category} page={this.state.page} file={this.state.pageFiles} doneLoading={this.doneLoading}/>
+          return (
+            <PDF
+              key={this.state.page}
+              category={this.state.category}
+              page={this.state.page}
+              file={this.state.pageFiles}
+              doneLoading={this.doneLoading}
+            />
+          )
         } else if (this.state.pageSubtype == 'ipynb') {
           // this.doneLoading() // !! need to impliment correctly
-          return <IPYNB category={this.state.category} page={this.state.page} file={this.state.pageFiles} doneLoading={this.doneLoading}/>
+          return (
+            <IPYNB
+              key={this.state.page}
+              category={this.state.category}
+              page={this.state.page}
+              file={this.state.pageFiles}
+              doneLoading={this.doneLoading}
+            />
+          )
         } else {
-          return <h3> this page is unsupported <br/> error: {this.state.page} {this.state.pageType} {this.state.pageSubtype}</h3>
+          return (
+            <h3>
+              {' '}
+              this page is unsupported <br /> error: {this.state.page} {this.state.pageType} {this.state.pageSubtype}
+            </h3>
+          )
         }
       } else if (this.state.pageType == 'collage') {
-        return <CollageRenderer category={this.state.category} page={this.state.page} files={this.state.pageFiles} />
+        return (
+          <CollageRenderer
+            key={this.state.page}
+            category={this.state.category}
+            page={this.state.page}
+            files={this.state.pageFiles}
+          />
+        )
       } else {
-        return <h3> gathering pagetype or this page aint no good ... (yet?) <br/> IDK what kinda page this is </h3>
+        return (
+          <h3>
+            {' '}
+            gathering pagetype or this page aint no good ... (yet?) <br /> IDK what kinda page this is{' '}
+          </h3>
+        )
         // return <this.Loader/>
       }
     } else {
-      return <h3> somethin aint right. <br/> I received no page to render from my component properties </h3>
+      return (
+        <h3>
+          {' '}
+          somethin aint right. <br /> I received no page to render from my component properties{' '}
+        </h3>
+      )
     }
   }
 
@@ -110,8 +155,8 @@ export default class PageHandler extends Component {
       <div>
         {/* <Spin spinning={this.state.isLoading}> */}
         {this.state.isLoading ? <Spin /> : null}
-          <this.PageTitle />
-          <this.PageBody />
+        <this.PageTitle />
+        <this.PageBody />
         {/* </Spin> */}
       </div>
     )

@@ -17,15 +17,20 @@ const { Text, Link } = Typography
 export default class MarkdownRenderer extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      // markdown: '### Loading page contents...',
-      markdown: '',
-      // prevProps: null,
-    }
-    this.baseState = this.state
+
+    //this.baseState = this.state
   }
 
-  updateInfo = () => {
+  state = {
+    // markdown: '### Loading page contents...',
+    loading: true,
+    markdown: '',
+    fetched: false,
+    // prevProps: null,
+  }
+
+  updateInfo = async () => {
+    //this.loading = true
     console.log('Updating Markdown Renderer:', this.props.category, this.props.page, this.props.file)
     // console.log('Getting page data...')
     api.getPageContent(this.props.category, this.props.page, this.props.file).then((res) => {
@@ -33,12 +38,14 @@ export default class MarkdownRenderer extends Component {
       if (res.status === 200) {
         // console.log(res)
         // this.$store.commit('stopLoading')
-        this.setState({ markdown: res.data }, () => {
-          this.props.doneLoading()
-        })
+
+        setTimeout(() => {
+          this.setState({ markdown: res.data, loading: false, fetched: true }, () => {
+            //this.props.doneLoading()
+          })
+        }, 1000)
       }
     })
-    
   }
 
   imageUriFormatter = (Uri) => {
@@ -99,38 +106,53 @@ export default class MarkdownRenderer extends Component {
   }
 
   render() {
-    return (
-      <div className='Page-Container md-container'>
-        <Row justify='center'>
-          <Col span={18}>
-            {/* <this.pageTitleRenderer/> */}
-            <ReactMarkdown
-              source={this.state.markdown}
-              transformImageUri={this.imageUriFormatter}
-              renderers={{
-                image: this.imageRenderer,
-                inlineCode: this.codeInlineRenderer,
-                code: this.codeBlockRenderer,
-              }}
-            />
-          </Col>
-        </Row>
-      </div>
-    )
+    console.log('rendering Markdown ' + this.state.loading)
+    if (this.state.loading == true) {
+      return <h1>LOADINGGGG</h1>
+    } else {
+      return (
+        <div className='Page-Container md-container'>
+          <Row justify='center'>
+            <Col span={18}>
+              {/* <this.pageTitleRenderer/> */}
+              <ReactMarkdown
+                source={this.state.markdown}
+                transformImageUri={this.imageUriFormatter}
+                renderers={{
+                  image: this.imageRenderer,
+                  inlineCode: this.codeInlineRenderer,
+                  code: this.codeBlockRenderer,
+                }}
+              />
+            </Col>
+          </Row>
+        </div>
+      )
+    }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     // console.log(this.props.match.params.id, this.props.page)
     // this.setState(this.baseState)
     this.updateInfo()
   }
 
+  // async componentDidUpdate(prevProps) {
+  //   console.log('debug: MDrenderer, componentDidUpdate()', prevProps, this.props)
+  //   if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
+  //     this.updateInfo()
+  //   }
+  // }
 
+  // static getDerivedStateFromProps(props, state) {
+  //   if (state.fetched === true) {
+  //     return { loading: false }
+  //   } else {
+  //     return { loading: true }
+  //   }
 
-  componentDidUpdate(prevProps) {
-    console.log('debug: MDrenderer, componentDidUpdate()', prevProps, this.props)
-    if(JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
-      this.updateInfo();
-    }
-  }
+  //   // if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
+  //   //   this.updateInfo()
+  //   // }
+  // }
 }

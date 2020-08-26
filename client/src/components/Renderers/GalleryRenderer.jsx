@@ -76,10 +76,10 @@ export default class GalleryRenderer extends Component {
   componentDidMount() {
     this.updateInfo()
   }
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-      this.updateInfo()
-    }
-    //this.updateInfo()
-  }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props !== prevProps) {
+  //     this.updateInfo()
+  //   }
+  //   //this.updateInfo()
+  // }
 }

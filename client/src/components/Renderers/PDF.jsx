@@ -13,35 +13,35 @@ import api from '../../services/Api'
 export default class GalleryRenderer extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      file: null,
-      numPages: null,
-      width: 0,
-      height: 0,
-    }
-    this.baseState = this.state
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
+  state = {
+    file: null,
+    numPages: null,
+    width: 0,
+    height: 0,
+  }
+
   // componentWillMount() { // legacy/unsafe
-    // console.log(this.props.match.params.id, this.props.page)
-    // this.setState(this.baseState)
-    // this.updateInfo()
+  // console.log(this.props.match.params.id, this.props.page)
+  // this.setState(this.baseState)
+  // this.updateInfo()
   // }
 
-  componentDidUpdate(prevProps) {
-    console.log('debug: PDFrenderer, componentDidUpdate()', prevProps, this.props)
-    if(JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
-      this.updateInfo();
-    }
-  }
+  // componentDidUpdate(prevProps) {
+  //   console.log('debug: PDFrenderer, componentDidUpdate()', prevProps, this.props)
+  //   if(JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
+  //     this.updateInfo();
+  //   }
+  // }
 
   // shouldComponentUpdate(nextProps, nextState) {
   //   return nextProps.id !== this.props.id;
   // }
 
   componentDidMount() {
-    console.log('PDF component moutned')
+    console.log('PDF component mounted')
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateInfo()
@@ -55,9 +55,11 @@ export default class GalleryRenderer extends Component {
     this.setState({ width: window.innerWidth, height: window.innerHeight })
   }
 
-  updateInfo () {
-    console.log('Getting PDF page data...', this.props.files)
-    this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file })
+  updateInfo() {
+    console.log('Getting PDF page data...', this.props)
+    let newfile = api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file
+    console.log('Got new file ' + newfile)
+    this.setState({ file: newfile })
   }
 
   onDocumentLoadSuccess = ({ numPages }) => {
@@ -70,39 +72,27 @@ export default class GalleryRenderer extends Component {
   }
 
   PageViewer = (props) => {
-    return (
-      Array.from(
-        new Array(this.state.numPages),
-        (el, index) => (
-          <Card style={{ marginTop: 10, marginBottom: 10 }} >
-          <Page
-            key={`page_${index + 1}`}
-            pageNumber={index + 1}
-            height={this.state.height}
-          />
-          </Card>
-        ),
-      )
-    )
+    console.log('viewing pages')
+    return Array.from(new Array(this.state.numPages), (el, index) => (
+      <Card key={`page_${index + 1}`} style={{ marginTop: 10, marginBottom: 10 }}>
+        <Page key={`page_${index + 1}`} pageNumber={index + 1} height={this.state.height} />
+      </Card>
+    ))
   }
 
   render() {
+    console.log('rendering PDF')
     return (
       <div>
         <Row justify='center'>
           <Col>
-            <Document
-              file={this.state.file}
-              onLoadSuccess={this.onDocumentLoadSuccess}
-            >              
+            <Document file={this.state.file} onLoadSuccess={this.onDocumentLoadSuccess}>
               {/* <Outline /> */}
-              <this.PageViewer/>
+              <this.PageViewer />
             </Document>
           </Col>
         </Row>
       </div>
     )
   }
-
-
 }
