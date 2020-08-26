@@ -106,29 +106,26 @@ export default class MarkdownRenderer extends Component {
   }
 
   render() {
-    console.log('rendering Markdown ' + this.state.loading)
-    if (this.state.loading == true) {
-      return <h1>LOADINGGGG</h1>
-    } else {
-      return (
-        <div className='Page-Container md-container'>
-          <Row justify='center'>
-            <Col span={18}>
-              {/* <this.pageTitleRenderer/> */}
-              <ReactMarkdown
-                source={this.state.markdown}
-                transformImageUri={this.imageUriFormatter}
-                renderers={{
-                  image: this.imageRenderer,
-                  inlineCode: this.codeInlineRenderer,
-                  code: this.codeBlockRenderer,
-                }}
-              />
-            </Col>
-          </Row>
-        </div>
-      )
-    }
+    return (
+      <div className='Page-Container md-container'>
+        <Row justify='center'>
+          <Col span={18}>
+            {/* <Card> */}
+            {/* <this.pageTitleRenderer/> */}
+            <ReactMarkdown
+              source={this.state.markdown}
+              transformImageUri={this.imageUriFormatter}
+              renderers={{
+                image: this.imageRenderer,
+                inlineCode: this.codeInlineRenderer,
+                code: this.codeBlockRenderer,
+              }}
+            />
+            {/* </Card> */}
+          </Col>
+        </Row>
+      </div>
+    )
   }
 
   async componentDidMount() {

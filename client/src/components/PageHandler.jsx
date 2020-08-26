@@ -37,7 +37,7 @@ export default class PageHandler extends Component {
     // this.setState({ category: this.props.match.params.category, page: this.props.match.params.page })
     newState.category = this.props.match.params.category
     newState.page = this.props.match.params.page
-    // newState.isLoading = true
+    newState.isLoading = true
     var res = await api.getPageInfo(newState.category, newState.page)
     // console.log('New Page Info: ', res)
     if (res.status === 200) {
@@ -153,11 +153,11 @@ export default class PageHandler extends Component {
   render() {
     return (
       <div>
-        {/* <Spin spinning={this.state.isLoading}> */}
-        {this.state.isLoading ? <Spin /> : null}
-        <this.PageTitle />
-        <this.PageBody />
-        {/* </Spin> */}
+        <Spin spinning={this.state.isLoading}>
+        {/* {this.state.isLoading ? <Spin /> : null} */}
+          <this.PageTitle />
+          <this.PageBody />
+        </Spin>
       </div>
     )
   }
