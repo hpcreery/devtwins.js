@@ -53,13 +53,9 @@ export default class GalleryRenderer extends Component {
       <div>
         <Row justify='center'>
           <Col span={20}>
-            {this.state.photosReady ? 
-              <Gallery 
-                margin={5} 
-                photos={this.state.photos} 
-                onClick={this.openLightbox} 
-              /> 
-            : null}
+            {this.state.photosReady ? (
+              <Gallery margin={5} photos={this.state.photos} onClick={this.openLightbox} />
+            ) : null}
             <ModalGateway>
               {this.state.viewerIsOpen ? (
                 <Modal onClose={this.closeLightbox}>

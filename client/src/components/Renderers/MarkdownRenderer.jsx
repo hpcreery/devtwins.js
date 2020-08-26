@@ -39,11 +39,9 @@ export default class MarkdownRenderer extends Component {
         // console.log(res)
         // this.$store.commit('stopLoading')
 
-        setTimeout(() => {
-          this.setState({ markdown: res.data, loading: false, fetched: true }, () => {
-            //this.props.doneLoading()
-          })
-        }, 1000)
+        this.setState({ markdown: res.data, loading: false, fetched: true }, () => {
+          this.props.doneLoading()
+        })
       }
     })
   }

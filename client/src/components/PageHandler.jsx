@@ -118,6 +118,7 @@ export default class PageHandler extends Component {
             category={this.state.category}
             page={this.state.page}
             files={this.state.pageFiles}
+            doneLoading={this.doneLoading}
           />
         )
       } else {
@@ -154,7 +155,7 @@ export default class PageHandler extends Component {
     return (
       <div>
         <Spin spinning={this.state.isLoading}>
-        {/* {this.state.isLoading ? <Spin /> : null} */}
+          {/* {this.state.isLoading ? <Spin /> : null} */}
           <this.PageTitle />
           <this.PageBody />
         </Spin>

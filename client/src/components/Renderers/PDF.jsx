@@ -56,9 +56,9 @@ export default class GalleryRenderer extends Component {
     this.setState({ width: window.innerWidth, height: window.innerHeight })
   }
 
-  updateInfo () {
+  updateInfo() {
     this.numRenderedPages = 0
-    console.log('Getting PDF page data...', this.props.files)
+    console.log('Getting PDF page data...', this.props.file)
     this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file })
   }
 
@@ -72,7 +72,6 @@ export default class GalleryRenderer extends Component {
   }
 
   countLoadedPages = () => {
-    
     // this.setState({})
     this.numRenderedPages = this.numRenderedPages + 1
     console.log('rendered new page', this.numRenderedPages)
@@ -80,25 +79,19 @@ export default class GalleryRenderer extends Component {
       this.props.doneLoading()
       console.log('Done loading')
     }
-
   }
 
   PageViewer = (props) => {
-    return (
-      Array.from(
-        new Array(this.state.numPages),
-        (el, index) => (
-          <Card style={{ marginTop: 10, marginBottom: 10 }} >
-          <Page
-            key={`page_${index + 1}`}
-            pageNumber={index + 1}
-            height={this.state.height}
-            onRenderSuccess={this.countLoadedPages}
-          />
-          </Card>
-        ),
-      )
-    )
+    return Array.from(new Array(this.state.numPages), (el, index) => (
+      <Card style={{ marginTop: 10, marginBottom: 10 }}>
+        <Page
+          key={`page_${index + 1}`}
+          pageNumber={index + 1}
+          height={this.state.height}
+          onRenderSuccess={this.countLoadedPages}
+        />
+      </Card>
+    ))
   }
 
   render() {
