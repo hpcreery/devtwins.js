@@ -154,9 +154,10 @@ export default class PageHandler extends Component {
   render() {
     return (
       <div>
+        <this.PageTitle />
         <Spin spinning={this.state.isLoading}>
           {/* {this.state.isLoading ? <Spin /> : null} */}
-          <this.PageTitle />
+          
           <this.PageBody />
         </Spin>
       </div>
