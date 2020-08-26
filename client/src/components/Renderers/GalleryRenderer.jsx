@@ -12,17 +12,18 @@ import api from '../../services/Api'
 export default class GalleryRenderer extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      currentImage: 0,
+      // setCurrentImage: 0,
+      viewerIsOpen: false,
+      // setViewerIsOpen: false
+      // photos: [{src: 'http://localhost:8081/pagecontent/Photos/First%20Gallery/IMG_8667.jpg', width: 2, hieght: 4}]
+      photos: [],
+      photosReady: false,
+    }
   }
 
-  state = {
-    currentImage: 0,
-    // setCurrentImage: 0,
-    viewerIsOpen: false,
-    // setViewerIsOpen: false
-    // photos: [{src: 'http://localhost:8081/pagecontent/Photos/First%20Gallery/IMG_8667.jpg', width: 2, hieght: 4}]
-    photos: [],
-    photosReady: false,
-  }
+  
 
   updateInfo = async () => {
     let newState = { ...this.state }
@@ -85,4 +86,11 @@ export default class GalleryRenderer extends Component {
   //   }
   //   //this.updateInfo()
   // }
+
+  async componentDidUpdate(prevProps) {
+    console.log('debug: GalleryRenderer, componentDidUpdate()', prevProps, this.props)
+    if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
+      this.updateInfo()
+    }
+  }
 }

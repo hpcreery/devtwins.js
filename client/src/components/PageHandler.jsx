@@ -85,7 +85,7 @@ export default class PageHandler extends Component {
         } else if (this.state.pageSubtype == 'pdf') {
           return (
             <PDF
-              key={this.state.page}
+              // key={this.state.page} // Interferes with page updating????
               category={this.state.category}
               page={this.state.page}
               file={this.state.pageFiles}
