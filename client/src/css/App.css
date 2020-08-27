@@ -111,3 +111,12 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected {
 	text-align: center;
 	font-size: 14;
 };
+
+.Header-Menu-Item > .anticon {
+  color: red !important;
+}
+
+html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected .Header-SearchIcon {
+  color: var(--color-accent) !important;
+  transition: all 0.05s linear;
+}

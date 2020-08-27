@@ -7,6 +7,7 @@ import SiteHeader from './MainHeader'
 import PageHandler from './PageHandler'
 // import MarkdownRenderer from './Renderers/MarkdownRenderer'
 import FrontPage from './pages/FrontPage'
+import SearchPage from './pages/SearchPage'
 
 // UI Elements
 import { Layout, Affix, Button, Row, Col, BackTop } from 'antd'
@@ -77,6 +78,7 @@ export default class Main extends Component {
           <SiteHeader />
           <Content className='Content'>
             <Route path='/' exact component={FrontPage} />
+            <Route path='/search' exact component={SearchPage} />
             <Route path='/:category/:page' component={PageHandler} />
           </Content>
           <BackTop>

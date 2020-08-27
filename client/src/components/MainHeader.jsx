@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Layout, Affix, Button, Menu } from 'antd'
+import { Layout, Affix, Button, Menu, Input } from 'antd'
 import { BrowserRouter as Router, Route, Link, Switch, useHistory, Redirect, withRouter } from 'react-router-dom'
-import { MailOutlined, AppstoreOutlined, SettingOutlined, PictureOutlined } from '@ant-design/icons'
+import { MailOutlined, AppstoreOutlined, SettingOutlined, PictureOutlined, SearchOutlined } from '@ant-design/icons'
 
 import api from '../services/Api'
 
 const { SubMenu } = Menu
 const { Header, Content, Footer } = Layout
+const { Search } = Input;
 
 class MainHeader extends Component {
   constructor(props) {
@@ -117,6 +118,11 @@ class MainHeader extends Component {
                 )
               })}
             </SubMenu>
+            <Menu.Item key='/search' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
+            <SearchOutlined className='Header-SearchIcon' />
+            </Menu.Item>
+            
+            
           </Menu>
         </Header>
       </div>
