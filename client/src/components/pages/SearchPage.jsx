@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 
 // UI Elements
+import api from '../../services/Api'
 // import { useThemeSwitcher } from 'react-css-theme-switcher'
 import { Switch, Input, Col, Row, List, Avatar, Space  } from 'antd'
 import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
@@ -35,10 +36,36 @@ export default class FrontPage extends Component {
     super(props)
     this.state = {
       isDarkMode: false,
+      listData: [],
+      loading: true
     }
-    // this.themeSwitcher = useThemeSwitcher();
-    // { switcher, currentTheme, status, themes } = useThemeSwitcher();
   }
+
+  updateInfo = () => {
+    console.log('this ur;:', this.props.location.pathname, window.location.href, this.props.location)
+    var list = []
+    api.getPageList().then((res) => {
+      console.log('Fetched Page list:', res)
+      res.data.map((page) => {
+        var pagelink = '/' + page.category.replace(/ /g, '%20') + '/' + page.name.replace(/ /g, '%20')
+        list.push({
+          // href: api.getPageBaseUrl(page.category, page.name),
+          href: pagelink,
+          title: page.name,
+          avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+          description: page.category,
+          content:
+            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+        })
+      })
+    
+    }).then(() => {
+      console.log('list', list)
+      this.setState({ listData: list, loading: false }, () => console.log('State: ', this.state))
+    })
+  }
+
+
 
 
   render() {
@@ -49,11 +76,12 @@ export default class FrontPage extends Component {
             <Search
               placeholder="input search text"
               // onSearch={value => console.log(value)}
-              style={{ margin: "20px" }}
+              style={{ marginTop: "20px", marginBottom: "20px" }}
+              enterButton 
             />
           </Col>
         </Row>
-        <Row justify='center'>
+        {!this.state.loading ? <Row justify='center'>
           <Col span={20}>
             <List
               itemLayout="vertical"
@@ -64,7 +92,7 @@ export default class FrontPage extends Component {
                 },
                 pageSize: 3,
               }}
-              dataSource={listData}
+              dataSource={this.state.listData}
               // footer={
               //   <div>
               //     <b>ant design</b> footer part
@@ -73,11 +101,11 @@ export default class FrontPage extends Component {
               renderItem={item => (
                 <List.Item
                   key={item.title}
-                  actions={[
-                    <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-                    <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-                    <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-                  ]}
+                  // actions={[
+                  //   <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
+                  //   <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
+                  //   <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                  // ]}
                   extra={
                     <img
                       width={272}
@@ -89,15 +117,21 @@ export default class FrontPage extends Component {
                   <List.Item.Meta
                     // avatar={<Avatar src={item.avatar} />}
                     title={<a href={item.href}>{item.title}</a>}
-                    // description={item.description}
+                    description={item.description}
                   />
                   {item.content}
                 </List.Item>
               )}
             />
           </Col>
-        </Row>
+        </Row> : null}
       </div>
     )
+  }
+
+  async componentDidMount() {
+    // console.log(this.props.match.params.id, this.props.page)
+    // this.setState(this.baseState)
+    this.updateInfo()
   }
 }

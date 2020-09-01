@@ -44,7 +44,13 @@ export default {
       method: 'GET',
       url: '/pagecontent/' + category + '/' + page + '/' + file,
     }),
+  getPageList: () =>
+    instance({
+      method: 'GET',
+      url: '/pages/',
+    }),
   getPageContentBaseUrl: (category, page) => {
     return instance.defaults.baseURL + '/pagecontent/' + category + '/' + page
   },
 }
+

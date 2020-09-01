@@ -38,6 +38,8 @@ module.exports = (app) => {
 
   // app.get('/pagebanner/:category/:page', PageController.getpageimage) // (page, image) => return image ...
 
+  app.get('/pages', PageController.getlistofallpages)
+
   // ############  PHOTOS  ############
 
   // app.get('/photo', PhotoController.getphoto) // () => return photo list of page
