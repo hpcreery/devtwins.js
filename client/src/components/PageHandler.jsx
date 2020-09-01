@@ -56,7 +56,7 @@ export default class PageHandler extends Component {
         <Row justify='center'>
           <Col span={18}>
             <h1 style={{ fontSize: 'xx-large', textAlign: 'center' }}>
-              {this.state.category} / {this.state.page}
+              {this.props.match.params.category} / {this.props.match.params.page}
             </h1>
           </Col>
         </Row>
@@ -70,7 +70,8 @@ export default class PageHandler extends Component {
   }
 
   PageBody = () => {
-    if (this.state.page) {
+    // if (this.state.page) {
+    if (this.props.match.params.page) {
       if (this.state.pageType == 'static') {
         if (this.state.pageSubtype == 'md') {
           return (
@@ -134,7 +135,7 @@ export default class PageHandler extends Component {
       return (
         <h3>
           {' '}
-          somethin aint right. <br /> I received no page to render from my component properties{' '}
+          somethin aint right. <br /> I received no page to render from my component properties OR the state has not been set{' '}
         </h3>
       )
     }
