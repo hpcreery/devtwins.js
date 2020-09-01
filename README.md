@@ -1,3 +1,7 @@
+
+![Banner](/doc/banner.png)
+
+
 # devtwins.js
 Flat File Headless CMS SPA written by Hunter Creery and Peyton Creery to showcase photos and developments
 
