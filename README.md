@@ -1,5 +1,5 @@
 
-![Banner](/doc/banner2.png)
+![Banner](/doc/banner3.png)
 
 
 # devtwins.js
