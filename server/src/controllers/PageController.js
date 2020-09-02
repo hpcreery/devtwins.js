@@ -79,6 +79,20 @@ module.exports = {
     let supportedCollageFiles = (files) => files.filter((file) => isSupportedCollage(file))
     let hasSupportedCollage = (files) => supportedCollageFiles(files).length > 0
 
+    // Get misc info about Page
+    let getThumbnail = (files) => {
+      let thumbnail = files.filter(item => new RegExp('^' + 'thumb.*' + '$').test(item))
+      if (thumbnail.length > 0) {
+        // console.log('yea', thumbnail[0])
+        return thumbnail[0]
+      } else {
+        // console.log('nah')
+        return null
+        // return "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimg.icons8.com%2Fcarbon-copy%2F2x%2Ffile.png&imgrefurl=https%3A%2F%2Ficons8.com%2Ficons%2Fset%2Ffile&tbnid=umEWAkqMMnbVmM&vet=12ahUKEwjj9syJrcnrAhWSfqwKHbFDA9gQMygCegUIARDYAQ..i&docid=fhdmazhWVkJ3aM&w=200&h=200&q=file%20icon&ved=2ahUKEwjj9syJrcnrAhWSfqwKHbFDA9gQMygCegUIARDYAQ"
+      }
+    }
+    
+
     let addSize = (files) =>
       files.map((file) => {
         var dimensions = sizeOf(config.dir.pages + '/' + category + '/' + page + '/' + file)
@@ -94,9 +108,9 @@ module.exports = {
       var staticfile = parentFile(supportedFiles(files))
       console.log('Supported Render File used for DIR:', config.dir.pages + '/' + staticfile)
       // res.status(200).sendFile(config.dir.pages + '/' + page + '/' + staticfile)
-      res({ type: 'static', subtype: staticfile.split('.').pop(), files: staticfile })
+      res({ type: 'static', subtype: staticfile.split('.').pop(), thumb: getThumbnail(files), files: staticfile })
     } else if (hasSupportedCollage(files)) {
-      res({ type: 'collage', subtype: 'none', files: addSize(supportedCollageFiles(files)) })
+      res({ type: 'collage', subtype: 'none', thumb: getThumbnail(files), files: addSize(supportedCollageFiles(files)) })
     } else {
       res('No file found')
       console.log('Err 404: No file found')

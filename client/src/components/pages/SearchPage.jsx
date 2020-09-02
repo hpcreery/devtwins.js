@@ -56,6 +56,7 @@ export default class FrontPage extends Component {
           description: page.category,
           content:
             'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+          thumbnailURL: (page.info.thumb ? api.getPageContentBaseUrl(page.category, page.name) + '/' + page.info.thumb : "https://cdn2.iconfinder.com/data/icons/files-and-documents-1/512/28-512.png")
         })
       })
     
@@ -90,7 +91,7 @@ export default class FrontPage extends Component {
                 onChange: page => {
                   console.log(page);
                 },
-                pageSize: 3,
+                pageSize: 5,
               }}
               dataSource={this.state.listData}
               // footer={
@@ -108,9 +109,10 @@ export default class FrontPage extends Component {
                   // ]}
                   extra={
                     <img
-                      width={272}
+                      width={172}
                       alt="logo"
-                      src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                      // src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                      src={item.thumbnailURL}
                     />
                   }
                 >
