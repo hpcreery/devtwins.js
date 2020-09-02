@@ -120,3 +120,8 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected .Header-SearchIco
   color: var(--color-accent) !important;
   transition: all 0.05s linear;
 }
+
+
+html[data-scroll='0'] .Site-Header-Menu {
+  /* line-height: 330% !important; */
+}

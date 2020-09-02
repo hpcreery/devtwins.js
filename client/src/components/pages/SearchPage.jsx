@@ -5,24 +5,11 @@ import React, { Component } from 'react'
 import api from '../../services/Api'
 // import { useThemeSwitcher } from 'react-css-theme-switcher'
 import { Switch, Input, Col, Row, List, Avatar, Space  } from 'antd'
-import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
+import { MessageOutlined, LikeOutlined, StarOutlined, FileOutlined, FileImageOutlined, PictureOutlined } from '@ant-design/icons';
 
 // UX Elements
 
 const { Search } = Input;
-
-const listData = [];
-for (let i = 0; i < 23; i++) {
-  listData.push({
-    href: 'https://ant.design',
-    title: `ant design part ${i}`,
-    avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-    description:
-      'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-    content:
-      'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-  });
-}
 
 const IconText = ({ icon, text }) => (
   <Space>
@@ -37,7 +24,8 @@ export default class FrontPage extends Component {
     this.state = {
       isDarkMode: false,
       listData: [],
-      loading: true
+      loading: true,
+      searchfilter: ''
     }
   }
 
@@ -54,9 +42,11 @@ export default class FrontPage extends Component {
           title: page.name,
           avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
           description: page.category,
-          content:
-            'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-          thumbnailURL: (page.info.thumb ? api.getPageContentBaseUrl(page.category, page.name) + '/' + page.info.thumb : "https://cdn2.iconfinder.com/data/icons/files-and-documents-1/512/28-512.png")
+          content: '',
+          thumbnailURL: (page.info.thumb ? api.getPageContentBaseUrl(page.category, page.name) + '/' + page.info.thumb : "https://cdn2.iconfinder.com/data/icons/files-and-documents-1/512/28-512.png"),
+          pagetype: page.info.type,
+          filetype: page.info.subtype,
+          show: true
         })
       })
     
@@ -70,13 +60,19 @@ export default class FrontPage extends Component {
 
 
   render() {
+    // const { filter, data } = this.state;
+    const lowercasedFilter = this.state.searchfilter.toLowerCase();
+    const filteredData = this.state.listData.filter(item => {
+      return item.title.toLowerCase().includes(lowercasedFilter)
+    });
     return (
       <div className={'Page-Heading'}>
         <Row justify='center'>
           <Col span={18}>
             <Search
               placeholder="input search text"
-              // onSearch={value => console.log(value)}
+              onSearch={value => this.setState({searchfilter: value})}
+              onChange={value => this.setState({searchfilter: value.currentTarget.value})}
               style={{ marginTop: "20px", marginBottom: "20px" }}
               enterButton 
             />
@@ -93,7 +89,8 @@ export default class FrontPage extends Component {
                 },
                 pageSize: 5,
               }}
-              dataSource={this.state.listData}
+              // dataSource={this.state.listData}
+              dataSource={filteredData}
               // footer={
               //   <div>
               //     <b>ant design</b> footer part
@@ -102,11 +99,12 @@ export default class FrontPage extends Component {
               renderItem={item => (
                 <List.Item
                   key={item.title}
-                  // actions={[
-                  //   <IconText icon={StarOutlined} text="156" key="list-vertical-star-o" />,
-                  //   <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-                  //   <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-                  // ]}
+                  actions={[
+                    (item.pagetype === 'collage' ? <IconText icon={PictureOutlined} text='gallery' key="list-vertical-star-o" /> : <IconText icon={FileOutlined} text={item.filetype} key="list-vertical-star-o" />)
+                    // <IconText icon={FileOutlined} text={item.filetype} key="list-vertical-star-o" />,
+                    // <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
+                    // <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
+                  ]}
                   extra={
                     <img
                       width={172}
