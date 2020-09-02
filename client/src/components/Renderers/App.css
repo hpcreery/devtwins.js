@@ -28,4 +28,9 @@
   
 figure { /* for .ipynb images that are in <figure> tags */
   text-align: center;
+  /* max-width: 70vw !important; */
+}
+
+img {
+  max-width: 100%;
 }

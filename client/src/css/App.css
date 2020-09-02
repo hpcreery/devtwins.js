@@ -122,6 +122,6 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected .Header-SearchIco
 }
 
 
-html[data-scroll='0'] .Site-Header-Menu {
+html[data-scroll='0'] .Site-Header-Menu { /* attempt to make menu shink on scroll */
   /* line-height: 330% !important; */
 }
