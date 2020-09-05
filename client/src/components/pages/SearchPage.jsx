@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import api from '../../services/Api'
 // import { useThemeSwitcher } from 'react-css-theme-switcher'
 import { Switch, Input, Col, Row, List, Avatar, Space  } from 'antd'
-import { MessageOutlined, LikeOutlined, StarOutlined, FileOutlined, FileImageOutlined, PictureOutlined } from '@ant-design/icons';
+import { MessageOutlined, LikeOutlined, StarOutlined, FileOutlined, FileImageOutlined, PictureOutlined, HistoryOutlined } from '@ant-design/icons';
 
 // UX Elements
 
@@ -44,9 +44,18 @@ export default class FrontPage extends Component {
           description: page.category,
           content: '',
           thumbnailURL: (page.info.thumb ? api.getPageContentBaseUrl(page.category, page.name) + '/' + page.info.thumb : "https://cdn2.iconfinder.com/data/icons/files-and-documents-1/512/28-512.png"),
+          thumbnail: (page.info.thumb ? <img
+            // width={172}
+            style={{objectFit: "cover",
+              width: "230px",
+              height: "230px"}}
+            alt="logo"
+            src={api.getPageContentBaseUrl(page.category, page.name) + '/' + page.info.thumb}
+          /> : <FileOutlined style={{ fontSize: '220px' }} />),
           pagetype: page.info.type,
           filetype: page.info.subtype,
-          show: true
+          show: true,
+          archived: page.info.archived
         })
       })
     
@@ -70,7 +79,7 @@ export default class FrontPage extends Component {
         <Row justify='center'>
           <Col span={18}>
             <Search
-              placeholder="input search text"
+              placeholder="Search"
               onSearch={value => this.setState({searchfilter: value})}
               onChange={value => this.setState({searchfilter: value.currentTarget.value})}
               style={{ marginTop: "20px", marginBottom: "20px" }}
@@ -100,18 +109,20 @@ export default class FrontPage extends Component {
                 <List.Item
                   key={item.title}
                   actions={[
-                    (item.pagetype === 'collage' ? <IconText icon={PictureOutlined} text='gallery' key="list-vertical-star-o" /> : <IconText icon={FileOutlined} text={item.filetype} key="list-vertical-star-o" />)
+                    (item.pagetype === 'collage' ? <IconText icon={PictureOutlined} text='gallery' key="list-vertical-type" /> : <IconText icon={FileOutlined} text={item.filetype} key="list-vertical-type" />),
+                    (item.archived ? <IconText icon={HistoryOutlined} text='archived' key="list-vertical-archived" /> : null)
                     // <IconText icon={FileOutlined} text={item.filetype} key="list-vertical-star-o" />,
                     // <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
                     // <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
                   ]}
                   extra={
-                    <img
-                      width={172}
-                      alt="logo"
-                      // src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                      src={item.thumbnailURL}
-                    />
+                    // <img
+                    //   width={172}
+                    //   alt="logo"
+                    //   // src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                    //   src={item.thumbnailURL}
+                    // />
+                    item.thumbnail
                   }
                 >
                   <List.Item.Meta

@@ -4,13 +4,14 @@ const sizeOf = require('image-size')
 var path = require('path')
 
 module.exports = {
-  // Parent Folder/Categories List
+  // Parent Folder/Categories List (filter out archived pages)
   getpagelist(req, res) {
     var category = req.params.category.replace(/%20/g, ' ')
     console.log(config.dir.pages + '/' + category)
     fs.readdir(config.dir.pages + '/' + category, function (err, items) {
-      console.log('List of Directories in', category, items)
-      err ? res.status(500).send(err) : res.status(200).json(items)
+      var filtereditems = items.filter(item => !item.startsWith('_'))
+      console.log('List of Directories in', category, filtereditems)
+      err ? res.status(500).send(err) : res.status(200).json(filtereditems)
     })
   },
 
@@ -91,6 +92,7 @@ module.exports = {
         // return "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimg.icons8.com%2Fcarbon-copy%2F2x%2Ffile.png&imgrefurl=https%3A%2F%2Ficons8.com%2Ficons%2Fset%2Ffile&tbnid=umEWAkqMMnbVmM&vet=12ahUKEwjj9syJrcnrAhWSfqwKHbFDA9gQMygCegUIARDYAQ..i&docid=fhdmazhWVkJ3aM&w=200&h=200&q=file%20icon&ved=2ahUKEwjj9syJrcnrAhWSfqwKHbFDA9gQMygCegUIARDYAQ"
       }
     }
+    let isArchived = page.startsWith('_')
     
 
     let addSize = (files) =>
@@ -108,9 +110,9 @@ module.exports = {
       var staticfile = parentFile(supportedFiles(files))
       console.log('Supported Render File used for DIR:', config.dir.pages + '/' + staticfile)
       // res.status(200).sendFile(config.dir.pages + '/' + page + '/' + staticfile)
-      res({ type: 'static', subtype: staticfile.split('.').pop(), thumb: getThumbnail(files), files: staticfile })
+      res({ type: 'static', subtype: staticfile.split('.').pop(), thumb: getThumbnail(files), archived: isArchived, files: staticfile })
     } else if (hasSupportedCollage(files)) {
-      res({ type: 'collage', subtype: 'none', thumb: getThumbnail(files), files: addSize(supportedCollageFiles(files)) })
+      res({ type: 'collage', subtype: 'none', thumb: getThumbnail(files), archived: isArchived, files: addSize(supportedCollageFiles(files)) })
     } else {
       res('No file found')
       console.log('Err 404: No file found')
