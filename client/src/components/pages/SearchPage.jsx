@@ -108,7 +108,7 @@ export default class FrontPage extends Component {
               renderItem={item => (
                 <div>
                   {/* <Divider/> */}
-                <Card hoverable style={{marginBottom: '20px'}}>
+                <Card hoverable style={{marginBottom: '20px'}} onClick={() => this.props.history.push(item.href)}>
                   <List.Item
                     key={item.title}
                     actions={[
