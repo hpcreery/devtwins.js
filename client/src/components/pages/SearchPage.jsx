@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 // UI Elements
 import api from '../../services/Api'
 // import { useThemeSwitcher } from 'react-css-theme-switcher'
-import { Switch, Input, Col, Row, List, Avatar, Space  } from 'antd'
+import { Switch, Input, Col, Row, List, Avatar, Space, Divider, Card } from 'antd'
 import { MessageOutlined, LikeOutlined, StarOutlined, FileOutlined, FileImageOutlined, PictureOutlined, HistoryOutlined } from '@ant-design/icons';
 
 // UX Elements
@@ -106,32 +106,37 @@ export default class FrontPage extends Component {
               //   </div>
               // }
               renderItem={item => (
-                <List.Item
-                  key={item.title}
-                  actions={[
-                    (item.pagetype === 'collage' ? <IconText icon={PictureOutlined} text='gallery' key="list-vertical-type" /> : <IconText icon={FileOutlined} text={item.filetype} key="list-vertical-type" />),
-                    (item.archived ? <IconText icon={HistoryOutlined} text='archived' key="list-vertical-archived" /> : null)
-                    // <IconText icon={FileOutlined} text={item.filetype} key="list-vertical-star-o" />,
-                    // <IconText icon={LikeOutlined} text="156" key="list-vertical-like-o" />,
-                    // <IconText icon={MessageOutlined} text="2" key="list-vertical-message" />,
-                  ]}
-                  extra={
-                    // <img
-                    //   width={172}
-                    //   alt="logo"
-                    //   // src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                    //   src={item.thumbnailURL}
-                    // />
-                    item.thumbnail
-                  }
-                >
-                  <List.Item.Meta
-                    // avatar={<Avatar src={item.avatar} />}
-                    title={<a href={item.href}>{item.title}</a>}
-                    description={item.description}
-                  />
-                  {item.content}
-                </List.Item>
+                <div>
+                  {/* <Divider/> */}
+                <Card hoverable style={{marginBottom: '20px'}}>
+                  <List.Item
+                    key={item.title}
+                    actions={[
+                      (item.pagetype === 'collage' ? <IconText icon={PictureOutlined} text='gallery' key="list-vertical-type" /> : <IconText icon={FileOutlined} text={item.filetype} key="list-vertical-type" />),
+                      (item.archived ? <IconText icon={HistoryOutlined} text='archived' key="list-vertical-archived" /> : null)
+                      // <IconText icon={FileOutlined} text={item.filetype} key="list-vertical-star-o" />,
+                    ]}
+                    extra={
+                      // <img
+                      //   width={172}
+                      //   alt="logo"
+                      //   // src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
+                      //   src={item.thumbnailURL}
+                      // />
+                      item.thumbnail
+                    }
+                    // style={{height: '100%'}}
+                  >
+                    <List.Item.Meta
+                      // avatar={<Avatar src={item.avatar} />}
+                      title={<a href={item.href}>{item.title}</a>}
+                      description={item.description}
+                    />
+                    {item.content}
+                  </List.Item>
+                </Card>
+                </div>
+
               )}
             />
           </Col>

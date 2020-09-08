@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Link, Switch, useHistory } from 'react-
 
 // Components
 import SiteHeader from './MainHeader'
+import MainFooter from './Footer'
 import PageHandler from './PageHandler'
 // import MarkdownRenderer from './Renderers/MarkdownRenderer'
 import FrontPage from './pages/FrontPage'
@@ -24,33 +25,6 @@ import {
 import { useThemeSwitcher } from 'react-css-theme-switcher'
 
 const { Header, Footer, Sider, Content } = Layout
-
-const igmenu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key="https://www.instagram.com/peyton_creery/?hl=en">peyton_creery</Menu.Item>
-    <Menu.Item key="https://www.instagram.com/_huntercreery_/?hl=en">_huntercreery_</Menu.Item>
-  </Menu>
-);
-
-const githubmenu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key="https://github.com/phcreery">phcreery</Menu.Item>
-    <Menu.Item key="https://github.com/hpcreery">hpcreery</Menu.Item>
-  </Menu>
-);
-
-const ytmenu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key="https://www.youtube.com/channel/UCfmeNqWuXu1V1EgYaPNiywg">phcreery</Menu.Item>
-    <Menu.Item key="https://www.youtube.com/channel/UCNjaQzmH4ZDepLGT77JI_lA">hpcreery</Menu.Item>
-  </Menu>
-);
-
-function handleMenuClick(e) {
-  console.log('click', e.key);
-  var win = window.open(e.key, '_blank');
-  win.focus();
-}
 
 // Main Class
 export default class Main extends Component {
@@ -113,36 +87,8 @@ export default class Main extends Component {
               {/* <div className="Back-Up">UP</div> */}
             {/* </BackTop> */}
           </Content>
-          
-          <Footer>
-            <Row justify='space-between'>
-              <Col xs={10} sm={12} md={15} lg={20} xl={20}>Created by Hunter & Peyton Creery</Col>
-              {/* <Col> */}
-              <Col>
-                {/* <Button type="text" icon={<GithubOutlined />}></Button> */}
-                <Dropdown overlay={githubmenu}>
-                  <Button type="text" icon={<GithubOutlined />}><DownOutlined /></Button>
-                </Dropdown>
-              </Col>
-              <Col>
-                {/* <Button type="text" icon={<YoutubeOutlined />}></Button> */}
-                {/* <YoutubeOutlined /> */}
-                <Dropdown overlay={ytmenu}>
-                  <Button type="text" icon={<YoutubeOutlined />}><DownOutlined /></Button>
-                </Dropdown>
-              </Col>
-              <Col>
-                {/* <Button type="text" icon={<InstagramOutlined />}></Button> */}
-                {/* <InstagramOutlined /> */}
-                <Dropdown overlay={igmenu} >
-                  <Button type="text" icon={<InstagramOutlined />}><DownOutlined /></Button>
-                </Dropdown>
-              </Col>
-              {/* Social */}
-              {/* </Col> */}
-            </Row>
-            {/* Created by Hunter & Peyton Creery */}
-          </Footer>
+          <MainFooter/>
+
         </Layout>
       </Router>
     )
