@@ -88,7 +88,7 @@ export default class FrontPage extends Component {
           </Col>
         </Row>
         {!this.state.loading ? <Row justify='center'>
-          <Col span={20}>
+          <Col span={18}>
             <List
               itemLayout="vertical"
               size="large"

@@ -110,7 +110,7 @@ export default class Main extends Component {
             <Route path='/search' exact component={SearchPage} />
             <Route path='/:category/:page' component={PageHandler} />
             {/* <BackTop> */}
-              <div className="Back-Up">UP</div>
+              {/* <div className="Back-Up">UP</div> */}
             {/* </BackTop> */}
           </Content>
           

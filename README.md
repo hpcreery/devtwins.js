@@ -26,11 +26,14 @@ Already have a directory of all the work you want to share? Just point the insta
 - Shows PDF files as pages. The standard for professional reports.
 
 #### Jupyter Notebooks (.ipynb)
-- Renders Jupyter notebooks along with kernel type to share your research done with programming.
+- Renders non-interactive Jupyter notebooks along with kernel type to share your research done with programming.
 Supports LATEX equations, code blocks, images, and more!
 
 #### Image Collage (.png/.jpeg/.jpg)
 - Just drop all your images in a folder and thats all there is to creating an awesome collage!
+
+## Installation
+TODO
 
 ## Roadmap
 

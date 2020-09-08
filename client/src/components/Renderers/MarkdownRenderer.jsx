@@ -54,21 +54,40 @@ export default class MarkdownRenderer extends Component {
   imageRenderer = (props) => {
     // pros: {src, title, alt}
     // console.log('image source:', props.src)
-    return (
+    let jsx = ''
+    if (props.alt.split('|')[0] == '!wide') {
+      jsx = (
       <Row justify='center'>
-        {/* a row in a row, i know */}
-        <Col span={10} justify='center'>
+        <Col span={24}>
           <Card hoverable cover={<img src={props.src} />} style={{ marginTop: 10 }}>
-            <Meta style={{ fontStyle: 'italic' }} description={props.alt} />
+            <Meta style={{ fontStyle: 'italic' }} description={props.alt.split('|')[1]} />
           </Card>
-          {/* // <Image
-          //   width="200px"
-          //   height={200}
-          //   src={props.src}
-          // /> */}
+          {/* <Image
+            // width="100%"
+            // height={200}
+            src={props.src}
+          /> */}
         </Col>
       </Row>
     )
+    } else {
+      jsx = (
+        <Row justify='center'>
+          {/* a row in a row, i know */}
+          <Col span={10} justify='center'>
+            <Card hoverable cover={<img src={props.src} />} style={{ marginTop: 10 }}>
+              <Meta style={{ fontStyle: 'italic' }} description={props.alt} />
+            </Card>
+            {/* // <Image
+            //   width="200px"
+            //   height={200}
+            //   src={props.src}
+            // /> */}
+          </Col>
+        </Row>
+      )
+    }
+    return jsx
   }
 
   codeBlockRenderer = (props) => {
