@@ -15,15 +15,18 @@ export default {
       url: '/test',
     }),
 
+  getCategoryList: (category) =>
+    instance({
+      method: 'GET',
+      url: '/categorylist/',
+    }),
+
   getPageListOfCategory: (category) =>
     instance({
       method: 'GET',
       url: '/pagelist/' + category,
     }),
-  // getProjectPages: () => instance({
-  //   method: "GET",
-  //   url: "/pagelist/Projects",
-  // }),
+
   getPageInfo: (category, page) =>
     instance({
       method: 'GET',

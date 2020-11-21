@@ -15,6 +15,15 @@ module.exports = {
     })
   },
 
+  getcategorylist(req, res) {
+    console.log(config.dir.pages)
+    fs.readdir(config.dir.pages, function (err, items) {
+      var filtereditems = items.filter(item => !item.startsWith('_'))
+      console.log('List of Directories', filtereditems)
+      err ? res.status(500).send(err) : res.status(200).json(filtereditems)
+    })
+  },
+
   // Page Data with supported file type alterations
   // getpagedata(req, res) {
   //   // Supported Files
@@ -134,7 +143,7 @@ module.exports = {
   },
 
 
-  // Retur lisf of all pages info and categories
+  // Return list of all pages info and categories
   getlistofallpages (filename, res) {
     var tree = []
     config.dir.categories.map((category) => {
