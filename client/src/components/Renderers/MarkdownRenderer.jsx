@@ -95,7 +95,8 @@ export default class MarkdownRenderer extends Component {
     // console.log('code:', props)
     return (
       <Card hoverable bordered={true} style={{ marginTop: 10, marginBottom: 10 }}>
-        <p style={{ marginBottom: 0, fontFamily: 'monospace' }}>{props.value}</p>
+        {/* <p style={{ marginBottom: 0, fontFamily: 'monospace' }}>{props.value}</p> */}
+        <span style={{ marginBottom: 0, fontFamily: 'monospace' }}>{props.value}</span>
       </Card>
     )
   }

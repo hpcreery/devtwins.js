@@ -49,7 +49,6 @@ class MainHeader extends Component {
     //   }
     // })
     api.getPageListOfCategory('Photos').then((res) => {
-      // console.log('aye!', res.data)
       if (res.status === 200) {
         console.log('Fetched PhotoPages:', res)
         this.setState({ photopages: res.data })
@@ -57,7 +56,6 @@ class MainHeader extends Component {
       }
     })
     api.getPageListOfCategory('Projects').then((res) => {
-      // console.log('aye!', res.data)
       if (res.status === 200) {
         console.log('Fetched Project Pages:', res)
         this.setState({ projectpages: res.data })

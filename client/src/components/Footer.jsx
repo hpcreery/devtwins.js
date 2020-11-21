@@ -65,29 +65,21 @@ class MainFooter extends Component {
           {/* <Row justify='space-between' gutter={[16,36]}></Row> */}
           <Row justify='space-between' gutter={[0,0]}>
             <Col xs={10} sm={12} md={15} lg={20} xl={20}>Created by Hunter & Peyton Creery</Col>
-            {/* <Col> */}
             <Col>
-            {/* <Button type="text" icon={<GithubOutlined />}></Button> */}
             <Dropdown overlay={githubmenu}>
               <Button type="text" icon={<GithubOutlined />}><DownOutlined /></Button>
             </Dropdown>
             </Col>
             <Col>
-            {/* <Button type="text" icon={<YoutubeOutlined />}></Button> */}
-            {/* <YoutubeOutlined /> */}
             <Dropdown overlay={ytmenu}>
               <Button type="text" icon={<YoutubeOutlined />}><DownOutlined /></Button>
             </Dropdown>
             </Col>
             <Col>
-            {/* <Button type="text" icon={<InstagramOutlined />}></Button> */}
-            {/* <InstagramOutlined /> */}
             <Dropdown overlay={igmenu} >
               <Button type="text" icon={<InstagramOutlined />}><DownOutlined /></Button>
             </Dropdown>
             </Col>
-            {/* Social */}
-            {/* </Col> */}
           </Row>
           {/* Created by Hunter & Peyton Creery */}
         </Footer>

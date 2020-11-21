@@ -110,7 +110,7 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected {
 }
 
 .Footer-Container {
-  height: 150px !important;
+  height: 100px !important;
   position: relative;
   /* position: absolute; */
 }

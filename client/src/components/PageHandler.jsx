@@ -94,7 +94,7 @@ export default class PageHandler extends Component {
             />
           )
         } else if (this.state.pageSubtype == 'ipynb') {
-          // this.doneLoading() // !! need to impliment correctly
+          // this.doneLoading() // !! need to implement correctly
           return (
             <IPYNB
               key={this.state.page}
