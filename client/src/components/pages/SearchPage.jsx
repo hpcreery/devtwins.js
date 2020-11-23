@@ -129,8 +129,8 @@ export default class FrontPage extends Component {
                   >
                     <List.Item.Meta
                       // avatar={<Avatar src={item.avatar} />}
-                      title={<a href={item.href}>{item.title}</a>}
-                      description={item.description}
+                      title={<span><a style={{color:'grey'}}>{item.description} / </a>{item.title}</span>}
+                      // description={item.description}
                     />
                     {item.content}
                   </List.Item>
