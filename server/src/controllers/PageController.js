@@ -2,8 +2,10 @@ const fs = require('fs')
 const config = require('../config/config')
 const sizeOf = require('image-size')
 var path = require('path')
+const { resolve } = require('path')
 
 module.exports = {
+
   // Parent Folder/Categories List (filter out archived pages)
   getpagelist(req, res) {
     var category = req.params.category.replace(/%20/g, ' ')
@@ -24,6 +26,40 @@ module.exports = {
     })
   },
 
+  getsitemap(req, res) {
+    var tree = {}
+    var categories
+    var pages
+    
+    fs.readdir(config.dir.pages, function (err, items) {
+      var filtereditems = items.filter(item => !item.startsWith('_'))
+      err ? res.status(500).send(err) : categories = filtereditems
+
+      var filled_categories = categories.map((category) => {
+        items = fs.readdirSync(config.dir.pages + '/' + category)
+        var filtereditems = items.filter(item => !item.startsWith('_'))
+        err ? res.status(500).send(err) : pages = filtereditems
+
+        var filled_pages = pages.map((page) => {
+          var page_info = module.exports._getpagedata(category, page, (data, err) => {
+            if (!err) {
+              return data
+            } else {
+              res.status(404).send('No file found')
+            }
+          })
+          return {"name": page, "info": page_info}
+        })
+        return {"name": category, "pages": filled_pages}
+        
+      })
+
+      tree = {"categories": filled_categories}
+      console.log('Finished tree', tree)
+      res.status(200).json(tree)
+    })
+
+  },
   // Page Data with supported file type alterations
   // getpagedata(req, res) {
   //   // Supported Files
@@ -88,43 +124,37 @@ module.exports = {
       config.dir.supportedCollageFormats.map((format) => file.endsWith(format)).includes(true)
     let supportedCollageFiles = (files) => files.filter((file) => isSupportedCollage(file))
     let hasSupportedCollage = (files) => supportedCollageFiles(files).length > 0
-
-    // Get misc info about Page
-    let getThumbnail = (files) => {
-      let thumbnail = files.filter(item => new RegExp('^' + 'thumb.*' + '$').test(item))
-      if (thumbnail.length > 0) {
-        // console.log('yea', thumbnail[0])
-        return thumbnail[0]
-      } else {
-        // console.log('nah')
-        return null
-        // return "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimg.icons8.com%2Fcarbon-copy%2F2x%2Ffile.png&imgrefurl=https%3A%2F%2Ficons8.com%2Ficons%2Fset%2Ffile&tbnid=umEWAkqMMnbVmM&vet=12ahUKEwjj9syJrcnrAhWSfqwKHbFDA9gQMygCegUIARDYAQ..i&docid=fhdmazhWVkJ3aM&w=200&h=200&q=file%20icon&ved=2ahUKEwjj9syJrcnrAhWSfqwKHbFDA9gQMygCegUIARDYAQ"
-      }
-    }
-    let isArchived = page.startsWith('_')
-    
-
     let addSize = (files) =>
       files.map((file) => {
         var dimensions = sizeOf(config.dir.pages + '/' + category + '/' + page + '/' + file)
         return { name: file, width: dimensions.width, height: dimensions.height }
       })
 
-    // var page = req.params.name.replace(/%20/g, ' ')
-    // var category = req.params.category.replace(/%20/g, ' ')
+    // Get misc info about Page
+    let getThumbnail = (files) => {
+      let thumbnail = files.filter(item => new RegExp('^' + 'thumb.*' + '$').test(item))
+      if (thumbnail.length > 0) {
+        return thumbnail[0]
+      } else {
+        return null
+        // return "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimg.icons8.com%2Fcarbon-copy%2F2x%2Ffile.png&imgrefurl=https%3A%2F%2Ficons8.com%2Ficons%2Fset%2Ffile&tbnid=umEWAkqMMnbVmM&vet=12ahUKEwjj9syJrcnrAhWSfqwKHbFDA9gQMygCegUIARDYAQ..i&docid=fhdmazhWVkJ3aM&w=200&h=200&q=file%20icon&ved=2ahUKEwjj9syJrcnrAhWSfqwKHbFDA9gQMygCegUIARDYAQ"
+      }
+    }
+
+    let isArchived = page.startsWith('_')
+    
     var files = []
     files = fs.readdirSync(config.dir.pages + '/' + category + '/' + page)
     console.log('List of Files in', config.dir.pages + '/' + category + '/' + page, files)
     if (hasSupportedFile(files)) {
       var staticfile = parentFile(supportedFiles(files))
-      console.log('Supported Render File used for DIR:', config.dir.pages + '/' + staticfile)
-      // res.status(200).sendFile(config.dir.pages + '/' + page + '/' + staticfile)
-      res({ type: 'static', subtype: staticfile.split('.').pop(), thumb: getThumbnail(files), archived: isArchived, files: staticfile })
+      console.log('Supported Render File selected:', config.dir.pages + '/' + staticfile)
+      return res({ type: 'static', subtype: staticfile.split('.').pop(), thumb: getThumbnail(files), archived: isArchived, files: staticfile })
     } else if (hasSupportedCollage(files)) {
-      res({ type: 'collage', subtype: 'none', thumb: getThumbnail(files), archived: isArchived, files: addSize(supportedCollageFiles(files)) })
+      return res({ type: 'collage', subtype: 'none', thumb: getThumbnail(files), archived: isArchived, files: addSize(supportedCollageFiles(files)) })
     } else {
-      res('No file found')
       console.log('Err 404: No file found')
+      return res('No file found')
     }
   },
 
