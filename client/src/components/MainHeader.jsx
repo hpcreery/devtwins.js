@@ -15,8 +15,7 @@ class MainHeader extends Component {
     this.state = {
       date: new Date(),
       menuItems: null,
-      photopages: [],
-      projectpages: [],
+      menudata: {},
       redirect: null,
     }
   }
@@ -32,36 +31,14 @@ class MainHeader extends Component {
   }
 
   populateMenuItems = () => {
-    // api.getPhotoPages().then((res) => {
-    //   console.log('aye!', res.data)
-    //   if (res.status === 200) {
-    //     console.log(res)
-    //     this.setState({ photopages: res.data })
-    //     // this.$store.commit('stopLoading')
-    //   }
-    // })
-    // api.getProjectPages().then((res) => {
-    //   console.log('aye!', res.data)
-    //   if (res.status === 200) {
-    //     console.log(res)
-    //     this.setState({ projectpages: res.data })
-    //     // this.$store.commit('stopLoading')
-    //   }
-    // })
-    api.getPageListOfCategory('Photos').then((res) => {
+    api.getSiteMap().then((res) => {
       if (res.status === 200) {
-        console.log('Fetched PhotoPages:', res)
-        this.setState({ photopages: res.data })
+        console.log('Fetched map:', res.data)
+        this.setState({ menudata: res.data })
         // this.$store.commit('stopLoading')
       }
     })
-    api.getPageListOfCategory('Projects').then((res) => {
-      if (res.status === 200) {
-        console.log('Fetched Project Pages:', res)
-        this.setState({ projectpages: res.data })
-        // this.$store.commit('stopLoading')
-      }
-    })
+
   }
 
   goTo = ({ key }) => {
@@ -94,11 +71,10 @@ class MainHeader extends Component {
             defaultSelectedKeys={['/']}
             getPopupContainer={(node) => node.parentNode}
           >
-            {/*getPopupContainer submenu scroll bug https://github.com/ant-design/ant-design/issues/10145*/}
             <Menu.Item key='/' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
               Home
             </Menu.Item>
-            <SubMenu icon={<SettingOutlined />} title='Projects' className='Header-Menu-Item'>
+            {/* <SubMenu icon={<SettingOutlined />} title='Projects' className='Header-Menu-Item'>
               {this.state.projectpages.map((value, index) => {
                 return (
                   <Menu.Item key={'/Projects/' + value} onClick={(...props) => this.goTo(...props)}>
@@ -106,18 +82,20 @@ class MainHeader extends Component {
                   </Menu.Item>
                 )
               })}
-            </SubMenu>
-            <SubMenu icon={<PictureOutlined />} title='Photos' className='Header-Menu-Item'>
-              {this.state.photopages.map((value, index) => {
-                return (
-                  <Menu.Item key={'/Photos/' + value} onClick={(...props) => this.goTo(...props)}>
-                    {value}
-                  </Menu.Item>
-                )
-              })}
-            </SubMenu>
+            </SubMenu> */}
+            {!this.state.menudata.categories ? null : ( this.state.menudata.categories.map((category, index) => {
+              return  <SubMenu title={category.name} className='Header-Menu-Item'>
+                        {category.pages.map((value, index) => {
+                          return (
+                            <Menu.Item key={'/' + category.name + '/' + value.name} onClick={(...props) => this.goTo(...props)}>
+                              {value.name}
+                            </Menu.Item>
+                          )
+                        })}
+                      </SubMenu>
+            }))}
             <Menu.Item key='/search' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
-            <SearchOutlined className='Header-SearchIcon' />
+              <SearchOutlined className='Header-SearchIcon' />
             </Menu.Item>
             
             

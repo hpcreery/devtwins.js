@@ -15,6 +15,12 @@ export default {
       url: '/test',
     }),
 
+  getSiteMap: (category) =>
+    instance({
+      method: 'GET',
+      url: '/sitemap/',
+    }),
+
   getCategoryList: (category) =>
     instance({
       method: 'GET',
@@ -32,6 +38,8 @@ export default {
       method: 'GET',
       url: '/pageinfo/' + category + '/' + page,
     }),
+
+
 
   // postData: () => instance({
   //   method: "POST",
