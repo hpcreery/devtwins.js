@@ -74,15 +74,7 @@ class MainHeader extends Component {
             <Menu.Item key='/' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
               Home
             </Menu.Item>
-            {/* <SubMenu icon={<SettingOutlined />} title='Projects' className='Header-Menu-Item'>
-              {this.state.projectpages.map((value, index) => {
-                return (
-                  <Menu.Item key={'/Projects/' + value} onClick={(...props) => this.goTo(...props)}>
-                    {value}
-                  </Menu.Item>
-                )
-              })}
-            </SubMenu> */}
+
             {!this.state.menudata.categories ? null : ( this.state.menudata.categories.map((category, index) => {
               return  <SubMenu title={category.name} className='Header-Menu-Item'>
                         {category.pages.map((value, index) => {
@@ -94,10 +86,10 @@ class MainHeader extends Component {
                         })}
                       </SubMenu>
             }))}
+
             <Menu.Item key='/search' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
               <SearchOutlined className='Header-SearchIcon' />
             </Menu.Item>
-            
             
           </Menu>
         </Header>

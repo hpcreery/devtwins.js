@@ -30,7 +30,7 @@ module.exports = {
     var tree = {}
     var categories
     var pages
-    
+
     fs.readdir(config.dir.pages, function (err, items) {
       var filtereditems = items.filter(item => !item.startsWith('_'))
       err ? res.status(500).send(err) : categories = filtereditems
@@ -60,6 +60,7 @@ module.exports = {
     })
 
   },
+  
   // Page Data with supported file type alterations
   // getpagedata(req, res) {
   //   // Supported Files

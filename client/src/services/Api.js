@@ -2,11 +2,7 @@ import axios from 'axios'
 // Create instance called instance
 const instance = axios.create({
   baseURL: process.env.BACKEND || `http://localhost:8081`,
-  headers: {
-    // "content-type": "application/octet-stream",
-    // "x-rapidapi-host": "example.com",
-    // "x-rapidapi-key": process.env.RAPIDAPI_KEY,
-  },
+  headers: {},
 })
 export default {
   getTestData: () =>
@@ -15,13 +11,13 @@ export default {
       url: '/test',
     }),
 
-  getSiteMap: (category) =>
+  getSiteMap: () =>
     instance({
       method: 'GET',
       url: '/sitemap/',
     }),
 
-  getCategoryList: (category) =>
+  getCategoryList: () =>
     instance({
       method: 'GET',
       url: '/categorylist/',
@@ -38,17 +34,6 @@ export default {
       method: 'GET',
       url: '/pageinfo/' + category + '/' + page,
     }),
-
-
-
-  // postData: () => instance({
-  //   method: "POST",
-  //   url: "/api",
-  //   data: {
-  //     item1: "data1",
-  //     item2: "item2",
-  //   },
-  // }),
 
   getPageContent: (category, page, file) =>
     instance({
