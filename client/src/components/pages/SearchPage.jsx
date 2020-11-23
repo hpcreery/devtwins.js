@@ -83,7 +83,7 @@ export default class FrontPage extends Component {
               onSearch={value => this.setState({searchfilter: value})}
               onChange={value => this.setState({searchfilter: value.currentTarget.value})}
               style={{ marginTop: "20px", marginBottom: "20px" }}
-              enterButton 
+              enterButton
             />
           </Col>
         </Row>
@@ -108,7 +108,7 @@ export default class FrontPage extends Component {
               renderItem={item => (
                 <div>
                   {/* <Divider/> */}
-                <Card hoverable style={{marginBottom: '20px'}} onClick={() => this.props.history.push(item.href)}>
+                <Card hoverable bordered style={{marginBottom: '20px', borderColor: '#D9D9D9'}} onClick={() => this.props.history.push(item.href)}>
                   <List.Item
                     key={item.title}
                     actions={[
