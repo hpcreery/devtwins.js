@@ -56,7 +56,7 @@ export default class PageHandler extends Component {
       <div className={'Page-Heading'}>
         <Row justify='center'>
           <Col span={18}>
-            <h1 style={{ fontSize: 'xx-large', textAlign: 'center' }}>
+            <h1 style={{ fontSize: 'xx-large', textAlign: 'center', paddingTop: '20px' }}>
               {this.props.match.params.category} / {this.props.match.params.page}
             </h1>
           </Col>
