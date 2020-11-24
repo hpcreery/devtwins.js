@@ -12,7 +12,7 @@ module.exports = {
     console.log(config.dir.pages + '/' + category)
     try {
       let items = fs.readdirSync(config.dir.pages + '/' + category)
-      let filtereditems = items.filter((item) => !item.startsWith('_'))
+      let filtereditems = items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
       console.log('List of Directories in', category, filtereditems)
       res.status(200).json(filtereditems)
     } catch (err) {
@@ -24,7 +24,7 @@ module.exports = {
     console.log(config.dir.pages)
     try {
       let items = fs.readdirSync(config.dir.pages)
-      var filtereditems = items.filter((item) => !item.startsWith('_'))
+      var filtereditems = items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
       console.log('List of Directories', filtereditems)
       res.status(200).json(filtereditems)
     } catch (err) {
