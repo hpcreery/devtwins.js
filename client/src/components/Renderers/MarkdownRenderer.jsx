@@ -130,7 +130,7 @@ export default class MarkdownRenderer extends Component {
           <Col span={18}>
             {/* <Card> */}
             {/* <this.pageTitleRenderer/> */}
-            <Card style={{ marginTop: 10, marginBottom: 10 }} hoverable>
+            <Card style={{ marginTop: 10, marginBottom: 10, cursor: 'auto' }} hoverable>
             <ReactMarkdown
               source={this.state.markdown}
               transformImageUri={this.imageUriFormatter}

@@ -113,7 +113,7 @@ export default class GalleryRenderer extends Component {
   PageViewer = (props) => {
     // console.log('rendering page...')
     return Array.from(new Array(this.state.numPages), (el, index) => (
-      <Card style={{ marginTop: 10, marginBottom: 10 }} hoverable>
+      <Card style={{ marginTop: 10, marginBottom: 10, cursor: 'auto' }} hoverable>
         <Page
           key={`${this.state.file}_page_${index + 1}`}
           pageNumber={index + 1}
