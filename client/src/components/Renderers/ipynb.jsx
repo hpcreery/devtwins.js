@@ -49,14 +49,15 @@ export default class GalleryRenderer extends Component {
         <Row justify="center">
           <Col >
             {/* <Card> */}
-            {this.state.file !== null ?  <JupViewer
+            {this.state.file !== null ?  <Card style={{ marginTop: 10, marginBottom: 10 }} hoverable>
+            <JupViewer
               // title="Jupyter as a Blog!"
               // subtitle="I've always wanted to publish my jupyter notebooks as blogs. Finally I can."
               // coverImg="https://notionpress.com/blog/wp-content/uploads/2018/06/Cover-design.png"
               file={this.state.file} 
               // file="http://localhost:8081/pagecontent/Projects/Jupyter%20Notebook/Transformation2D.ipynb"
               // baseURL="http://localhost:8081/pagecontent/Projects/Jupyter%20Notebook"
-            /> : null}
+            /> </Card>: null}
             
             {/* </Card> */}
           </Col>

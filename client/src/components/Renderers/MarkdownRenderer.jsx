@@ -59,7 +59,7 @@ export default class MarkdownRenderer extends Component {
       jsx = (
       <Row justify='center'>
         <Col span={24}>
-          <Card hoverable cover={<img src={props.src} />} style={{ marginTop: 10 }}>
+          <Card hoverable cover={<img style={{padding: '10px'}} src={props.src} />} style={{ marginTop: 10 }}>
             <Meta style={{ fontStyle: 'italic' }} description={props.alt.split('|')[1]} />
           </Card>
           {/* <Image
@@ -75,7 +75,7 @@ export default class MarkdownRenderer extends Component {
         <Row justify='center'>
           {/* a row in a row, i know */}
           <Col span={10} justify='center'>
-            <Card hoverable cover={<img src={props.src} />} style={{ marginTop: 10 }}>
+            <Card hoverable cover={<img style={{padding: '10px'}} src={props.src} />} style={{ marginTop: 10 }}>
               <Meta style={{ fontStyle: 'italic' }} description={props.alt} />
             </Card>
             {/* // <Image
@@ -130,6 +130,7 @@ export default class MarkdownRenderer extends Component {
           <Col span={18}>
             {/* <Card> */}
             {/* <this.pageTitleRenderer/> */}
+            <Card style={{ marginTop: 10, marginBottom: 10 }} hoverable>
             <ReactMarkdown
               source={this.state.markdown}
               transformImageUri={this.imageUriFormatter}
@@ -139,7 +140,7 @@ export default class MarkdownRenderer extends Component {
                 code: this.codeBlockRenderer,
               }}
             />
-            {/* </Card> */}
+            </Card>
           </Col>
         </Row>
       </div>
