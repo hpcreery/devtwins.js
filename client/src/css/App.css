@@ -137,7 +137,7 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected {
 }
 
 .Header-Menu-Item > .anticon {
-  color: red !important;
+  /* color: red !important; */
 }
 
 html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected .Header-SearchIcon {
