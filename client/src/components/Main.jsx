@@ -30,48 +30,48 @@ const { Header, Footer, Sider, Content } = Layout
 export default class Main extends Component {
   constructor(props) {
     super(props)
-    document.documentElement.dataset.scroll = 0
-    this.contentRef = React.createRef()
+    //document.documentElement.dataset.scroll = 0
+    //this.contentRef = React.createRef()
   }
 
   state = {}
 
-  listenToScrollEvent = () => {
-    document.addEventListener('scroll', () => {
-      requestAnimationFrame(() => {
-        // Calculates the scroll distance
-        this.calculateScrollDistance()
-      })
-    })
-  }
+  // listenToScrollEvent = () => {
+  //   document.addEventListener('scroll', () => {
+  //     requestAnimationFrame(() => {
+  //       // Calculates the scroll distance
+  //       this.calculateScrollDistance()
+  //     })
+  //   })
+  // }
 
-  calculateScrollDistance = () => {
-    const scrollTop = window.pageYOffset
-    const windowHeight = window.innerHeight
-    const docHeight = this.getDocHeight()
-    const totalDocScrollLength = docHeight - windowHeight
-    this.scrollPostion = Math.floor((scrollTop / totalDocScrollLength) * 100)
-    //console.log(scrollPostion)
-    document.documentElement.dataset.scroll = this.scrollPostion
-  }
+  // calculateScrollDistance = () => {
+  //   const scrollTop = window.pageYOffset
+  //   const windowHeight = window.innerHeight
+  //   const docHeight = this.getDocHeight()
+  //   const totalDocScrollLength = docHeight - windowHeight
+  //   this.scrollPostion = Math.floor((scrollTop / totalDocScrollLength) * 100)
+  //   //console.log(scrollPostion)
+  //   document.documentElement.dataset.scroll = this.scrollPostion
+  // }
 
-  getDocHeight = () => {
-    return Math.max(
-      document.body.scrollHeight,
-      document.documentElement.scrollHeight,
-      document.body.offsetHeight,
-      document.documentElement.offsetHeight,
-      document.body.clientHeight,
-      document.documentElement.clientHeight
-    )
-  }
+  // getDocHeight = () => {
+  //   return Math.max(
+  //     document.body.scrollHeight,
+  //     document.documentElement.scrollHeight,
+  //     document.body.offsetHeight,
+  //     document.documentElement.offsetHeight,
+  //     document.body.clientHeight,
+  //     document.documentElement.clientHeight
+  //   )
+  // }
 
-  changeTheme = (nextTheme) => {
-    Object.keys(nextTheme).map((key) => {
-      var value = nextTheme[key]
-      document.documentElement.style.setProperty(key, value)
-    })
-  }
+  // changeTheme = (nextTheme) => {
+  //   Object.keys(nextTheme).map((key) => {
+  //     var value = nextTheme[key]
+  //     document.documentElement.style.setProperty(key, value)
+  //   })
+  // }
 
   render() {
     // console.log('rendering')
@@ -79,22 +79,21 @@ export default class Main extends Component {
       <Router>
         <Layout className='Site-Layout'>
           <SiteHeader />
-          <Content className='Content' ref={this.contentRef}>
+          <Content className='Content'>
             <Route path='/' exact component={FrontPage} />
             <Route path='/search' exact component={SearchPage} />
             <Route path='/:category/:page' component={PageHandler} />
             {/* <BackTop> */}
-              {/* <div className="Back-Up">UP</div> */}
+            {/* <div className="Back-Up">UP</div> */}
             {/* </BackTop> */}
           </Content>
-          <MainFooter/>
-
+          <MainFooter />
         </Layout>
       </Router>
     )
   }
 
   componentDidMount() {
-    this.listenToScrollEvent()
+    //this.listenToScrollEvent()
   }
 }

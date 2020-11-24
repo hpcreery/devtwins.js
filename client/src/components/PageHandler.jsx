@@ -10,6 +10,7 @@ import IPYNB from './renderers/ipynb'
 
 // UI Elements
 import { Layout, Affix, Button, Row, Col, Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 
 const { Header, Footer, Sider, Content } = Layout
 
@@ -135,7 +136,8 @@ export default class PageHandler extends Component {
       return (
         <h3>
           {' '}
-          somethin aint right. <br /> I received no page to render from my component properties OR the state has not been set{' '}
+          somethin aint right. <br /> I received no page to render from my component properties OR the state has not
+          been set{' '}
         </h3>
       )
     }
@@ -156,9 +158,9 @@ export default class PageHandler extends Component {
     return (
       <div>
         <this.PageTitle />
-        <Spin spinning={this.state.isLoading}>
+        <Spin spinning={this.state.isLoading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
           {/* {this.state.isLoading ? <Spin /> : null} */}
-          
+
           <this.PageBody />
         </Spin>
       </div>

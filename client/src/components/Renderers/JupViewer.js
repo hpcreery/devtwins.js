@@ -1,13 +1,13 @@
 import React from 'react'
 import { Card, Spin, Tag, Col, Row, Typography, Switch } from 'antd'
-import { render } from 'react-dom'
+import { LoadingOutlined } from '@ant-design/icons'
 import AceEditor from 'react-ace'
-import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/mode-markdown";
-import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/theme-kuroir";
-import "ace-builds/src-noconflict/theme-terminal";
-import "ace-builds/src-noconflict/theme-iplastic";
+import 'ace-builds/src-noconflict/mode-python'
+import 'ace-builds/src-noconflict/mode-markdown'
+import 'ace-builds/src-noconflict/theme-monokai'
+import 'ace-builds/src-noconflict/theme-kuroir'
+import 'ace-builds/src-noconflict/theme-terminal'
+import 'ace-builds/src-noconflict/theme-iplastic'
 import { InlineMath, BlockMath } from 'react-katex'
 import RemarkMathPlugin from 'remark-math'
 import 'katex/dist/katex.min.css'
@@ -38,7 +38,7 @@ class JupViewer extends React.Component {
     background_text_theme: 'black',
     // background_input_theme: '#2F3129',
     background_input_theme: '#E8E9E8',
-    background_output_theme: '#F1F1F2',
+    background_output_theme: '#ffffff',
 
     // Gutter
     gutterVisible: false,
@@ -47,10 +47,10 @@ class JupViewer extends React.Component {
   validURL(str) {
     var pattern = new RegExp(
       '^(https?:\\/\\/)?' + // protocol
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-      '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-      '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
         '(\\#[-a-z\\d_]*)?$',
       'i'
     ) // fragment locator
@@ -370,7 +370,7 @@ class JupViewer extends React.Component {
     return (
       <div>
         {/* <br></br> */}
-        <Spin spinning={this.state.loading}>
+        <Spin spinning={this.state.loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
           <center>
             {/* This is where the blog metadata and the cover will go */}
 

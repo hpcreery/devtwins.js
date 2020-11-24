@@ -6,8 +6,8 @@ import { MailOutlined, AppstoreOutlined, SettingOutlined, PictureOutlined, Searc
 import api from '../services/Api'
 
 const { SubMenu } = Menu
-const { Header, Content, Footer } = Layout
-const { Search } = Input;
+const { Header } = Layout
+const { Search } = Input
 
 class MainHeader extends Component {
   constructor(props) {
@@ -38,7 +38,6 @@ class MainHeader extends Component {
         // this.$store.commit('stopLoading')
       }
     })
-
   }
 
   goTo = ({ key }) => {
@@ -46,7 +45,8 @@ class MainHeader extends Component {
     const dest = key.replace(/ /g, '%20')
     // history.push(props.id)
     // this.props.history.push(dest)
-    setTimeout(() => {  //  to prevent menubar animation from freezing
+    setTimeout(() => {
+      //  to prevent menubar animation from freezing
       this.props.history.push(dest)
     }, 300)
     // this.setState({ redirect: dest });  // Use with redirect router method && remove withRouter from export
@@ -61,8 +61,8 @@ class MainHeader extends Component {
     //   return <Redirect to={dest} />
     // }
     return (
-      <div className='Header-Container'>
-        <Header className='Site-Header' style={{ position: 'fixed', width: '100%' }}>
+      <div>
+        <Header className='Site-Header' style={{ position: 'fixed', width: '100%', padding: '0 0' }}>
           {/* <div className="logo" /> */}
           <Menu
             theme='dark'
@@ -75,22 +75,28 @@ class MainHeader extends Component {
               Home
             </Menu.Item>
 
-            {!this.state.menudata.categories ? null : ( this.state.menudata.categories.map((category, index) => {
-              return  <SubMenu title={category.name} className='Header-Menu-Item'>
-                        {category.pages.map((value, index) => {
-                          return (
-                            <Menu.Item key={'/' + category.name + '/' + value.name} onClick={(...props) => this.goTo(...props)}>
-                              {value.name}
-                            </Menu.Item>
-                          )
-                        })}
-                      </SubMenu>
-            }))}
+            {!this.state.menudata.categories
+              ? null
+              : this.state.menudata.categories.map((category, index) => {
+                  return (
+                    <SubMenu key={category.name} title={category.name} className='Header-Menu-Item'>
+                      {category.pages.map((value, index) => {
+                        return (
+                          <Menu.Item
+                            key={'/' + category.name + '/' + value.name}
+                            onClick={(...props) => this.goTo(...props)}
+                          >
+                            {value.name}
+                          </Menu.Item>
+                        )
+                      })}
+                    </SubMenu>
+                  )
+                })}
 
             <Menu.Item key='/search' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
               <SearchOutlined className='Header-SearchIcon' />
             </Menu.Item>
-            
           </Menu>
         </Header>
       </div>
@@ -98,7 +104,6 @@ class MainHeader extends Component {
   }
 
   async componentDidMount() {
-    // this.getTestData()
     this.populateMenuItems()
   }
 }
