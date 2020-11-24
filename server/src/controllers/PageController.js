@@ -7,6 +7,7 @@ const { resolve } = require('path')
 module.exports = {
   // Parent Folder/Categories List (filter out archived pages)
   getPageList(req, res) {
+    console.log('req', req)
     let category = req.params.category.replace(/%20/g, ' ')
     console.log(config.dir.pages + '/' + category)
     try {
@@ -22,7 +23,7 @@ module.exports = {
   getCategoryList(req, res) {
     console.log(config.dir.pages)
     try {
-      let items = fs.readdir(config.dir.pages)
+      let items = fs.readdirSync(config.dir.pages)
       var filtereditems = items.filter((item) => !item.startsWith('_'))
       console.log('List of Directories', filtereditems)
       res.status(200).json(filtereditems)
