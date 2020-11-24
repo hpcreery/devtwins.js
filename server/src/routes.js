@@ -7,18 +7,13 @@ const PageController = require('./controllers/PageController')
 // const NewAuthenticationController = require('./controllers/NewAuthenticationController')
 // const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 
-const express = require('express');
+const express = require('express')
 // const config = require('./config/config')
 
-
 module.exports = (app) => {
-  
   app.get('/test', (req, res) => {
-    res.send(
-      "Hello World"
-    )
+    res.send('Hello World')
   })
-
 
   // ############  AUTH  ############
 
@@ -28,13 +23,13 @@ module.exports = (app) => {
 
   // ############  PAGES  ############
 
-  app.get('/sitemap/', PageController.getsitemap) // () => return pages: names, types, ...
+  app.get('/sitemap/', PageController.getSiteMap) // () => return pages: names, types, ...
 
-  app.get('/categorylist/', PageController.getcategorylist) // () => return pages: names, types, ...
+  app.get('/categorylist/', PageController.getCategoryList) // () => return pages: names, types, ...
 
-  app.get('/pagelist/:category', PageController.getpagelist) // () => return pages: names, types, ...
+  app.get('/pagelist/:category', PageController.getPageData) // () => return pages: names, types, ...
 
-  app.get('/pageinfo/:category/:name', PageController.getpagedata) // (page) => return page: type, content, ...
+  app.get('/pageinfo/:category/:name', PageController.getPageData) // (page) => return page: type, content, ...
 
   // app.get('/pagecontent/:category/:page/:file', PageController.getpagefile) // (page, image) => return image ...
 
@@ -42,7 +37,7 @@ module.exports = (app) => {
 
   // app.get('/pagebanner/:category/:page', PageController.getpageimage) // (page, image) => return image ...
 
-  app.get('/pages', PageController.getlistofallpages)
+  app.get('/pages', PageController.getListOfAllPages)
 
   // ############  PHOTOS  ############
 
@@ -52,15 +47,13 @@ module.exports = (app) => {
 
   // ############  FILES  ############
 
-
   app.get('/', (req, res) => {
     res.send(
-      "You have landed on the Full Stack applicaiton server-side instance. This can be opened for API usage. Documentation to come soon..."
+      'You have landed on the Full Stack applicaiton server-side instance. This can be opened for API usage. Documentation to come soon...'
     )
   })
 
   app.get('/help', (req, res) => {
     res.sendFile(process.cwd() + '/README.md')
   })
-
 }

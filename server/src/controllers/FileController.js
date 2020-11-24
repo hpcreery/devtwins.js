@@ -1,10 +1,9 @@
 const { readdirSync } = require('fs')
 const config = require('../config/config')
-const fs = require('fs');
+const fs = require('fs')
 // const asyn = require('async');
 // const ffmetadata = require('ffmetadata');
-const multer = require("multer")
-
+const multer = require('multer')
 
 module.exports = {
   // async readdircontents (req, res) {
@@ -25,7 +24,7 @@ module.exports = {
   //   });
   // },
 
-  async readdircontents2 (req, res) {
+  async readdircontents2(req, res) {
     // var path = req
     var path = req.query.path
     // console.log('Received path: ', path)
@@ -36,16 +35,18 @@ module.exports = {
     }
     // console.log('Readign folders and files from ', path)
     // var path = 'C:\\Users\\phcre\\Documents\\GameBoy'
-    const getDirectories = source =>
+    const getDirectories = (source) =>
       readdirSync(source, { withFileTypes: true })
-        .filter(dirent => dirent.isDirectory())
-        .map(dirent => {return {name: dirent.name, display: true, icon: 'mdi-folder'}})
-    const getFiles = source =>
+        .filter((dirent) => dirent.isDirectory())
+        .map((dirent) => {
+          return { name: dirent.name, display: true, icon: 'mdi-folder' }
+        })
+    const getFiles = (source) =>
       readdirSync(source, { withFileTypes: true })
-        .filter(dirent => !dirent.isDirectory())
-        .map(dirent => {
+        .filter((dirent) => !dirent.isDirectory())
+        .map((dirent) => {
           var icon = 'mdi-file'
-          switch ( dirent.name.split('.').pop().toLowerCase() ) {
+          switch (dirent.name.split('.').pop().toLowerCase()) {
             case 'zip':
               icon = 'mdi-zip-box'
               break
@@ -110,13 +111,13 @@ module.exports = {
               icon = 'mdi-file'
               break
           }
-          return {name: dirent.name, display: true, icon: icon, thumb: icon}
+          return { name: dirent.name, display: true, icon: icon, thumb: icon }
         })
-  
+
     let folders = getDirectories(path)
     let files = getFiles(path)
     // console.log(folders,files)
-    res.send({folders,files})
+    res.send({ folders, files })
     res.end()
   },
 
@@ -135,13 +136,12 @@ module.exports = {
   //   res.end();
   // },
 
-
-  createdir (req, res) {
+  createdir(req, res) {
     console.log('creating dir:', req.body.dir)
     // let dir = req.body.dir
     let dir = config.dir.files + '/' + req.body.dir
-    if (!fs.existsSync(dir)){
-      fs.mkdirSync(dir);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir)
       res.status('200').send('success')
     } else {
       res.send('Folder already exists')
@@ -149,36 +149,38 @@ module.exports = {
     // res.status('200').send('success')
   },
 
-
-  deletefolder (req, res) {
+  deletefolder(req, res) {
     // console.log('deleting dir:', req.body.dir)
     let dir = config.dir.files + '/' + req.body.dir
     console.log('deleting dir:', dir)
-    fs.rmdirSync(dir, { recursive: true });
-    res.status('200').send('success')
 
+    try {
+      fs.rmdirSync(dir, { recursive: true })
+      res.status('200').send('success')
+    } catch (err) {
+      console.error(err)
+      res.status('406').send(err)
+    }
   },
 
-  deletefile (req, res) {
+  deletefile(req, res) {
     let subdir = req.params.dir + '/'
-    if (req.params.dir === 'root' || typeof req.params.dir === "undefined")  {
+    if (req.params.dir === 'root' || typeof req.params.dir === 'undefined') {
       subdir = ''
     }
     let dir = config.dir.files + '/' + subdir + req.body.file
     console.log('deleting file:', dir)
-    
+
     try {
       fs.unlinkSync(dir)
       res.status('200').send('success')
-      //file removed
-    } catch(err) {
+    } catch (err) {
       console.error(err)
-      res.status('406').send(err);
+      res.status('406').send(err)
     }
-
   },
 
-  uploadfile (req, res) {
+  uploadfile(req, res) {
     if (req.params.dir === 'root') {
       req.params.dir = ''
     }
@@ -186,21 +188,20 @@ module.exports = {
     // console.log('Form submitting:', req.files.get('files'))
     // console.log()
 
-
     // let dir = config.dir.files + '/' + req.body.dir
     // fs.rmdirSync(dir, { recursive: true });
 
     const storage = multer.diskStorage({
-      destination: function(req, file, cb) {
-          cb(null, config.dir.files + '/' + req.params.dir)
+      destination: function (req, file, cb) {
+        cb(null, config.dir.files + '/' + req.params.dir)
       },
-  
+
       // By default, multer removes file name and extensions so let's add them back
-      filename: function(req, file, cb) {
-          cb(null, file.originalname);
-      }
+      filename: function (req, file, cb) {
+        cb(null, file.originalname)
+      },
     })
-    const videoFilter = function(req, file, cb) {
+    const videoFilter = function (req, file, cb) {
       // // Accept images only
       // var supportedstring = ''
       // config.dir.supportedVideoFormats.forEach(element => {
@@ -216,20 +217,17 @@ module.exports = {
       //   req.fileValidationError = 'Only video files are allowed!';
       //   return cb(new Error('Only video files are allowed!'), false);
       // }
-      cb(null, true);
-    };
+      cb(null, true)
+    }
 
-    let upload = multer({ storage: storage, fileFilter: videoFilter }).array("files")
+    let upload = multer({ storage: storage, fileFilter: videoFilter }).array('files')
     upload(req, res, function (err) {
       if (req.fileValidationError) {
-        return res.status('406').send(req.fileValidationError);
+        return res.status('406').send(req.fileValidationError)
       }
-      console.log("body: ", req.body);
-      console.log("files:", req.files);
-      return res.sendStatus(200);
+      console.log('body: ', req.body)
+      console.log('files:', req.files)
+      return res.sendStatus(200)
     })
-    
-  }
-
-
+  },
 }

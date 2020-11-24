@@ -5,67 +5,79 @@ var path = require('path')
 const { resolve } = require('path')
 
 module.exports = {
-
   // Parent Folder/Categories List (filter out archived pages)
-  getpagelist(req, res) {
-    var category = req.params.category.replace(/%20/g, ' ')
+  getPageList(req, res) {
+    let category = req.params.category.replace(/%20/g, ' ')
     console.log(config.dir.pages + '/' + category)
-    fs.readdir(config.dir.pages + '/' + category, function (err, items) {
-      var filtereditems = items.filter(item => !item.startsWith('_'))
+    try {
+      let items = fs.readdirSync(config.dir.pages + '/' + category)
+      let filtereditems = items.filter((item) => !item.startsWith('_'))
       console.log('List of Directories in', category, filtereditems)
-      err ? res.status(500).send(err) : res.status(200).json(filtereditems)
-    })
+      res.status(200).json(filtereditems)
+    } catch (err) {
+      res.status(500).send(err)
+    }
   },
 
-  getcategorylist(req, res) {
+  getCategoryList(req, res) {
     console.log(config.dir.pages)
-    fs.readdir(config.dir.pages, function (err, items) {
-      var filtereditems = items.filter(item => !item.startsWith('_'))
+    try {
+      let items = fs.readdir(config.dir.pages)
+      var filtereditems = items.filter((item) => !item.startsWith('_'))
       console.log('List of Directories', filtereditems)
-      err ? res.status(500).send(err) : res.status(200).json(filtereditems)
-    })
+      res.status(200).json(filtereditems)
+    } catch (err) {
+      res.status(500).send(err)
+    }
   },
 
-  getsitemap(req, res) {
-    var tree = {}
-    var categories
-    var pages
+  getSiteMap(req, res) {
+    let tree = {}
+    let categories
+    let pages
+    let items
+    try {
+      items = fs.readdirSync(config.dir.pages)
+      let filtereditems = items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
+      categories = filtereditems
+    } catch (err) {
+      res.status(500).send(err)
+      return
+    }
 
-    fs.readdir(config.dir.pages, function (err, items) {
-      var filtereditems = items.filter(item => !item.startsWith('_'))
-      err ? res.status(500).send(err) : categories = filtereditems
-
-      var filled_categories = categories.map((category) => {
+    let filled_categories = categories.map((category) => {
+      try {
         items = fs.readdirSync(config.dir.pages + '/' + category)
-        var filtereditems = items.filter(item => !item.startsWith('_'))
-        err ? res.status(500).send(err) : pages = filtereditems
-
-        var filled_pages = pages.map((page) => {
-          var page_info = module.exports._getpagedata(category, page, (data, err) => {
+        var filtereditems = items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
+        pages = filtereditems
+        let filled_pages = pages.map((page) => {
+          let page_info = module.exports._getPageData(category, page, (data, err) => {
             if (!err) {
               return data
             } else {
               res.status(404).send('No file found')
             }
           })
-          return {"name": page, "info": page_info}
+          return { name: page, info: page_info }
         })
-        return {"name": category, "pages": filled_pages}
-        
-      })
-
-      tree = {"categories": filled_categories}
-      console.log('Finished tree', tree)
-      res.status(200).json(tree)
+        return { name: category, pages: filled_pages }
+      } catch (err) {
+        console.log('Error in func [getsitemap]', err)
+        return null
+      }
     })
 
+    filled_categories = filled_categories.filter((e) => e != null)
+
+    tree = { categories: filled_categories }
+    console.log('Finished tree', tree)
+    res.status(200).json(tree)
   },
 
-
-  getpagedata(req, res) {
-    var page = req.params.name.replace(/%20/g, ' ')
-    var category = req.params.category.replace(/%20/g, ' ')
-    module.exports._getpagedata(category, page, (data, err) => {
+  getPageData(req, res) {
+    let page = req.params.name.replace(/%20/g, ' ')
+    let category = req.params.category.replace(/%20/g, ' ')
+    module.exports._getPageData(category, page, (data, err) => {
       if (!err) {
         res.status(200).json(data)
       } else {
@@ -74,7 +86,7 @@ module.exports = {
     })
   },
 
-  _getpagedata(category, page, res) {
+  _getPageData(category, page, res) {
     // Supported Files
     let isSupportedFile = (file) =>
       config.dir.supportedPageFormats.map((format) => file.endsWith(format)).includes(true)
@@ -89,13 +101,13 @@ module.exports = {
     let hasSupportedCollage = (files) => supportedCollageFiles(files).length > 0
     let addSize = (files) =>
       files.map((file) => {
-        var dimensions = sizeOf(config.dir.pages + '/' + category + '/' + page + '/' + file)
+        let dimensions = sizeOf(config.dir.pages + '/' + category + '/' + page + '/' + file)
         return { name: file, width: dimensions.width, height: dimensions.height }
       })
 
     // Get misc info about Page
     let getThumbnail = (files) => {
-      let thumbnail = files.filter(item => new RegExp('^' + 'thumb.*' + '$').test(item))
+      let thumbnail = files.filter((item) => new RegExp('^' + 'thumb.*' + '$').test(item))
       if (thumbnail.length > 0) {
         return thumbnail[0]
       } else {
@@ -105,16 +117,34 @@ module.exports = {
     }
 
     let isArchived = page.startsWith('_')
-    
-    var files = []
-    files = fs.readdirSync(config.dir.pages + '/' + category + '/' + page)
-    console.log('List of Files in', config.dir.pages + '/' + category + '/' + page, files)
+
+    let files = []
+
+    try {
+      files = fs.readdirSync(config.dir.pages + '/' + category + '/' + page)
+      console.log('List of Files in', config.dir.pages + '/' + category + '/' + page, files)
+    } catch (err) {
+      console.log('Error Reading Dir: ', config.dir.pages + '/' + category + '/' + page)
+    }
+
     if (hasSupportedFile(files)) {
-      var staticfile = parentFile(supportedFiles(files))
+      let staticfile = parentFile(supportedFiles(files))
       console.log('Supported Render File selected:', config.dir.pages + '/' + staticfile)
-      return res({ type: 'static', subtype: staticfile.split('.').pop(), thumb: getThumbnail(files), archived: isArchived, files: staticfile })
+      return res({
+        type: 'static',
+        subtype: staticfile.split('.').pop(),
+        thumb: getThumbnail(files),
+        archived: isArchived,
+        files: staticfile,
+      })
     } else if (hasSupportedCollage(files)) {
-      return res({ type: 'collage', subtype: 'none', thumb: getThumbnail(files), archived: isArchived, files: addSize(supportedCollageFiles(files)) })
+      return res({
+        type: 'collage',
+        subtype: 'none',
+        thumb: getThumbnail(files),
+        archived: isArchived,
+        files: addSize(supportedCollageFiles(files)),
+      })
     } else {
       console.log('Err 404: No file found')
       return res('No file found')
@@ -122,10 +152,10 @@ module.exports = {
   },
 
   // Return file in director. Obsolete unless security is needed
-  getpagefile(req, res) {
-    var page = req.params.page.replace(/%20/g, ' ')
-    var category = req.params.category.replace(/%20/g, ' ')
-    var path = config.dir.pages + '/' + category + '/' + page + '/' + req.params.file
+  getPageFile(req, res) {
+    let page = req.params.page.replace(/%20/g, ' ')
+    let category = req.params.category.replace(/%20/g, ' ')
+    let path = config.dir.pages + '/' + category + '/' + page + '/' + req.params.file
     console.log(path)
     if (fs.existsSync(path)) {
       res.status(200).sendFile(path)
@@ -135,21 +165,19 @@ module.exports = {
     }
   },
 
-
   // Return list of all pages info and categories
-  getlistofallpages (filename, res) {
-    var tree = []
+  getListOfAllPages(filename, res) {
+    let tree = []
     config.dir.categories.map((category) => {
       fs.readdirSync(config.dir.pages + '/' + category).map((page) => {
-        module.exports._getpagedata(category, page, (data, err) => {
+        module.exports._getPageData(category, page, (data, err) => {
           if (!err) {
-            tree.push({name: page, category: category, info: data})
+            tree.push({ name: page, category: category, info: data })
           }
         })
       })
     })
     console.log(tree)
     res.status(200).json(tree)
-  }
-
+  },
 }
