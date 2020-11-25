@@ -64,24 +64,18 @@ class MainFooter extends Component {
           <Row justify='space-between' gutter={[0, 0]}>
             <Col flex='auto'>Created by Hunter & Peyton Creery</Col>
             <Col flex='50px'>
-              <Dropdown overlay={githubmenu}>
-                <Button type='text' icon={<GithubOutlined />}>
-                  <DownOutlined />
-                </Button>
+              <Dropdown overlay={githubmenu} placement="topCenter" arrow>
+                <Button type='text' icon={<GithubOutlined />} />
               </Dropdown>
             </Col>
             <Col flex='50px'>
-              <Dropdown overlay={ytmenu}>
-                <Button type='text' icon={<YoutubeOutlined />}>
-                  <DownOutlined />
-                </Button>
+              <Dropdown overlay={ytmenu} placement="topCenter" arrow>
+                <Button type='text' icon={<YoutubeOutlined />} />
               </Dropdown>
             </Col>
             <Col flex='50xpx'>
-              <Dropdown overlay={igmenu}>
-                <Button type='text' icon={<InstagramOutlined />}>
-                  <DownOutlined />
-                </Button>
+              <Dropdown overlay={igmenu} placement="topCenter" arrow>
+                <Button type='text' icon={<InstagramOutlined />} />
               </Dropdown>
             </Col>
           </Row>
