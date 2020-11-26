@@ -1,10 +1,10 @@
-import React, { useState, useCallback, Component } from 'react'
+import React, { Component } from 'react'
 // import { render } from "react-dom";
 import Gallery from 'react-photo-gallery'
 import Carousel, { Modal, ModalGateway } from 'react-images'
 // import { photos } from "./photos-temp";
 
-import { Layout, Affix, Button, Row, Col, Card, Typography, Space } from 'antd'
+import { Row, Col } from 'antd'
 
 // Components
 import api from '../../services/Api'
@@ -17,7 +17,7 @@ export default class GalleryRenderer extends Component {
       // setCurrentImage: 0,
       viewerIsOpen: false,
       // setViewerIsOpen: false
-      // photos: [{src: 'http://localhost:8081/pagecontent/Photos/First%20Gallery/IMG_8667.jpg', width: 2, hieght: 4}]
+      // photos: [{src: 'http://localhost:8081/pagecontent/Photos/First%20Gallery/IMG_8667.jpg', width: 2, height: 4}]
       photos: [],
       photosReady: false,
     }

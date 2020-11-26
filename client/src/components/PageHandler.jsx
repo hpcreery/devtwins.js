@@ -9,10 +9,9 @@ import PDF from './renderers/PDF'
 import IPYNB from './renderers/ipynb'
 
 // UI Elements
-import { Layout, Affix, Button, Row, Col, Spin } from 'antd'
+import { Row, Col, Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
-const { Header, Footer, Sider, Content } = Layout
 
 // Main Class
 export default class PageHandler extends Component {
@@ -73,8 +72,8 @@ export default class PageHandler extends Component {
   PageBody = () => {
     // if (this.state.page) {
     if (this.props.match.params.page) {
-      if (this.state.pageType == 'static') {
-        if (this.state.pageSubtype == 'md') {
+      if (this.state.pageType === 'static') {
+        if (this.state.pageSubtype === 'md') {
           return (
             <MarkdownRenderer
               key={this.state.page}
@@ -84,7 +83,7 @@ export default class PageHandler extends Component {
               doneLoading={this.doneLoading}
             />
           )
-        } else if (this.state.pageSubtype == 'pdf') {
+        } else if (this.state.pageSubtype === 'pdf') {
           return (
             <PDF
               // key={this.state.page} // Interferes with page updating????
@@ -94,7 +93,7 @@ export default class PageHandler extends Component {
               doneLoading={this.doneLoading}
             />
           )
-        } else if (this.state.pageSubtype == 'ipynb') {
+        } else if (this.state.pageSubtype === 'ipynb') {
           // this.doneLoading() // !! need to implement correctly
           return (
             <IPYNB
@@ -113,7 +112,7 @@ export default class PageHandler extends Component {
             </h3>
           )
         }
-      } else if (this.state.pageType == 'collage') {
+      } else if (this.state.pageType === 'collage') {
         return (
           <CollageRenderer
             key={this.state.page}

@@ -1,22 +1,12 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Link, Switch, useHistory, Redirect, withRouter } from 'react-router-dom'
-// import { MailOutlined, AppstoreOutlined, SettingOutlined, PictureOutlined } from '@ant-design/icons'
-import { Layout, Affix, Button, Row, Col, BackTop, Dropdown, Menu, Divider } from 'antd'
+import { Layout, Button, Row, Col, Dropdown, Menu, Divider } from 'antd'
 import {
-  MailOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-  PictureOutlined,
   GithubOutlined,
   YoutubeOutlined,
   InstagramOutlined,
-  DownOutlined,
 } from '@ant-design/icons'
 
-import api from '../services/Api'
-
-const { SubMenu } = Menu
-const { Header, Content, Footer } = Layout
+const { Footer } = Layout
 
 const igmenu = (
   <Menu onClick={handleMenuClick}>
@@ -46,9 +36,9 @@ function handleMenuClick(e) {
 }
 
 class MainFooter extends Component {
-  constructor(props) {
-    super(props)
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
 
   async componentDidMount() {
     // this.getTestData();

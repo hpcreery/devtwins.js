@@ -1,8 +1,7 @@
-import React, { useState, useCallback, Component } from "react";
+import React, { Component } from "react";
 
-import { Layout, Affix, Button, Row, Col, Card, Typography, Space } from 'antd'
+import { Row, Col, Card } from 'antd'
 import './App.css';
-// import '../../css/App.css'
 import JupViewer from './JupViewer'
 // Components
 import api from '../../services/Api'

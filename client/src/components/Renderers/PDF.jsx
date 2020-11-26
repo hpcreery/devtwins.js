@@ -1,11 +1,7 @@
-import React, { useState, useCallback, Component } from 'react'
-// import { render } from "react-dom";
-// import Gallery from "react-photo-gallery";
-// import Carousel, { Modal, ModalGateway } from "react-images";
-// import { photos } from "./photos-temp";
-import { Document, Page, Outline } from 'react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
+import React, { Component } from 'react'
+import { Document, Page } from 'react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
 
-import { Layout, Affix, Button, Row, Col, Card, Typography, Space, Progress } from 'antd'
+import { Row, Col, Card, Progress } from 'antd'
 
 import { pdfjs } from 'react-pdf';
 
@@ -28,23 +24,7 @@ export default class GalleryRenderer extends Component {
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
     this.basestate = this.state
   }
-  
 
-  // state = {
-  //   file: null,
-  //   numPages: null,
-  //   numRenderedPages: 0,
-  //   width: 0,
-  //   height: 0,
-  // }
-
-  // basestate = this.state
-
-  // componentWillMount() { // legacy/unsafe
-  // console.log(this.props.match.params.id, this.props.page)
-  // this.setState(this.baseState)
-  // this.updateInfo()
-  // }
 
   componentDidUpdate(prevProps) {
     console.log('debug: PDFrenderer, componentDidUpdate()', prevProps, this.props)
@@ -89,7 +69,6 @@ export default class GalleryRenderer extends Component {
   }
 
   onDocumentLoadSuccess = ({ numPages }) => {
-    // setNumPages(numPages);
     console.log(numPages, 'pages')
     this.setState({ numPages }, () => {
       console.log(this.state.numPages)
@@ -104,7 +83,7 @@ export default class GalleryRenderer extends Component {
       return {numRenderedPages: prevState.numRenderedPages + 1}
    })
     console.log('rendered new page', this.state.numRenderedPages)
-    if (this.state.numRenderedPages == this.state.numPages) {
+    if (this.state.numRenderedPages === this.state.numPages) {
       this.props.doneLoading()
       console.log('Done loading')
     }
@@ -134,7 +113,6 @@ export default class GalleryRenderer extends Component {
           <Progress percent={(this.state.numRenderedPages/this.state.numPages)*100} showInfo={false} />
            : null}
             <Document file={this.state.file} onLoadSuccess={this.onDocumentLoadSuccess} onLoadProgress={({ loaded, total }) => console.log('Loading a document: ' + (loaded / total) * 100 + '%')} onLoadError={(error) => console.log('Error while loading page! ' + error.message)}>
-              {/* <Outline /> */}
               <this.PageViewer />
             </Document>
           </Col>

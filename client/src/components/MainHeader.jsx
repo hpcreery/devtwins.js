@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import { Layout, Affix, Button, Menu, Input } from 'antd'
+import { Layout, Menu } from 'antd'
 import { BrowserRouter as Router, Route, Link, Switch, useHistory, Redirect, withRouter } from 'react-router-dom'
-import { MailOutlined, AppstoreOutlined, SettingOutlined, PictureOutlined, SearchOutlined } from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 
 import api from '../services/Api'
 
 const { SubMenu } = Menu
 const { Header } = Layout
-const { Search } = Input
 
 class MainHeader extends Component {
   constructor(props) {

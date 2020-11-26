@@ -7,19 +7,17 @@ import ReactMarkdown from 'react-markdown' // https://github.com/rexxars/react-m
 import api from '../../services/Api'
 
 // UI Elements
-import { Layout, Row, Col, Card, Typography, Image } from 'antd'
+import { Row, Col, Card, Typography } from 'antd'
 
 // const { Header, Footer, Sider, Content } = Layout
 const { Meta } = Card
-const { Text, Link } = Typography
+const { Text } = Typography
 
 // Main Class
 export default class MarkdownRenderer extends Component {
-  constructor(props) {
-    super(props)
-
-    //this.baseState = this.state
-  }
+  // constructor(props) {
+  //   super(props)
+  // }
 
   state = {
     // markdown: '### Loading page contents...',
@@ -55,11 +53,11 @@ export default class MarkdownRenderer extends Component {
     // pros: {src, title, alt}
     // console.log('image source:', props.src)
     let jsx = ''
-    if (props.alt.split('|')[0] == '!wide') {
+    if (props.alt.split('|')[0] === '!wide') {
       jsx = (
       <Row justify='center'>
         <Col span={24}>
-          <Card hoverable cover={<img style={{padding: '10px'}} src={props.src} />} style={{ marginTop: 10 }}>
+          <Card hoverable cover={<img alt='' style={{padding: '10px'}} src={props.src} />} style={{ marginTop: 10 }}>
             <Meta style={{ fontStyle: 'italic' }} description={props.alt.split('|')[1]} />
           </Card>
           {/* <Image
@@ -75,7 +73,7 @@ export default class MarkdownRenderer extends Component {
         <Row justify='center'>
           {/* a row in a row, i know */}
           <Col span={10} justify='center'>
-            <Card hoverable cover={<img style={{padding: '10px'}} src={props.src} />} style={{ marginTop: 10 }}>
+            <Card hoverable cover={<img alt='' style={{padding: '10px'}} src={props.src} />} style={{ marginTop: 10 }}>
               <Meta style={{ fontStyle: 'italic' }} description={props.alt} />
             </Card>
             {/* // <Image

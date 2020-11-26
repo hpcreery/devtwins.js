@@ -4,8 +4,8 @@ import React, { Component } from 'react'
 // UI Elements
 import api from '../../services/Api'
 // import { useThemeSwitcher } from 'react-css-theme-switcher'
-import { Switch, Input, Col, Row, List, Avatar, Space, Divider, Card } from 'antd'
-import { MessageOutlined, LikeOutlined, StarOutlined, FileOutlined, FileImageOutlined, PictureOutlined, HistoryOutlined } from '@ant-design/icons';
+import { Input, Col, Row, List, Space, Card } from 'antd'
+import { FileOutlined, PictureOutlined, HistoryOutlined } from '@ant-design/icons';
 
 // UX Elements
 
@@ -34,9 +34,9 @@ export default class FrontPage extends Component {
     var list = []
     api.getPageList().then((res) => {
       console.log('Fetched Page list:', res)
-      res.data.map((page) => {
+      list = res.data.map((page) => {
         var pagelink = '/' + page.category.replace(/ /g, '%20') + '/' + page.name.replace(/ /g, '%20')
-        list.push({
+        return {
           // href: api.getPageBaseUrl(page.category, page.name),
           href: pagelink,
           title: page.name,
@@ -56,9 +56,8 @@ export default class FrontPage extends Component {
           filetype: page.info.subtype,
           show: true,
           archived: page.info.archived
-        })
+        }
       })
-    
     }).then(() => {
       console.log('list', list)
       this.setState({ listData: list, loading: false }, () => console.log('State: ', this.state))
@@ -69,7 +68,6 @@ export default class FrontPage extends Component {
 
 
   render() {
-    // const { filter, data } = this.state;
     const lowercasedFilter = this.state.searchfilter.toLowerCase();
     const filteredData = this.state.listData.filter(item => {
       return item.title.toLowerCase().includes(lowercasedFilter)
@@ -100,14 +98,8 @@ export default class FrontPage extends Component {
               }}
               // dataSource={this.state.listData}
               dataSource={filteredData}
-              // footer={
-              //   <div>
-              //     <b>ant design</b> footer part
-              //   </div>
-              // }
               renderItem={item => (
                 <div>
-                  {/* <Divider/> */}
                 <Card hoverable bordered style={{marginBottom: '20px', borderColor: '#D9D9D9'}} onClick={() => this.props.history.push(item.href)}>
                   <List.Item
                     key={item.title}
@@ -117,19 +109,12 @@ export default class FrontPage extends Component {
                       // <IconText icon={FileOutlined} text={item.filetype} key="list-vertical-star-o" />,
                     ]}
                     extra={
-                      // <img
-                      //   width={172}
-                      //   alt="logo"
-                      //   // src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                      //   src={item.thumbnailURL}
-                      // />
                       item.thumbnail
                     }
-                    // style={{height: '100%'}}
                   >
                     <List.Item.Meta
                       // avatar={<Avatar src={item.avatar} />}
-                      title={<span><a style={{color:'grey'}}>{item.description} / </a>{item.title}</span>}
+                      title={<span><span style={{color:'grey'}}>{item.description} / </span>{item.title}</span>}
                       // description={item.description}
                     />
                     {item.content}
