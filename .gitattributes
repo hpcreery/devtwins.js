@@ -1,1 +1,1 @@
-server/public/* -linguist-vendored
+server/public/* linguist-vendored=false
