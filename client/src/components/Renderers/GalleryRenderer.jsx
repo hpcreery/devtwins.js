@@ -1,28 +1,25 @@
-import React, { Component } from 'react'
-// import { render } from "react-dom";
+import React, { Component, useCallback } from 'react'
 import Gallery from 'react-photo-gallery'
 import Carousel, { Modal, ModalGateway } from 'react-images'
-// import { photos } from "./photos-temp";
 
-import { Row, Col } from 'antd'
+import { Row, Col, Card } from 'antd'
 
 // Components
 import api from '../../services/Api'
+
+const { Meta } = Card
+
 
 export default class GalleryRenderer extends Component {
   constructor(props) {
     super(props)
     this.state = {
       currentImage: 0,
-      // setCurrentImage: 0,
       viewerIsOpen: false,
-      // setViewerIsOpen: false
-      // photos: [{src: 'http://localhost:8081/pagecontent/Photos/First%20Gallery/IMG_8667.jpg', width: 2, height: 4}]
       photos: [],
       photosReady: false,
     }
   }
-
   
 
   updateInfo = async () => {
@@ -49,13 +46,23 @@ export default class GalleryRenderer extends Component {
     this.setState({ currentImage: 0, viewerIsOpen: false })
   }
 
+  imageRenderer = ({ index, left, top, key, photo }) => {
+    console.log(photo)
+    return (
+    <Card hoverable style={{ marginTop: 10 }}>
+      {/* <Meta style={{ fontStyle: 'italic' }} description={index} /> */}
+      <img alt='' src={photo.src} />
+    </Card>
+    )
+  }
+
   render() {
     return (
       <div>
         <Row justify='center'>
           <Col span={20}>
             {this.state.photosReady ? (
-              <Gallery margin={5} photos={this.state.photos} onClick={this.openLightbox} />
+              <Gallery margin={5} photos={this.state.photos} onClick={this.openLightbox}  /> // renderImage={this.imageRenderer}
             ) : null}
             <ModalGateway>
               {this.state.viewerIsOpen ? (
@@ -80,12 +87,6 @@ export default class GalleryRenderer extends Component {
   componentDidMount() {
     this.updateInfo()
   }
-  // componentDidUpdate(prevProps) {
-  //   if (this.props !== prevProps) {
-  //     this.updateInfo()
-  //   }
-  //   //this.updateInfo()
-  // }
 
   async componentDidUpdate(prevProps) {
     console.log('debug: GalleryRenderer, componentDidUpdate()', prevProps, this.props)
