@@ -61,8 +61,8 @@ class MainFooter extends Component {
         <Divider />
         <Footer className='Footer-Component'>
           {/* <Row justify='space-between' gutter={[16,36]}></Row> */}
-          <Row justify='space-between' gutter={[0, 0]}>
-            <Col flex='auto'>Created by Hunter & Peyton Creery</Col>
+          <Row justify='space-between' style={{alignItems: 'center'}} gutter={[0, 0]}>
+            <Col flex='auto'><p style={{marginBottom: '0', }}>Created by Hunter & Peyton Creery</p></Col>
             <Col flex='50px'>
               <Dropdown overlay={githubmenu} placement="topCenter" arrow>
                 <Button type='text' icon={<GithubOutlined />} />
