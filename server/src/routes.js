@@ -8,7 +8,7 @@ const PageController = require('./controllers/PageController')
 // const AuthenticationControllerPolicy = require('./policies/AuthenticationControllerPolicy')
 
 const express = require('express')
-// const config = require('./config/config')
+const config = require('./config/config')
 
 module.exports = (app) => {
   app.get('/test', (req, res) => {
@@ -33,7 +33,7 @@ module.exports = (app) => {
 
   // app.get('/pagecontent/:category/:page/:file', PageController.getpagefile) // (page, image) => return image ...
 
-  app.use('/pagecontent/', express.static(process.cwd() + '/public'))
+  app.use('/pagecontent/', express.static(config.dir.pages))
 
   // app.get('/pagebanner/:category/:page', PageController.getpageimage) // (page, image) => return image ...
 
