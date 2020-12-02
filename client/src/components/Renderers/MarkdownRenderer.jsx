@@ -151,22 +151,4 @@ export default class MarkdownRenderer extends Component {
     this.updateInfo()
   }
 
-  // async componentDidUpdate(prevProps) {
-  //   console.log('debug: MDrenderer, componentDidUpdate()', prevProps, this.props)
-  //   if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
-  //     this.updateInfo()
-  //   }
-  // }
-
-  // static getDerivedStateFromProps(props, state) {
-  //   if (state.fetched === true) {
-  //     return { loading: false }
-  //   } else {
-  //     return { loading: true }
-  //   }
-
-  //   // if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
-  //   //   this.updateInfo()
-  //   // }
-  // }
 }
