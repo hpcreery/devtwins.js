@@ -12,7 +12,6 @@ import IPYNB from './renderers/ipynb'
 import { Row, Col, Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
-
 // Main Class
 export default class PageHandler extends Component {
   constructor(props) {
