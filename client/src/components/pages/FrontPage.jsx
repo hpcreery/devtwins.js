@@ -2,20 +2,53 @@
 import React, { Component } from 'react'
 
 // UI Elements
+import api from '../../services/Api'
 import { useThemeSwitcher } from 'react-css-theme-switcher'
-import { Switch, Input } from 'antd'
+import { Carousel, Row } from 'antd'
+import slide1 from './slide1.jpg'
+import slide2 from './slide2.png'
 import {Parallax, ParallaxLayer} from 'react-spring/renderprops-addons'
 
-// UX Elements
+const contentStyle = {
+  objectFit: 'contain',
+  maxHeight: '160px',
+  color: '#fff',
+  lineHeight: '160px',
+  textAlign: 'center',
+  background: '#364d79',
+};
 
 export default class FrontPage extends Component {
   constructor(props) {
     super(props)
     this.state = {
       isDarkMode: false,
+      currentImage: 0,
+      photos: [],
+      photosReady: false,
     }
-    // this.themeSwitcher = useThemeSwitcher();
-    // { switcher, currentTheme, status, themes } = useThemeSwitcher();
+  }
+
+  updateInfo = async () => {
+    let newState = { ...this.state }
+    console.log('Getting page data...', this.props.files)
+
+    var res = await api.getPageInfo('_Home', 'images')
+    // console.log('New Page Info: ', res)
+    if (res.status === 200) {
+      newState.pageFiles = res.data.files
+    } else {
+      console.log('Server Error')
+    }
+
+    newState.photos = await res.data.files.map((image) => ({
+      src: api.getPageContentBaseUrl('_Home', 'images') + '/' + image.name,
+      ...image,
+    }))
+    newState.photosReady = true
+
+    console.log('Photos are:', newState.photos)
+    this.setState({ ...newState })
   }
 
   ThemeComponent = () => {
@@ -43,25 +76,32 @@ export default class FrontPage extends Component {
 
   render() {
     return (
-      <div>
-        Front Page{this.props.scrollPosition} 
-        {/* <h1>The current theme is: {this.themeSwitcher.currentTheme}</h1> */}
-        {/* <Switch checked={this.isDarkMode} onChange={this.toggleTheme} /> */}
-        {/* <Input
-          style={{ width: 300, marginTop: 30 }}
-          placeholder="I will change with the theme!"
-        /> */}
-        {/* <this.ThemeComponent/> */}
-        {/* <Parallax pages={3} ref={ref => (this.parallax = ref)}>
-          <ParallaxLayer offset={0} speed={0.5}>
-            <span onClick={() => this.parallax.scrollTo(1)}>Layers can contain anything</span>
-          </ParallaxLayer>
-          <ParallaxLayer offset={1} speed={0.5}>
-            <span onClick={() => this.parallax.scrollTo(1)}>Layer 1</span>
-          </ParallaxLayer>
-          <ParallaxLayer offset={2} speed={1} style={{ backgroundColor: '#805E73' }} />
-        </Parallax> */}
+      <div style={{paddingTop: '64px', width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', textAlign: 'center'}}>
+        <h1 style={{fontFamily: 'Courier', fontSize: 50}}>Welcome</h1>
+        {this.state.photosReady ? (
+            <Carousel autoplay>
+              {this.state.photos.map((x) => (
+                <div>
+                <Row justify="center" key={x.name}>
+                  {/* <h1 style={contentStyle}>{x.src}</h1> */}
+                  <img src={x.src} style={{maxHeight: '300px'}} />
+                </Row>
+                </div>
+              ))}
+            </Carousel>
+        ) : null}
       </div>
     )
+  }
+
+  componentDidMount() {
+    this.updateInfo()
+  }
+
+  async componentDidUpdate(prevProps) {
+    console.log('debug: GalleryRenderer, componentDidUpdate()', prevProps, this.props)
+    if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
+      this.updateInfo()
+    }
   }
 }
