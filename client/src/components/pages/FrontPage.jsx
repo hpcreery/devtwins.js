@@ -5,8 +5,6 @@ import React, { Component } from 'react'
 import api from '../../services/Api'
 import { useThemeSwitcher } from 'react-css-theme-switcher'
 import { Carousel, Row } from 'antd'
-import slide1 from './slide1.jpg'
-import slide2 from './slide2.png'
 import {Parallax, ParallaxLayer} from 'react-spring/renderprops-addons'
 
 const contentStyle = {
