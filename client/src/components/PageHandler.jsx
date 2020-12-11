@@ -21,8 +21,6 @@ export default class PageHandler extends Component {
       page: null,
       pageType: null,
       pageSubtype: null,
-      // pageBanner: null,
-      // pageIcon: null,
       pageFiles: null,
       isLoading: true,
     }
@@ -32,13 +30,10 @@ export default class PageHandler extends Component {
   updateInfo = async () => {
     console.log('THESE ARE THE KEYS ', this.props.match.params)
     let newState = { ...this.state }
-    console.log('Updating Page Handler Info..')
-    // this.setState({ category: this.props.match.params.category, page: this.props.match.params.page })
     newState.category = this.props.match.params.category
     newState.page = this.props.match.params.page
     newState.isLoading = true
     var res = await api.getPageInfo(newState.category, newState.page)
-    // console.log('New Page Info: ', res)
     if (res.status === 200) {
       newState.pageType = res.data.type
       newState.pageSubtype = res.data.subtype
@@ -69,7 +64,6 @@ export default class PageHandler extends Component {
   }
 
   PageBody = () => {
-    // if (this.state.page) {
     if (this.props.match.params.page) {
       if (this.state.pageType === 'static') {
         if (this.state.pageSubtype === 'md') {
@@ -93,7 +87,6 @@ export default class PageHandler extends Component {
             />
           )
         } else if (this.state.pageSubtype === 'ipynb') {
-          // this.doneLoading() // !! need to implement correctly
           return (
             <IPYNB
               key={this.state.page}
@@ -102,6 +95,13 @@ export default class PageHandler extends Component {
               file={this.state.pageFiles}
               doneLoading={this.doneLoading}
             />
+          )
+        } else if (this.state.pageSubtype === null) {
+          return (
+            <h3>
+              {' '}
+              this page does not exist
+            </h3>
           )
         } else {
           return (
@@ -125,41 +125,28 @@ export default class PageHandler extends Component {
         return (
           <h3>
             {' '}
-            gathering pagetype or this page aint no good ... (yet?) <br /> IDK what kinda page this is{' '}
+            gathering pagetype or this page ain't no good ... (yet?) <br /> IDK what kinda page this is{' '}
           </h3>
         )
-        // return <this.Loader/>
       }
     } else {
       return (
         <h3>
           {' '}
-          somethin aint right. <br /> I received no page to render from my component properties OR the state has not
+          somethin ain't right. <br /> I received no page to render from my component properties OR the state has not
           been set{' '}
         </h3>
       )
     }
   }
 
-  Loader = () => {
-    return (
-      // <h3>Loading page details...</h3>
-      <Row justify='center'>
-        <Col span={18}>
-          <h3 style={{ fontSize: 'small', textAlign: 'center' }}>{/* Loading page details... */}</h3>
-        </Col>
-      </Row>
-    )
-  }
 
   render() {
     return (
       <div>
         <this.PageTitle />
         <Spin spinning={this.state.isLoading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
-          {/* {this.state.isLoading ? <Spin /> : null} */}
-
-          <this.PageBody />
+        <this.PageBody />
         </Spin>
       </div>
     )
@@ -171,7 +158,6 @@ export default class PageHandler extends Component {
 
   componentDidUpdate(prevProps) {
     if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
-      // this.setState(this.baseState)
       this.updateInfo()
     }
   }

@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 // Create instance called instance
 const instance = axios.create({
   baseURL: process.env.REACT_APP_BACKEND || `http://localhost:8081`,

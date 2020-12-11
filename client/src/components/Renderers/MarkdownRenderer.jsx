@@ -24,19 +24,14 @@ export default class MarkdownRenderer extends Component {
     loading: true,
     markdown: '',
     fetched: false,
-    // prevProps: null,
   }
 
   updateInfo = async () => {
     //this.loading = true
     console.log('Updating Markdown Renderer:', this.props.category, this.props.page, this.props.file)
-    // console.log('Getting page data...')
     api.getPageContent(this.props.category, this.props.page, this.props.file).then((res) => {
       console.log('Got Markdown Data: ', res)
       if (res.status === 200) {
-        // console.log(res)
-        // this.$store.commit('stopLoading')
-
         this.setState({ markdown: res.data, loading: false, fetched: true }, () => {
           this.props.doneLoading()
         })
@@ -89,7 +84,7 @@ export default class MarkdownRenderer extends Component {
   }
 
   codeBlockRenderer = (props) => {
-    // pros: {literal: String, language: ex. JS}
+    // props: {literal: String, language: ex. JS}
     // console.log('code:', props)
     return (
       <Card hoverable bordered={true} style={{ marginTop: 10, marginBottom: 10 }}>
@@ -100,7 +95,7 @@ export default class MarkdownRenderer extends Component {
   }
 
   codeInlineRenderer = (props) => {
-    // pros: {literal: String, inline: Boolean}
+    // props: {literal: String, inline: Boolean}
     // console.log('code:', props)
     return (
       // <span style={{ marginBottom: 0, fontFamily: "monospace", backgroundColor: "white" }}>{props.value}</span>
@@ -126,8 +121,6 @@ export default class MarkdownRenderer extends Component {
       <div className='Page-Container md-container'>
         <Row justify='center'>
           <Col span={18}>
-            {/* <Card> */}
-            {/* <this.pageTitleRenderer/> */}
             <Card style={{ marginTop: 10, marginBottom: 10, cursor: 'auto' }} hoverable>
             <ReactMarkdown
               source={this.state.markdown}
@@ -146,8 +139,6 @@ export default class MarkdownRenderer extends Component {
   }
 
   async componentDidMount() {
-    // console.log(this.props.match.params.id, this.props.page)
-    // this.setState(this.baseState)
     this.updateInfo()
   }
 

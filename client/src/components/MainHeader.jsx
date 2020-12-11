@@ -45,7 +45,7 @@ class MainHeader extends Component {
     // history.push(props.id)
     // this.props.history.push(dest)
     setTimeout(() => {
-      //  to prevent menubar animation from freezing
+      // to prevent menubar animation from freezing
       this.props.history.push(dest)
     }, 300)
     // this.setState({ redirect: dest });  // Use with redirect router method && remove withRouter from export

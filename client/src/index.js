@@ -2,12 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import { ThemeSwitcherProvider } from 'react-css-theme-switcher'
+// import { ThemeSwitcherProvider } from 'react-css-theme-switcher'
 
-const themes = {
-  dark: `${process.env.PUBLIC_URL}/dark-theme.css`,
-  light: `${process.env.PUBLIC_URL}/light-theme.css`,
-}
+// const themes = {
+//   dark: `${process.env.PUBLIC_URL}/dark-theme.css`,
+//   light: `${process.env.PUBLIC_URL}/light-theme.css`,
+// }
 
 ReactDOM.render(
   // <ThemeSwitcherProvider themeMap={themes} defaultTheme="light" insertionPoint="styles-insertion-point">

@@ -2,9 +2,9 @@
 import React, { Component } from 'react'
 
 // UI Elements
-import { useThemeSwitcher } from 'react-css-theme-switcher'
-import { Switch, Input } from 'antd'
-import {Parallax, ParallaxLayer} from 'react-spring/renderprops-addons'
+// import { useThemeSwitcher } from 'react-css-theme-switcher'
+// import { Switch, Input } from 'antd'
+// import { Parallax, ParallaxLayer } from 'react-spring/renderprops-addons'
 
 // UX Elements
 
@@ -18,28 +18,28 @@ export default class FrontPage extends Component {
     // { switcher, currentTheme, status, themes } = useThemeSwitcher();
   }
 
-  ThemeComponent = () => {
-    const { switcher, themes, currentTheme, status } = useThemeSwitcher()
-    const [isDarkMode, setIsDarkMode] = React.useState(false)
+  // ThemeComponent = () => {
+  //   const { switcher, themes, currentTheme, status } = useThemeSwitcher()
+  //   const [isDarkMode, setIsDarkMode] = React.useState(false)
 
-    if (status === 'loading') {
-      return <div>Loading styles...</div>
-    }
+  //   if (status === 'loading') {
+  //     return <div>Loading styles...</div>
+  //   }
 
-    const toggleDarkMode = () => {
-      setIsDarkMode((previous) => {
-        switcher({ theme: previous ? themes.light : themes.dark })
-        return !previous
-      })
-    }
+  //   const toggleDarkMode = () => {
+  //     setIsDarkMode((previous) => {
+  //       switcher({ theme: previous ? themes.light : themes.dark })
+  //       return !previous
+  //     })
+  //   }
 
-    return (
-      <div>
-        <h2>Current theme: {currentTheme}</h2>
-        <button onClick={toggleDarkMode}> swith the theme </button>
-      </div>
-    )
-  }
+  //   return (
+  //     <div>
+  //       <h2>Current theme: {currentTheme}</h2>
+  //       <button onClick={toggleDarkMode}> swith the theme </button>
+  //     </div>
+  //   )
+  // }
 
   render() {
     return (

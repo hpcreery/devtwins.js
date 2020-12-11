@@ -3,12 +3,10 @@ import React, { Component } from 'react'
 
 // UI Elements
 import api from '../../services/Api'
-// import { useThemeSwitcher } from 'react-css-theme-switcher'
 import { Input, Col, Row, List, Space, Card } from 'antd'
 import { FileOutlined, PictureOutlined, HistoryOutlined } from '@ant-design/icons';
 
 // UX Elements
-
 const { Search } = Input;
 
 const IconText = ({ icon, text }) => (
@@ -37,7 +35,6 @@ export default class FrontPage extends Component {
       list = res.data.map((page) => {
         var pagelink = '/' + page.category.replace(/ /g, '%20') + '/' + page.name.replace(/ /g, '%20')
         return {
-          // href: api.getPageBaseUrl(page.category, page.name),
           href: pagelink,
           title: page.name,
           avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
@@ -45,7 +42,6 @@ export default class FrontPage extends Component {
           content: '',
           thumbnailURL: (page.info.thumb ? api.getPageContentBaseUrl(page.category, page.name) + '/' + page.info.thumb : "https://cdn2.iconfinder.com/data/icons/files-and-documents-1/512/28-512.png"),
           thumbnail: (page.info.thumb ? <img
-            // width={172}
             style={{objectFit: "cover",
               width: "230px",
               height: "230px"}}
@@ -131,8 +127,6 @@ export default class FrontPage extends Component {
   }
 
   async componentDidMount() {
-    // console.log(this.props.match.params.id, this.props.page)
-    // this.setState(this.baseState)
     this.updateInfo()
   }
 }

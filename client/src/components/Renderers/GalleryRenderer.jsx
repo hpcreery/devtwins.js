@@ -1,15 +1,16 @@
-import React, { Component, useCallback } from 'react'
-import Gallery from 'react-photo-gallery'
-import Carousel, { Modal, ModalGateway } from 'react-images'
-
-import { Row, Col, Card } from 'antd'
+// ReactJS
+import React, { Component } from 'react'
 
 // Components
+import Gallery from 'react-photo-gallery'
+import Carousel, { Modal, ModalGateway } from 'react-images'
 import api from '../../services/Api'
 
-const { Meta } = Card
+// UI Elements
+import { Row, Col, Card } from 'antd'
+// const { Meta } = Card
 
-
+// Main Class
 export default class GalleryRenderer extends Component {
   constructor(props) {
     super(props)
