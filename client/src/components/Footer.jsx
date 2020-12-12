@@ -4,6 +4,8 @@ import {
   GithubOutlined,
   YoutubeOutlined,
   InstagramOutlined,
+  LinkedinOutlined,
+  GlobalOutlined,
 } from '@ant-design/icons'
 
 const { Footer } = Layout
@@ -29,6 +31,20 @@ const ytmenu = (
   </Menu>
 )
 
+const linkedmenu = (
+  <Menu onClick={handleMenuClick}>
+    <Menu.Item key='https://www.linkedin.com/in/peyton-creery'>Peyton Creery</Menu.Item>
+    <Menu.Item key='https://www.linkedin.com/in/hunter-creery-a4479815a/'>Hunter Creery</Menu.Item>
+  </Menu>
+)
+
+const sitesmenu = (
+  <Menu onClick={handleMenuClick}>
+    <Menu.Item key='https://twinsphoto.creery.org/'>twinsphoto.creery.org</Menu.Item>
+    <Menu.Item key='https://dev.creery.org/'>dev.creery.org</Menu.Item>
+  </Menu>
+)
+
 function handleMenuClick(e) {
   console.log('click', e.key)
   var win = window.open(e.key, '_blank')
@@ -36,14 +52,6 @@ function handleMenuClick(e) {
 }
 
 class MainFooter extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
-
-  async componentDidMount() {
-    // this.getTestData();
-    // this.populateMenuItems()
-  }
 
   render() {
     return (
@@ -52,7 +60,7 @@ class MainFooter extends Component {
         <Footer className='Footer-Component'>
           {/* <Row justify='space-between' gutter={[16,36]}></Row> */}
           <Row justify='space-between' style={{alignItems: 'center'}} gutter={[0, 0]}>
-            <Col flex='auto'><p style={{marginBottom: '0', }}>Created by Hunter & Peyton Creery</p></Col>
+            <Col flex='auto'><p style={{marginBottom: '0', }}>Designed and Developed by Hunter & Peyton Creery</p></Col>
             <Col flex='50px'>
               <Dropdown overlay={githubmenu} placement="topCenter" arrow>
                 <Button type='text' icon={<GithubOutlined />} />
@@ -63,9 +71,19 @@ class MainFooter extends Component {
                 <Button type='text' icon={<YoutubeOutlined />} />
               </Dropdown>
             </Col>
-            <Col flex='50xpx'>
+            <Col flex='50px'>
               <Dropdown overlay={igmenu} placement="topCenter" arrow>
                 <Button type='text' icon={<InstagramOutlined />} />
+              </Dropdown>
+            </Col>
+            <Col flex='50px'>
+              <Dropdown overlay={linkedmenu} placement="topCenter" arrow>
+                <Button type='text' icon={<LinkedinOutlined />} />
+              </Dropdown>
+            </Col>
+            <Col flex='50px'>
+              <Dropdown overlay={sitesmenu} placement="topCenter" arrow>
+                <Button type='text' icon={<GlobalOutlined />} />
               </Dropdown>
             </Col>
           </Row>
