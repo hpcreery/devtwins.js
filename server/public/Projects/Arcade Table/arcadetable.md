@@ -1,12 +1,13 @@
 # Arcade Table
 ------------------------------------------- 
+
 ## Intro/Purpose
 This project was developed out of our own desires. The three of us, Hunter, Lucas, and Peyton all contributed to the design. It was built to replace the current coffee table we had in our living space. We wanted it to fit in with the man-cave theme of our space and still serve as a coffee table. 
 
 &nbsp;
 
 ## Parts List
-| &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | | |
+|  | | |
 |:---|---|:---:|
 | **Raspberry Pi 3** ($35) | The Raspberry Pi is a credit card sized, single board, ARM computer that will run our system.|![RaspberryPi](images/raspberry-pi.jpg)|
 | **HDMI to VGA video converter** ($7~$27) | The Raspberry Pi has video out as HDMI, but our monitor that we use only had VGA in. To solve this we used a simple HDMI to VGA adapter. We got ours from Amazon for relatively cheap. |![HDMI-VGA adapter](images/hdmi-vga.jpg)|

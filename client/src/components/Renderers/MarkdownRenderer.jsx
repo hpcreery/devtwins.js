@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import ReactMarkdown from 'react-markdown' // https://github.com/rexxars/react-markdown
 // https://github.com/rexxars/commonmark-react-renderer#type-renderer-options
+import gfm from 'remark-gfm'
 
 // Components
 import api from '../../services/Api'
@@ -52,7 +53,7 @@ export default class MarkdownRenderer extends Component {
       jsx = (
       <Row justify='center'>
         <Col span={24}>
-          <Card cover={<img alt='' style={{padding: '10px'}} src={props.src} />} style={{ marginTop: 10 }}>
+          <Card cover={<img alt='' style={{ padding: '10px' }} src={props.src} />} style={{ marginTop: 10 }}>
             <Meta style={{ fontStyle: 'italic' }} description={props.alt.split('|')[1]} />
           </Card>
           {/* <Image
@@ -65,10 +66,11 @@ export default class MarkdownRenderer extends Component {
     )
     } else {
       jsx = (
+        
         <Row justify='center'>
           {/* a row in a row, i know */}
-          <Col span={10} justify='center'>
-            <Card cover={<img alt='' style={{padding: '10px'}} src={props.src} />} style={{ marginTop: 10 }}>
+          <Col xs={20} sm={20} md={16} lg={16} xl={16} justify='center'>
+            <Card cover={<img alt='' style={{padding: '10px'}} src={props.src} />} style={{ marginTop: 10 }} bodyStyle={{ padding: '6px', paddingTop: '0px', textAlign: 'center' }}>
               <Meta style={{ fontStyle: 'italic' }} description={props.alt} />
             </Card>
             {/* // <Image
@@ -130,6 +132,9 @@ export default class MarkdownRenderer extends Component {
                 inlineCode: this.codeInlineRenderer,
                 code: this.codeBlockRenderer,
               }}
+              allowDangerousHtml
+              skipHtml={false}
+              plugins={[gfm]}
             />
             </Card>
           </Col>
