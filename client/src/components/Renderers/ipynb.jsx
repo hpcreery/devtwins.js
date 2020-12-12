@@ -46,7 +46,7 @@ export default class GalleryRenderer extends Component {
     return (
       <div>
         <Row justify="center">
-          <Col >
+          <Col span={20}>
             {/* <Card> */}
             {this.state.file !== null ?  <Card style={{ marginTop: 10, marginBottom: 10, cursor: 'auto' }} hoverable>
             <JupViewer
