@@ -30,11 +30,8 @@ module.exports = (app) => {
 
   app.get('/', (req, res) => {
     res.send(
-      'You have landed on the Full Stack applicaiton server-side instance. This can be opened for API usage. Documentation to come soon...'
+      'You have landed on the Full Stack application server-side instance.'
     )
   })
 
-  app.get('/help', (req, res) => {
-    res.sendFile(process.cwd() + '/README.md')
-  })
 }

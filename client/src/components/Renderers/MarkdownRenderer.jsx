@@ -16,12 +16,8 @@ const { Text } = Typography
 
 // Main Class
 export default class MarkdownRenderer extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
 
   state = {
-    // markdown: '### Loading page contents...',
     loading: true,
     markdown: '',
     fetched: false,
@@ -42,12 +38,14 @@ export default class MarkdownRenderer extends Component {
 
   imageUriFormatter = (Uri) => {
     // return "http://localhost:8081/pagecontent/Projects/New%20Page/" + Uri
+
     return api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + Uri
   }
 
   imageRenderer = (props) => {
     // pros: {src, title, alt}
     // console.log('image source:', props.src)
+
     let jsx = ''
     if (props.alt.split('|')[0] === '!wide') {
       jsx = (
@@ -56,11 +54,6 @@ export default class MarkdownRenderer extends Component {
           <Card cover={<img alt='' style={{ padding: '10px' }} src={props.src} />} style={{ marginTop: 10 }}>
             <Meta style={{ fontStyle: 'italic' }} description={props.alt.split('|')[1]} />
           </Card>
-          {/* <Image
-            // width="100%"
-            // height={200}
-            src={props.src}
-          /> */}
         </Col>
       </Row>
     )
@@ -73,11 +66,6 @@ export default class MarkdownRenderer extends Component {
             <Card cover={<img alt='' style={{padding: '10px'}} src={props.src} />} style={{ marginTop: 10 }} bodyStyle={{ padding: '6px', paddingTop: '0px', textAlign: 'center' }}>
               <Meta style={{ fontStyle: 'italic' }} description={props.alt} />
             </Card>
-            {/* // <Image
-            //   width="200px"
-            //   height={200}
-            //   src={props.src}
-            // /> */}
           </Col>
         </Row>
       )
@@ -88,9 +76,9 @@ export default class MarkdownRenderer extends Component {
   codeBlockRenderer = (props) => {
     // props: {literal: String, language: ex. JS}
     // console.log('code:', props)
+
     return (
       <Card hoverable bordered={true} style={{ marginTop: 10, marginBottom: 10 }}>
-        {/* <p style={{ marginBottom: 0, fontFamily: 'monospace' }}>{props.value}</p> */}
         <span style={{ marginBottom: 0, fontFamily: 'monospace' }}>{props.value}</span>
       </Card>
     )
@@ -99,8 +87,8 @@ export default class MarkdownRenderer extends Component {
   codeInlineRenderer = (props) => {
     // props: {literal: String, inline: Boolean}
     // console.log('code:', props)
+    
     return (
-      // <span style={{ marginBottom: 0, fontFamily: "monospace", backgroundColor: "white" }}>{props.value}</span>
       <Text code>{props.value}</Text>
     )
   }

@@ -51,7 +51,7 @@ function handleMenuClick(e) {
   win.focus()
 }
 
-class MainFooter extends Component {
+export default class MainFooter extends Component {
 
   render() {
     return (
@@ -94,4 +94,3 @@ class MainFooter extends Component {
   }
 }
 
-export default MainFooter

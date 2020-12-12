@@ -1,14 +1,13 @@
+// ReactJS
 import React, { Component } from 'react'
 import { Document, Page } from 'react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
 
+// UI
 import { Row, Col, Card, Progress } from 'antd'
 
-import { pdfjs } from 'react-pdf';
-
-
 // Components
+import { pdfjs } from 'react-pdf';
 import api from '../../services/Api'
-
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export default class GalleryRenderer extends Component {
@@ -22,9 +21,7 @@ export default class GalleryRenderer extends Component {
       height: 0,
     }
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
-    this.basestate = this.state
   }
-
 
   componentDidUpdate(prevProps) {
     console.log('debug: PDFrenderer, componentDidUpdate()', prevProps, this.props)
@@ -33,27 +30,16 @@ export default class GalleryRenderer extends Component {
     }
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return nextProps.id !== this.props.id;
-  // }
-
   componentDidMount() {
-    console.log('PDF component mounted')
-    // this.setState(basestate)
+    // console.log('PDF component mounted')
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateInfo()
   }
 
-  // async componentDidUpdate(prevProps) {
-  //   console.log('debug: PDFrenderer, componentDidUpdate()', prevProps, this.props)
-  //   if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
-  //     this.updateInfo()
-  //   }
-  // }
 
   componentWillUnmount() {
-    console.log('Unmounting PDF Component')
+    // console.log('Unmounting PDF Component')
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
@@ -66,27 +52,22 @@ export default class GalleryRenderer extends Component {
   }
 
   updateInfo() {
-    // this.numRenderedPages = 0
-    // this.setState({numRenderedPages: 0})
-    console.log('Updating PDF page data...', this.props.file)
-    this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file, numRenderedPages: 0 }, () => console.log('set PDF state to:', this.state))
+    // console.log('Updating PDF page data...', this.props.file)
+    this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file, numRenderedPages: 0 }, () => {})
   }
 
   onDocumentLoadSuccess = ({ numPages }) => {
     console.log(numPages, 'pages')
     this.setState({ numPages }, () => {
       console.log(this.state.numPages)
-      // this.props.doneLoading()
     })
   }
 
   countLoadedPages = () => {
-    // this.setState({})
-    // this.numRenderedPages = this.numRenderedPages + 1
     this.setState(prevState => {
       return {numRenderedPages: prevState.numRenderedPages + 1}
-   })
-    console.log('rendered new page', this.state.numRenderedPages)
+    })
+    // console.log('rendered new page', this.state.numRenderedPages)
     if (this.state.numRenderedPages === this.state.numPages) {
       this.props.doneLoading()
       console.log('Done loading')
@@ -94,7 +75,6 @@ export default class GalleryRenderer extends Component {
   }
 
   PageViewer = (props) => {
-    // console.log('rendering page...')
     return Array.from(new Array(this.state.numPages), (el, index) => (
       <Card style={{ marginTop: 10, marginBottom: 10, cursor: 'auto' }} hoverable>
         <Page
@@ -109,7 +89,7 @@ export default class GalleryRenderer extends Component {
   }
 
   render() {
-    console.log('rerendering PDF')
+    console.log('re-rendering PDF')
     return (
       <div>
         <Row justify='center'>
