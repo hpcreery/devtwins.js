@@ -58,7 +58,11 @@ export default class GalleryRenderer extends Component {
   }
 
   updateWindowDimensions() {
-    this.setState({ width: window.innerWidth, height: window.innerHeight })
+    if (window.innerWidth > window.innerHeight ) { // Desktop
+      this.setState({ width: null, height: window.innerHeight })
+    } else {
+      this.setState({ width: window.innerWidth - (0.2*window.innerWidth), height: null })
+    }
   }
 
   updateInfo() {
@@ -97,6 +101,7 @@ export default class GalleryRenderer extends Component {
           key={`${this.state.file}_page_${index + 1}`}
           pageNumber={index + 1}
           height={this.state.height}
+          width={this.state.width}
           onRenderSuccess={this.countLoadedPages}
         />
       </Card>
