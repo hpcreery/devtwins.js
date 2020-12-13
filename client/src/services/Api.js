@@ -41,6 +41,13 @@ export default {
       method: 'GET',
       url: '/pagecontent/' + category + '/' + page + '/' + file,
     }),
+
+  getHomePageContent: () =>
+    instance({
+      method: 'GET',
+      url: '/pagecontent/_Home/README.md',
+    }),
+
   getPageList: () =>
     instance({
       method: 'GET',

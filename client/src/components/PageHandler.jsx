@@ -146,7 +146,7 @@ export default class PageHandler extends Component {
       <div>
         <this.PageTitle />
         <Spin spinning={this.state.isLoading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
-        <this.PageBody />
+          <this.PageBody />
         </Spin>
       </div>
     )
