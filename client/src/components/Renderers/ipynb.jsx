@@ -48,7 +48,7 @@ export default class GalleryRenderer extends Component {
         <Row justify="center">
           <Col >
             {/* <Card> */}
-            {this.state.file !== null ?  <Card style={{ marginTop: 10, marginBottom: 10, cursor: 'auto' }} hoverable>
+            {this.state.file !== null ?  <Card style={{ marginTop: 10, marginBottom: 10, cursor: 'auto', borderColor: '#D9D9D9' }} hoverable bordered>
             <JupViewer
               // title="Jupyter as a Blog!"
               // subtitle="I've always wanted to publish my jupyter notebooks as blogs. Finally I can."
