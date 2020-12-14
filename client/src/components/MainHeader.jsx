@@ -16,6 +16,7 @@ class MainHeader extends Component {
       menuItems: null,
       menudata: {},
       redirect: null,
+      isShadowVisible: false
     }
   }
 
@@ -61,7 +62,7 @@ class MainHeader extends Component {
     // }
     return (
       <div>
-        <Header className='Site-Header' style={{ position: 'fixed', width: '100%', padding: '0 0' }}>
+        <Header className={`Site-Header ${this.state.isShadowVisible ? "active" : ""}`} style={{ position: 'fixed', width: '100%', padding: '0 0' }}>
           {/* <div className="logo" /> */}
           <Menu
             theme='dark'
@@ -69,6 +70,7 @@ class MainHeader extends Component {
             className='Site-Header-Menu'
             defaultSelectedKeys={['/']}
             getPopupContainer={(node) => node.parentNode}
+            // style={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
           >
             <Menu.Item key='/' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
               Home
@@ -103,7 +105,24 @@ class MainHeader extends Component {
   }
 
   async componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
     this.populateMenuItems()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+  
+  handleScroll = (event) => {
+    let scrollTop = event.target.scrollingElement.scrollTop
+
+    if ((scrollTop > 0) && (this.state.isShadowVisible == false)) {
+      this.setState({ isShadowVisible: true })
+      console.log('scrolled down')
+    } else if ((scrollTop == 0) && (this.state.isShadowVisible == true)) {
+      this.setState({ isShadowVisible: false })
+      console.log('top')
+    }
   }
 }
 

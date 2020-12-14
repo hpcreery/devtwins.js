@@ -1,10 +1,13 @@
+// React
 import React, { Component } from "react";
 
+// UI
 import { Row, Col, Card } from 'antd'
 import './App.css';
-import JupViewer from './JupViewer'
+
 // Components
 import api from '../../services/Api'
+import JupViewer from './JupViewer'
 
 export default class GalleryRenderer extends Component {
   constructor(props) {
@@ -63,6 +66,7 @@ export default class GalleryRenderer extends Component {
         </Row>
       </div>
     );
-            }
+  }
+  
 }
 

@@ -23,6 +23,11 @@
   z-index: 100;
 }
 
+.Site-Header.active {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
 .Site-Layout {
   min-height: 100vh;
   transition: all 0.05s linear;
