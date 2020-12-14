@@ -56,7 +56,7 @@ export default class MainFooter extends Component {
   render() {
     return (
       <div className='Footer-Container'>
-        <Divider />
+        {/* <Divider /> */}
         <Footer className='Footer-Component'>
           {/* <Row justify='space-between' gutter={[16,36]}></Row> */}
           <Row justify='space-between' style={{alignItems: 'center'}} gutter={[0, 0]}>

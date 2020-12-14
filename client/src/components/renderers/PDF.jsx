@@ -125,9 +125,9 @@ export default class GalleryRenderer extends Component {
       <div>
         <Row justify='center'>
           <Col>
-          {(this.state.numRenderedPages < this.state.numPages) ? 
-          <Progress percent={(this.state.numRenderedPages/this.state.numPages)*100} showInfo={false} />
-           : null}
+            {(this.state.numRenderedPages < this.state.numPages) ? 
+            <Progress percent={(this.state.numRenderedPages/this.state.numPages)*100} showInfo={false} />
+            : null}
             <Dropdown overlay={this.menu} trigger={['contextMenu']}>
               <Document file={this.state.file} onLoadSuccess={this.onDocumentLoadSuccess} onLoadProgress={({ loaded, total }) => console.log('Loading a document: ' + (loaded / total) * 100 + '%')} onLoadError={(error) => console.log('Error while loading page! ' + error.message)}>
                 <this.PageViewer />

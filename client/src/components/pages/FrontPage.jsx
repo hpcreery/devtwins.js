@@ -8,6 +8,7 @@ import MarkdownRenderer from '../renderers/MarkdownRenderer'
 // UI Elements
 import { Row, Col, Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
+// const { Title } = Typography;
 
 // Main Class
 export default class PageHandler extends Component {
@@ -51,10 +52,8 @@ export default class PageHandler extends Component {
     return (
       <div className={'Page-Heading'}>
         <Row justify='center'>
-          <Col span={18}>
-            <h1 style={{ fontSize: 'xx-large', textAlign: 'center', paddingTop: '20px' }}>
-              {/* {this.props.match.params.category} / {this.props.match.params.page} */}
-              {/* README.md */}
+          <Col span={20}>
+            <h1 style={{ fontSize: '3vh', textAlign: 'center', paddingTop: '20px' }}>
               {this.state.pageFiles}
             </h1>
           </Col>
