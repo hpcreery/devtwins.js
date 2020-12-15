@@ -8,7 +8,8 @@ import 'ace-builds/src-noconflict/theme-monokai'
 import 'ace-builds/src-noconflict/theme-kuroir'
 import 'ace-builds/src-noconflict/theme-terminal'
 import 'ace-builds/src-noconflict/theme-iplastic'
-import { InlineMath, BlockMath } from 'react-katex'
+// import { InlineMath, BlockMath } from 'react-katex'
+import Tex from '@matejmazur/react-katex'
 import RemarkMathPlugin from 'remark-math'
 import 'katex/dist/katex.min.css'
 // import './App.css';
@@ -145,13 +146,15 @@ class JupViewer extends React.Component {
 
   ReactMarkdownWithEquations(props) {
     // https://github.com/rexxars/react-markdown/issues/10
+    // https://github.com/remarkjs/react-markdown/commit/634f88d610c3beb39411db5c928d2cfff440f9ff#
+
     const newProps = {
       ...props,
       plugins: [RemarkMathPlugin],
       renderers: {
-        ...props.renderers,
-        math: (props) => <BlockMath math={props.value} />,
-        inlineMath: (props) => <InlineMath math={props.value} />,
+        // ...props.renderers,
+        inlineMath: (props) => <Tex math={props.value} />,
+        math: (props) => <Tex block math={props.value} />,
       },
     }
     return <ReactMarkdown {...newProps} />
@@ -568,7 +571,7 @@ class JupViewer extends React.Component {
                               }}
                               source={this.parseMD(item['source'])}
                               escapeHtml={false}
-                              plugins={[[RemarkMathPlugin]]}
+                              // plugins={[[RemarkMathPlugin]]}
                               // plugins={[[require('rehype-katex')]]}
                             />
                           </div>
