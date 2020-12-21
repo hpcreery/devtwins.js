@@ -16,7 +16,7 @@ import 'katex/dist/katex.min.css'
 // import '../../css/App.css';
 
 const ReactMarkdown = require('react-markdown')
-const remarkmath = require('remark-math')
+// const remarkmath = require('remark-math')
 // const inlineMath = require('remark-math/inline')
 
 const { Meta } = Card
@@ -145,6 +145,7 @@ class JupViewer extends React.Component {
   }
 
   ReactMarkdownWithEquations(props) {
+    // https://github.com/remarkjs/react-markdown
     // https://github.com/rexxars/react-markdown/issues/10
     // https://github.com/remarkjs/react-markdown/commit/634f88d610c3beb39411db5c928d2cfff440f9ff#
 

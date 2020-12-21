@@ -110,7 +110,7 @@ export default class MarkdownRenderer extends Component {
     return (
       <div className='Page-Container md-container'>
         <Row justify='center'>
-          <Col xs={22} sm={22} md={20} lg={18} xl={18}>
+          <Col xs={22} sm={22} md={20} lg={18} xl={14}>
             <Card style={{ padding: '2vw', marginTop: 10, marginBottom: 10, cursor: 'auto', borderColor: '#D9D9D9' }} hoverable bordered>
               <ReactMarkdown
                 source={this.state.markdown}
