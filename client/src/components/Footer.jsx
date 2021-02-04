@@ -5,7 +5,11 @@ import {
   YoutubeOutlined,
   InstagramOutlined,
   LinkedinOutlined,
-  GlobalOutlined
+  GlobalOutlined,
+  TwitterOutlined,
+  FacebookOutlined,
+  MediumOutlined,
+  RedditOutlined
 } from '@ant-design/icons'
 
 import api from '../services/Api'
@@ -38,6 +42,12 @@ export default class MainFooter extends Component {
       githubmenu: (<div />),
       linkedin: false,
       linkedinmenu: (<div />),
+      facebook: false,
+      facebookmenu: (<div />),
+      medium: false,
+      mediummenu: (<div />),
+      reddit: false,
+      redditmenu: (<div />),
       about: ""
 
     }
@@ -106,7 +116,31 @@ export default class MainFooter extends Component {
             })}
           </Menu>
         )
-        this.setState({ sitesmenu: newsitesmenu, ytmenu: newytmenu, igmenu: newigmenu, twittermenu: newtwittermenu, linkedinmenu: newlinkedinmenu, githubmenu: newgithubmenu })
+        if (Object.keys(res.data.facebook).length > 0) {this.setState({ facebook: true })}
+        var newfacebookmenu = (
+          <Menu onClick={handleMenuClick}>
+            {Object.keys(res.data.facebook).map((key, index) => {
+              return <Menu.Item key={res.data.facebook[key]}>{key}</Menu.Item>
+            })}
+          </Menu>
+        )
+        if (Object.keys(res.data.medium).length > 0) {this.setState({ medium: true })}
+        var newmediummenu = (
+          <Menu onClick={handleMenuClick}>
+            {Object.keys(res.data.medium).map((key, index) => {
+              return <Menu.Item key={res.data.medium[key]}>{key}</Menu.Item>
+            })}
+          </Menu>
+        )
+        if (Object.keys(res.data.reddit).length > 0) {this.setState({ reddit: true })}
+        var newredditmenu = (
+          <Menu onClick={handleMenuClick}>
+            {Object.keys(res.data.reddit).map((key, index) => {
+              return <Menu.Item key={res.data.reddit[key]}>{key}</Menu.Item>
+            })}
+          </Menu>
+        )
+        this.setState({ sitesmenu: newsitesmenu, ytmenu: newytmenu, igmenu: newigmenu, twittermenu: newtwittermenu, linkedinmenu: newlinkedinmenu, githubmenu: newgithubmenu, facebookmenu: newfacebookmenu, mediummenu: newmediummenu, redditmenu: newredditmenu })
 
       }
     })
@@ -140,6 +174,26 @@ export default class MainFooter extends Component {
             {this.state.linkedin ? <Col flex='50px'>
               <Dropdown overlay={this.state.linkedinmenu} placement="topCenter" arrow>
                 <Button type='text' icon={<LinkedinOutlined />} />
+              </Dropdown>
+            </Col> : null}
+            {this.state.twitter ? <Col flex='50px'>
+              <Dropdown overlay={this.state.twittermenu} placement="topCenter" arrow>
+                <Button type='text' icon={<TwitterOutlined />} />
+              </Dropdown>
+            </Col> : null}
+            {this.state.facebook ? <Col flex='50px'>
+              <Dropdown overlay={this.state.facebookmenu} placement="topCenter" arrow>
+                <Button type='text' icon={<FacebookOutlined />} />
+              </Dropdown>
+            </Col> : null}
+            {this.state.medium ? <Col flex='50px'>
+              <Dropdown overlay={this.state.mediummenu} placement="topCenter" arrow>
+                <Button type='text' icon={<MediumOutlined />} />
+              </Dropdown>
+            </Col> : null}
+            {this.state.reddit ? <Col flex='50px'>
+              <Dropdown overlay={this.state.redditmenu} placement="topCenter" arrow>
+                <Button type='text' icon={<RedditOutlined />} />
               </Dropdown>
             </Col> : null}
             {this.state.sites ? <Col flex='50px'>
