@@ -37,7 +37,8 @@ export default class MainFooter extends Component {
       github: false,
       githubmenu: (<div />),
       linkedin: false,
-      linkedinmenu: (<div/>),
+      linkedinmenu: (<div />),
+      about: ""
 
     }
   }
@@ -54,6 +55,8 @@ export default class MainFooter extends Component {
         this.setState({ data: res.data }, () => { console.log("Footer:", this.state.data) })
 
         console.log("sites", res.data.web)
+
+        this.setState({ about: res.data.about })
 
         if (Object.keys(res.data.web).length > 0) {this.setState({ sites: true })}
         var newsitesmenu = (
@@ -117,7 +120,8 @@ export default class MainFooter extends Component {
         <Footer className='Footer-Component'>
           {/* <Row justify='space-between' gutter={[16,36]}></Row> */}
           <Row justify='space-between' style={{alignItems: 'center'}} gutter={[0, 0]}>
-            <Col flex='auto'><p style={{marginBottom: '0', }}>Designed and Developed by Hunter & Peyton Creery</p></Col>
+            {/* <Col flex='auto'><p style={{marginBottom: '0', }}>Designed and Developed by Hunter & Peyton Creery</p></Col> */}
+            <Col flex='auto'><p style={{marginBottom: '0', }}>{this.state.about}</p></Col>
             {this.state.github ? <Col flex='50px'>
               <Dropdown overlay={this.state.githubmenu} placement="topCenter" arrow>
                 <Button type='text' icon={<GithubOutlined />} />
