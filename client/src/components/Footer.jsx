@@ -5,45 +5,12 @@ import {
   YoutubeOutlined,
   InstagramOutlined,
   LinkedinOutlined,
-  GlobalOutlined,
+  GlobalOutlined
 } from '@ant-design/icons'
 
+import api from '../services/Api'
+
 const { Footer } = Layout
-
-const igmenu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key='https://www.instagram.com/peyton_creery/?hl=en'>peyton_creery</Menu.Item>
-    <Menu.Item key='https://www.instagram.com/_huntercreery_/?hl=en'>_huntercreery_</Menu.Item>
-  </Menu>
-)
-
-const githubmenu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key='https://github.com/phcreery'>phcreery</Menu.Item>
-    <Menu.Item key='https://github.com/hpcreery'>hpcreery</Menu.Item>
-  </Menu>
-)
-
-const ytmenu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key='https://www.youtube.com/channel/UCfmeNqWuXu1V1EgYaPNiywg'>phcreery</Menu.Item>
-    <Menu.Item key='https://www.youtube.com/channel/UCNjaQzmH4ZDepLGT77JI_lA'>hpcreery</Menu.Item>
-  </Menu>
-)
-
-const linkedmenu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key='https://www.linkedin.com/in/peyton-creery'>Peyton Creery</Menu.Item>
-    <Menu.Item key='https://www.linkedin.com/in/hunter-creery-a4479815a/'>Hunter Creery</Menu.Item>
-  </Menu>
-)
-
-const sitesmenu = (
-  <Menu onClick={handleMenuClick}>
-    <Menu.Item key='https://twinsphoto.creery.org/'>twinsphoto.creery.org</Menu.Item>
-    <Menu.Item key='https://dev.creery.org/'>dev.creery.org</Menu.Item>
-  </Menu>
-)
 
 function handleMenuClick(e) {
   console.log('click', e.key)
@@ -51,7 +18,82 @@ function handleMenuClick(e) {
   win.focus()
 }
 
+
 export default class MainFooter extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: {},
+      sitesmenu: (<div/>),
+      igmenu: (<div/>),
+      ytmenu: (<div/>),
+      twittermenu: (<div/>),
+      githubmenu: (<div/>),
+
+    }
+  }
+
+  componentDidMount() {
+    this.updateInfo()
+  }
+
+  updateInfo() {
+    var data = {}
+    console.log('Updating footer')
+    api.getPageContent("_App", "Footer", "footer.json").then((res) => {
+      if (res.status === 200) {
+        this.setState({ data: res.data }, () => { console.log("Footer:", this.state.data) })
+
+        console.log("sites", res.data.web)
+        var newsitesmenu = (
+          <Menu onClick={handleMenuClick}>
+            {Object.keys(res.data.web).map((key, index) => {
+              return <Menu.Item key={res.data.web[key]}>{key}</Menu.Item>
+            })}
+          </Menu>
+        )
+        var newlinkedinmenu = (
+          <Menu onClick={handleMenuClick}>
+            {Object.keys(res.data.linkedin).map((key, index) => {
+              return <Menu.Item key={res.data.web[key]}>{key}</Menu.Item>
+            })}
+          </Menu>
+        )
+        var newytmenu = (
+          <Menu onClick={handleMenuClick}>
+            {Object.keys(res.data.youtube).map((key, index) => {
+              return <Menu.Item key={res.data.web[key]}>{key}</Menu.Item>
+            })}
+          </Menu>
+        )
+        var newigmenu = (
+          <Menu onClick={handleMenuClick}>
+            {Object.keys(res.data.instagram).map((key, index) => {
+              return <Menu.Item key={res.data.web[key]}>{key}</Menu.Item>
+            })}
+          </Menu>
+        )
+        var newtwittermenu = (
+          <Menu onClick={handleMenuClick}>
+            {Object.keys(res.data.twitter).map((key, index) => {
+              return <Menu.Item key={res.data.web[key]}>{key}</Menu.Item>
+            })}
+          </Menu>
+        )
+        var newgithubmenu = (
+          <Menu onClick={handleMenuClick}>
+            {Object.keys(res.data.github).map((key, index) => {
+              return <Menu.Item key={res.data.web[key]}>{key}</Menu.Item>
+            })}
+          </Menu>
+        )
+        this.setState({ sitesmenu: newsitesmenu, ytmenu: newytmenu, igmenu: newigmenu, twittermenu: newtwittermenu, linkedmenu: newlinkedinmenu, githubmenu: newgithubmenu })
+
+      }
+    })
+
+  }
 
   render() {
     return (
@@ -62,27 +104,27 @@ export default class MainFooter extends Component {
           <Row justify='space-between' style={{alignItems: 'center'}} gutter={[0, 0]}>
             <Col flex='auto'><p style={{marginBottom: '0', }}>Designed and Developed by Hunter & Peyton Creery</p></Col>
             <Col flex='50px'>
-              <Dropdown overlay={githubmenu} placement="topCenter" arrow>
+              <Dropdown overlay={this.state.githubmenu} placement="topCenter" arrow>
                 <Button type='text' icon={<GithubOutlined />} />
               </Dropdown>
             </Col>
             <Col flex='50px'>
-              <Dropdown overlay={ytmenu} placement="topCenter" arrow>
+              <Dropdown overlay={this.state.ytmenu} placement="topCenter" arrow>
                 <Button type='text' icon={<YoutubeOutlined />} />
               </Dropdown>
             </Col>
             <Col flex='50px'>
-              <Dropdown overlay={igmenu} placement="topCenter" arrow>
+              <Dropdown overlay={this.state.igmenu} placement="topCenter" arrow>
                 <Button type='text' icon={<InstagramOutlined />} />
               </Dropdown>
             </Col>
             <Col flex='50px'>
-              <Dropdown overlay={linkedmenu} placement="topCenter" arrow>
+              <Dropdown overlay={this.state.linkedmenu} placement="topCenter" arrow>
                 <Button type='text' icon={<LinkedinOutlined />} />
               </Dropdown>
             </Col>
             <Col flex='50px'>
-              <Dropdown overlay={sitesmenu} placement="topCenter" arrow>
+              <Dropdown overlay={this.state.sitesmenu} placement="topCenter" arrow>
                 <Button type='text' icon={<GlobalOutlined />} />
               </Dropdown>
             </Col>
