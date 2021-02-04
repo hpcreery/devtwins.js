@@ -75,7 +75,6 @@ export default class MarkdownRenderer extends Component {
 
   codeBlockRenderer = (props) => {
     // props: {literal: String, language: ex. JS}
-    // console.log('code:', props)
 
     return (
       <Card hoverable bordered={true} style={{ marginTop: 10, marginBottom: 10 }}>
@@ -86,7 +85,6 @@ export default class MarkdownRenderer extends Component {
 
   codeInlineRenderer = (props) => {
     // props: {literal: String, inline: Boolean}
-    // console.log('code:', props)
     
     return (
       <Text code>{props.value}</Text>

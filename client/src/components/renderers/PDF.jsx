@@ -20,6 +20,7 @@ export default class GalleryRenderer extends Component {
       width: 0,
       height: 0,
     }
+    this.baseState = this.state 
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
   }
 
@@ -28,6 +29,7 @@ export default class GalleryRenderer extends Component {
     if(JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
       this.updateInfo();
     }
+    // this.props.isLoading = false
   }
 
   componentDidMount() {
