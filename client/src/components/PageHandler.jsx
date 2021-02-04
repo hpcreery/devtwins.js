@@ -9,7 +9,7 @@ import PDF from './renderers/PDF'
 import IPYNB from './renderers/ipynb'
 
 // UI Elements
-import { Row, Col, Spin } from 'antd'
+import { Row, Col, Spin, Dropdown, Menu, message } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
 // Main Class
@@ -18,10 +18,11 @@ export default class PageHandler extends Component {
     super(props)
     this.state = {
       category: null,
-      page: null,
+      pageName: null,
       pageType: null,
       pageSubtype: null,
       pageFiles: null,
+      pageFileURL: null,
       isLoading: true,
     }
     this.baseState = this.state
@@ -31,9 +32,9 @@ export default class PageHandler extends Component {
     console.log('THESE ARE THE KEYS ', this.props.match.params)
     let newState = { ...this.state }
     newState.category = this.props.match.params.category
-    newState.page = this.props.match.params.page
+    newState.pageName = this.props.match.params.page
     newState.isLoading = true
-    var res = await api.getPageInfo(newState.category, newState.page)
+    var res = await api.getPageInfo(newState.category, newState.pageName)
     if (res.status === 200) {
       newState.pageType = res.data.type
       newState.pageSubtype = res.data.subtype
@@ -41,7 +42,9 @@ export default class PageHandler extends Component {
     } else {
       console.log('Server Error')
     }
+    newState.pageFileURL = api.getPageContentBaseUrl(this.props.match.params.category, this.props.match.params.page) + '/' + res.data.files
     this.setState({ ...newState })
+    console.log('newstate', newState)
   }
 
   PageTitle = () => {
@@ -63,15 +66,45 @@ export default class PageHandler extends Component {
     this.setState({ isLoading: false })
   }
 
+  handleMenuClick = (e) => {
+    console.log('click', e.key)
+    if (e.key == "download") {
+      fetch(this.state.file)
+        .then(response => {
+          response.blob().then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = this.state.pageFiles;
+            a.click();
+          });
+          //window.location.href = response.url;
+        });
+    } else if (e.key == "open") {
+      window.open(this.state.pageFileURL)
+    } else if (e.key == "share") {
+      navigator.clipboard.writeText(window.location.href)
+      message.info('URL copied to clipboard');
+    }
+  }
+  
+  menu = () =>  (
+    <Menu onClick={this.handleMenuClick}>
+      <Menu.Item key="download">Download Page</Menu.Item>
+      <Menu.Item key="open">Open Raw</Menu.Item>
+      <Menu.Item key="share">Share Page</Menu.Item>
+    </Menu>
+  );
+
   PageBody = () => {
     if (this.props.match.params.page) {
       if (this.state.pageType === 'static') {
         if (this.state.pageSubtype === 'md') {
           return (
             <MarkdownRenderer
-              key={this.state.page}
+              key={this.state.pageName}
               category={this.state.category}
-              page={this.state.page}
+              page={this.state.pageName}
               file={this.state.pageFiles}
               doneLoading={this.doneLoading}
             />
@@ -81,7 +114,7 @@ export default class PageHandler extends Component {
             <PDF
               // key={this.state.page} // Interferes with page updating????
               category={this.state.category}
-              page={this.state.page}
+              page={this.state.pageName}
               file={this.state.pageFiles}
               doneLoading={this.doneLoading}
             />
@@ -89,9 +122,9 @@ export default class PageHandler extends Component {
         } else if (this.state.pageSubtype === 'ipynb') {
           return (
             <IPYNB
-              key={this.state.page}
+              key={this.state.pageName}
               category={this.state.category}
-              page={this.state.page}
+              page={this.state.pageName}
               file={this.state.pageFiles}
               doneLoading={this.doneLoading}
             />
@@ -114,9 +147,9 @@ export default class PageHandler extends Component {
       } else if (this.state.pageType === 'collage') {
         return (
           <CollageRenderer
-            key={this.state.page}
+            key={this.state.pageName}
             category={this.state.category}
-            page={this.state.page}
+            page={this.state.pageName}
             files={this.state.pageFiles}
             doneLoading={this.doneLoading}
           />
@@ -145,9 +178,13 @@ export default class PageHandler extends Component {
     return (
       <div>
         <this.PageTitle />
+        <Dropdown overlay={this.menu} trigger={['contextMenu']}>
         <Spin spinning={this.state.isLoading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
-          <this.PageBody />
+          
+            <this.PageBody />
+          
         </Spin>
+        </Dropdown>
       </div>
     )
   }

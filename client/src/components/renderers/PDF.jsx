@@ -3,7 +3,7 @@ import React, { Component, Link } from 'react'
 import { Document, Page } from 'react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
 
 // UI
-import { Row, Col, Card, Progress, Dropdown, Menu, message } from 'antd'
+import { Row, Col, Card, Progress } from 'antd'
 
 // Components
 import { pdfjs } from 'react-pdf';
@@ -74,36 +74,6 @@ export default class GalleryRenderer extends Component {
     }
   }
 
-  
-  handleMenuClick = (e) => {
-    console.log('click', e.key)
-    if (e.key == "download") {
-      fetch(this.state.file)
-        .then(response => {
-          response.blob().then(blob => {
-            let url = window.URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = this.props.file;
-            a.click();
-          });
-          //window.location.href = response.url;
-        });
-    } else if (e.key == "open") {
-      window.open(this.state.file)
-    } else if (e.key == "share") {
-      navigator.clipboard.writeText(window.location.href)
-      message.info('URL copied to clipboard');
-    }
-  }
-  
-  menu = () =>  (
-    <Menu onClick={this.handleMenuClick}>
-      <Menu.Item key="download">Download</Menu.Item>
-      <Menu.Item key="open">Open</Menu.Item>
-      <Menu.Item key="share">Share</Menu.Item>
-    </Menu>
-  );
 
   PageViewer = (props) => {
     return Array.from(new Array(this.state.numPages), (el, index) => (
@@ -128,11 +98,14 @@ export default class GalleryRenderer extends Component {
             {(this.state.numRenderedPages < this.state.numPages) ? 
             <Progress percent={(this.state.numRenderedPages/this.state.numPages)*100} showInfo={false} />
             : null}
-            <Dropdown overlay={this.menu} trigger={['contextMenu']}>
-              <Document file={this.state.file} onLoadSuccess={this.onDocumentLoadSuccess} onLoadProgress={({ loaded, total }) => console.log('Loading a document: ' + (loaded / total) * 100 + '%')} onLoadError={(error) => console.log('Error while loading page! ' + error.message)}>
+            <Document
+              file={this.state.file}
+              onLoadSuccess={this.onDocumentLoadSuccess}
+              onLoadProgress={({ loaded, total }) => console.log('Loading a document: ' + (loaded / total) * 100 + '%')}
+              onLoadError={(error) => console.log('Error while loading page! ' + error.message)}
+            >
                 <this.PageViewer />
               </Document>
-            </Dropdown>
           </Col>
         </Row>
       </div>
