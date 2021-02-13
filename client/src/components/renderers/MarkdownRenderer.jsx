@@ -26,7 +26,6 @@ export default class MarkdownRenderer extends Component {
     }
   }
 
-
   updateInfo = async () => {
     //this.loading = true
     console.log('Updating Markdown Renderer:', this.props.category, this.props.page, this.props.file)
@@ -40,14 +39,12 @@ export default class MarkdownRenderer extends Component {
 
   imageUriFormatter = (Uri) => {
     // return "http://localhost:8081/pagecontent/Projects/New%20Page/" + Uri
-
     return api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + Uri
   }
 
   imageRenderer = (props) => {
     // pros: {src, title, alt}
     // console.log('image source:', props.src)
-
     let jsx = ''
     if (props.alt.split('|')[0] === '!wide') {
       jsx = (
@@ -61,11 +58,14 @@ export default class MarkdownRenderer extends Component {
       )
     } else {
       jsx = (
-
         <Row justify='center'>
           {/* a row in a row, i know */}
           <Col xs={20} sm={20} md={16} lg={16} xl={16} justify='center'>
-            <Card cover={<img alt='' style={{ padding: '10px' }} src={props.src} />} style={{ marginTop: 10 }} bodyStyle={{ padding: '6px', paddingTop: '0px', textAlign: 'center' }}>
+            <Card
+              cover={<img alt='' style={{ padding: '10px' }} src={props.src} />}
+              style={{ marginTop: 10 }}
+              bodyStyle={{ padding: '6px', paddingTop: '0px', textAlign: 'center' }}
+            >
               <Meta style={{ fontStyle: 'italic' }} description={props.alt} />
             </Card>
           </Col>
@@ -77,7 +77,6 @@ export default class MarkdownRenderer extends Component {
 
   codeBlockRenderer = (props) => {
     // props: {literal: String, language: ex. JS}
-
     return (
       <Card bordered={true} style={{ marginTop: 10, marginBottom: 10 }}>
         <span style={{ marginBottom: 0, fontFamily: 'monospace' }}>{props.value}</span>
@@ -87,10 +86,7 @@ export default class MarkdownRenderer extends Component {
 
   codeInlineRenderer = (props) => {
     // props: {literal: String, inline: Boolean}
-
-    return (
-      <Text code>{props.value}</Text>
-    )
+    return <Text code>{props.value}</Text>
   }
 
   pageTitleRenderer = () => {
@@ -110,12 +106,15 @@ export default class MarkdownRenderer extends Component {
     return (
       <div className='Page-Container md-container'>
         <Spin spinning={this.state.loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
-
-
           <Row justify='center'>
             <Col xs={22} sm={22} md={20} lg={18} xl={14}>
-              <Card style={{ padding: '2vw', marginTop: 10, marginBottom: 10, cursor: 'auto', borderColor: '#D9D9D9' }} hoverable bordered>
+              <Card
+                style={{ padding: '2vw', marginTop: 10, marginBottom: 10, cursor: 'auto', borderColor: '#D9D9D9' }}
+                hoverable
+                bordered
+              >
                 <ReactMarkdown
+                  key={this.state.markdown}
                   source={this.state.markdown}
                   transformImageUri={this.imageUriFormatter}
                   renderers={{
@@ -139,4 +138,9 @@ export default class MarkdownRenderer extends Component {
     this.updateInfo()
   }
 
+  componentDidUpdate(prevProps) {
+    if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
+      this.updateInfo()
+    }
+  }
 }

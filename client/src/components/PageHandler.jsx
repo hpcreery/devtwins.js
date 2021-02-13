@@ -40,9 +40,9 @@ export default class PageHandler extends Component {
       console.log('Server Error')
     }
     newState.pageFileURL =
-      api.getPageContentBaseUrl(this.props.match.params.category, this.props.match.params.page) + '/' + res.data.files
+      (await api.getPageContentBaseUrl(newState.category, newState.pageName)) + '/' + res.data.files
     this.setState({ ...newState })
-    console.log('newstate', newState)
+    //console.log('newstate', newState)
   }
 
   PageTitle = () => {
@@ -88,80 +88,47 @@ export default class PageHandler extends Component {
     </Menu>
   )
 
-  PageBody = () => {
-    if (this.props.match.params.page) {
-      if (this.state.pageType === 'static') {
-        if (this.state.pageSubtype === 'md') {
-          return (
-            <MarkdownRenderer
-              key={this.state.pageName}
-              category={this.state.category}
-              page={this.state.pageName}
-              file={this.state.pageFiles}
-            />
-          )
-        } else if (this.state.pageSubtype === 'pdf') {
-          return (
-            <PDF
-              key={this.state.page} // Interferes with page updating????
-              category={this.state.category}
-              page={this.state.pageName}
-              file={this.state.pageFiles}
-            />
-          )
-        } else if (this.state.pageSubtype === 'ipynb') {
-          return (
-            <IPYNB
-              key={this.state.pageName}
-              category={this.state.category}
-              page={this.state.pageName}
-              file={this.state.pageFiles}
-            />
-          )
-        } else if (this.state.pageSubtype === null) {
-          return <h3> this page does not exist</h3>
-        } else {
-          return (
-            <h3>
-              {' '}
-              this page is unsupported <br /> error: {this.state.page} {this.state.pageType} {this.state.pageSubtype}
-            </h3>
-          )
-        }
-      } else if (this.state.pageType === 'collage') {
-        return (
-          <CollageRenderer
-            key={this.state.pageName}
-            category={this.state.category}
-            page={this.state.pageName}
-            files={this.state.pageFiles}
-          />
-        )
-      } else {
-        return (
-          <h3>
-            {' '}
-            gathering pagetype or this page ain't no good ... (yet?) <br /> IDK what kinda page this is{' '}
-          </h3>
-        )
-      }
-    } else {
-      return (
-        <h3>
-          {' '}
-          somethin ain't right. <br /> I received no page to render from my component properties OR the state has not
-          been set{' '}
-        </h3>
-      )
-    }
-  }
+  pageBodyElements = [
+    {
+      pageType: 'static',
+      pageSubtype: 'md',
+      component: MarkdownRenderer,
+    },
+    {
+      pageType: 'static',
+      pageSubtype: 'pdf',
+      component: PDF,
+    },
+    {
+      pageType: 'static',
+      pageSubtype: 'ipynb',
+      component: IPYNB,
+    },
+    {
+      pageType: 'collage',
+      pageSubtype: 'none',
+      component: CollageRenderer,
+    },
+  ]
 
   render() {
+    console.log(this.state)
+    const PageBody =
+      this.state.pageName !== null
+        ? this.pageBodyElements
+            .filter((element) => element.pageType == this.state.pageType)
+            .find((element) => element.pageSubtype == this.state.pageSubtype).component
+        : 'Working...'
     return (
       <div>
         <this.PageTitle />
         <Dropdown overlay={this.menu} trigger={['contextMenu']}>
-          <this.PageBody />
+          <PageBody
+            key={this.state.pageName}
+            category={this.state.category}
+            page={this.state.pageName}
+            file={this.state.pageFiles}
+          />
         </Dropdown>
       </div>
     )
@@ -177,3 +144,72 @@ export default class PageHandler extends Component {
     }
   }
 }
+
+// Deprecited Methods
+// PageBody = () => {
+//   if (this.props.match.params.page) {
+//     if (this.state.pageType === 'static') {
+//       if (this.state.pageSubtype === 'md') {
+//         return (
+//           <MarkdownRenderer
+//             key={this.state.pageName}
+//             category={this.state.category}
+//             page={this.state.pageName}
+//             file={this.state.pageFiles}
+//           />
+//         )
+//       } else if (this.state.pageSubtype === 'pdf') {
+//         return (
+//           <PDF
+//             key={this.state.page} // Interferes with page updating????
+//             category={this.state.category}
+//             page={this.state.pageName}
+//             file={this.state.pageFiles}
+//           />
+//         )
+//       } else if (this.state.pageSubtype === 'ipynb') {
+//         return (
+//           <IPYNB
+//             key={this.state.pageName}
+//             category={this.state.category}
+//             page={this.state.pageName}
+//             file={this.state.pageFiles}
+//           />
+//         )
+//       } else if (this.state.pageSubtype === null) {
+//         return <h3> this page does not exist</h3>
+//       } else {
+//         return (
+//           <h3>
+//             {' '}
+//             this page is unsupported <br /> error: {this.state.page} {this.state.pageType} {this.state.pageSubtype}
+//           </h3>
+//         )
+//       }
+//     } else if (this.state.pageType === 'collage') {
+//       return (
+//         <CollageRenderer
+//           key={this.state.pageName}
+//           category={this.state.category}
+//           page={this.state.pageName}
+//           file={this.state.pageFiles}
+//         />
+//       )
+//     } else {
+//       return (
+//         <h3>
+//           {' '}
+//           gathering pagetype or this page ain't no good ... (yet?) <br /> IDK what kinda page this is{' '}
+//         </h3>
+//       )
+//     }
+//   } else {
+//     return (
+//       <h3>
+//         {' '}
+//         somethin ain't right. <br /> I received no page to render from my component properties OR the state has not
+//         been set{' '}
+//       </h3>
+//     )
+//   }
+// }

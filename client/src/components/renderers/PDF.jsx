@@ -7,9 +7,9 @@ import { Row, Col, Card, Progress, Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
 // Components
-import { pdfjs } from 'react-pdf';
+import { pdfjs } from 'react-pdf'
 import api from '../../services/Api'
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 export default class GalleryRenderer extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export default class GalleryRenderer extends Component {
       numRenderedPages: 0,
       width: 0,
       height: 0,
-      loading: true
+      loading: true,
     }
     this.baseState = this.state
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
@@ -29,7 +29,7 @@ export default class GalleryRenderer extends Component {
   componentDidUpdate(prevProps) {
     console.log('debug: PDFrenderer, componentDidUpdate()', prevProps, this.props)
     if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
-      this.updateInfo();
+      this.updateInfo()
     }
     // this.props.isLoading = false
   }
@@ -41,23 +41,29 @@ export default class GalleryRenderer extends Component {
     this.updateInfo()
   }
 
-
   componentWillUnmount() {
     // console.log('Unmounting PDF Component')
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
   updateWindowDimensions() {
-    if (window.innerWidth > window.innerHeight) { // Desktop
+    if (window.innerWidth > window.innerHeight) {
+      // Desktop
       this.setState({ width: null, height: window.innerHeight })
     } else {
-      this.setState({ width: window.innerWidth - (0.2 * window.innerWidth), height: null })
+      this.setState({ width: window.innerWidth - 0.2 * window.innerWidth, height: null })
     }
   }
 
   updateInfo() {
     // console.log('Updating PDF page data...', this.props.file)
-    this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file, numRenderedPages: 0 }, () => { })
+    this.setState(
+      {
+        file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file,
+        numRenderedPages: 0,
+      },
+      () => {}
+    )
   }
 
   onDocumentLoadSuccess = ({ numPages }) => {
@@ -68,7 +74,7 @@ export default class GalleryRenderer extends Component {
   }
 
   countLoadedPages = () => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return { numRenderedPages: prevState.numRenderedPages + 1 }
     })
     // console.log('rendered new page', this.state.numRenderedPages)
@@ -76,7 +82,6 @@ export default class GalleryRenderer extends Component {
       this.setState({ loading: false })
     }
   }
-
 
   PageViewer = (props) => {
     return Array.from(new Array(this.state.numPages), (el, index) => (
@@ -96,23 +101,21 @@ export default class GalleryRenderer extends Component {
     console.log('re-rendering PDF')
     return (
       <div>
-        <Spin spinning={this.state.loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
-          <Row justify='center'>
-            <Col>
-              {(this.state.numRenderedPages < this.state.numPages) ?
-                <Progress percent={(this.state.numRenderedPages / this.state.numPages) * 100} showInfo={false} />
-                : null}
-              <Document
-                file={this.state.file}
-                onLoadSuccess={this.onDocumentLoadSuccess}
-                onLoadProgress={({ loaded, total }) => console.log('Loading a document: ' + (loaded / total) * 100 + '%')}
-                onLoadError={(error) => console.log('Error while loading page! ' + error.message)}
-              >
-                <this.PageViewer />
-              </Document>
-            </Col>
-          </Row>
-        </Spin>
+        <Row justify='center'>
+          <Col>
+            {this.state.numRenderedPages < this.state.numPages ? (
+              <Progress percent={(this.state.numRenderedPages / this.state.numPages) * 100} showInfo={false} />
+            ) : null}
+            <Document
+              file={this.state.file}
+              onLoadSuccess={this.onDocumentLoadSuccess}
+              onLoadProgress={({ loaded, total }) => console.log('Loading a document: ' + (loaded / total) * 100 + '%')}
+              onLoadError={(error) => console.log('Error while loading page! ' + error.message)}
+            >
+              <this.PageViewer />
+            </Document>
+          </Col>
+        </Row>
       </div>
     )
   }
