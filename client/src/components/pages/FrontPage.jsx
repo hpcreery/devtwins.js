@@ -20,7 +20,6 @@ export default class PageHandler extends Component {
       pageType: null,
       pageSubtype: null,
       pageFiles: null,
-      isLoading: true,
     }
     this.baseState = this.state
   }
@@ -30,7 +29,6 @@ export default class PageHandler extends Component {
     let newState = { ...this.state }
     newState.category = "_app"
     newState.page = "Home"
-    newState.isLoading = true
     var res = await api.getPageInfo(newState.category, newState.page)
     if (res.status === 200) {
       newState.pageType = res.data.type // "static"
@@ -40,12 +38,6 @@ export default class PageHandler extends Component {
       console.log('Server Error')
     }
     this.setState({ ...newState })
-  }
-
-
-  doneLoading = () => {
-    console.log('Done Loading Child Component')
-    this.setState({ isLoading: false })
   }
 
   PageTitle = () => {
@@ -68,15 +60,12 @@ export default class PageHandler extends Component {
     return (
       <div>
         <this.PageTitle />
-        <Spin spinning={this.state.isLoading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
-          {this.state.page ? <MarkdownRenderer
-            key={this.state.page}
-            category={this.state.category}
-            page={this.state.page}
-            file={this.state.pageFiles}
-            doneLoading={this.doneLoading}
-          /> : null}
-        </Spin>
+        {this.state.page ? <MarkdownRenderer
+          key={this.state.page}
+          category={this.state.category}
+          page={this.state.page}
+          file={this.state.pageFiles}
+        /> : null}
       </div>
     )
   }

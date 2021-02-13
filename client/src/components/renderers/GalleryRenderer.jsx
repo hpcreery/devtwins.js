@@ -7,7 +7,8 @@ import Carousel, { Modal, ModalGateway } from 'react-images'
 import api from '../../services/Api'
 
 // UI Elements
-import { Row, Col, Card } from 'antd'
+import { Row, Col, Card, Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 // const { Meta } = Card
 
 // Main Class
@@ -15,13 +16,14 @@ export default class GalleryRenderer extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: true,
       currentImage: 0,
       viewerIsOpen: false,
       photos: [],
       photosReady: false,
     }
   }
-  
+
 
   updateInfo = async () => {
     let newState = { ...this.state }
@@ -32,7 +34,7 @@ export default class GalleryRenderer extends Component {
       ...image,
     }))
     newState.photosReady = true
-    this.props.doneLoading()
+    newState.loading = false
 
     console.log('Photos are:', newState.photos)
     this.setState({ ...newState })
@@ -50,37 +52,39 @@ export default class GalleryRenderer extends Component {
   imageRenderer = ({ index, left, top, key, photo }) => {
     console.log(photo)
     return (
-    <Card hoverable style={{ marginTop: 10 }}>
-      {/* <Meta style={{ fontStyle: 'italic' }} description={index} /> */}
-      <img alt='' src={photo.src} />
-    </Card>
+      <Card hoverable style={{ marginTop: 10 }}>
+        {/* <Meta style={{ fontStyle: 'italic' }} description={index} /> */}
+        <img alt='' src={photo.src} />
+      </Card>
     )
   }
 
   render() {
     return (
       <div>
-        <Row justify='center'>
-          <Col span={20}>
-            {this.state.photosReady ? (
-              <Gallery margin={5} photos={this.state.photos} onClick={this.openLightbox}  /> // renderImage={this.imageRenderer}
-            ) : null}
-            <ModalGateway>
-              {this.state.viewerIsOpen ? (
-                <Modal onClose={this.closeLightbox}>
-                  <Carousel
-                    currentIndex={this.state.currentImage}
-                    views={this.state.photos.map((x) => ({
-                      ...x,
-                      srcset: x.srcSet,
-                      caption: x.title,
-                    }))}
-                  />
-                </Modal>
+        <Spin spinning={this.state.loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
+          <Row justify='center'>
+            <Col span={20}>
+              {this.state.photosReady ? (
+                <Gallery margin={5} photos={this.state.photos} onClick={this.openLightbox} /> // renderImage={this.imageRenderer}
               ) : null}
-            </ModalGateway>
-          </Col>
-        </Row>
+              <ModalGateway>
+                {this.state.viewerIsOpen ? (
+                  <Modal onClose={this.closeLightbox}>
+                    <Carousel
+                      currentIndex={this.state.currentImage}
+                      views={this.state.photos.map((x) => ({
+                        ...x,
+                        srcset: x.srcSet,
+                        caption: x.title,
+                      }))}
+                    />
+                  </Modal>
+                ) : null}
+              </ModalGateway>
+            </Col>
+          </Row>
+        </Spin>
       </div>
     )
   }

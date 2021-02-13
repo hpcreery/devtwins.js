@@ -70,7 +70,7 @@ class MainHeader extends Component {
             className='Site-Header-Menu'
             defaultSelectedKeys={['/']}
             getPopupContainer={(node) => node.parentNode}
-            // style={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
+          // style={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
           >
             <Menu.Item key='/' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
               Home
@@ -79,21 +79,21 @@ class MainHeader extends Component {
             {!this.state.menudata.categories
               ? null
               : this.state.menudata.categories.map((category, index) => {
-                  return (
-                    <SubMenu key={category.name} title={category.name} className='Header-Menu-Item'>
-                      {category.pages.map((value, index) => {
-                        return (
-                          <Menu.Item
-                            key={'/' + category.name + '/' + value.name}
-                            onClick={(...props) => this.goTo(...props)}
-                          >
-                            {value.name}
-                          </Menu.Item>
-                        )
-                      })}
-                    </SubMenu>
-                  )
-                })}
+                return (
+                  <SubMenu key={category.name} title={category.name} className='Header-Menu-Item'>
+                    {category.pages.map((value, index) => {
+                      return (
+                        <Menu.Item
+                          key={'/' + category.name + '/' + value.name}
+                          onClick={(...props) => this.goTo(...props)}
+                        >
+                          {value.name}
+                        </Menu.Item>
+                      )
+                    })}
+                  </SubMenu>
+                )
+              })}
 
             <Menu.Item key='/search' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
               <SearchOutlined className='Header-SearchIcon' />
@@ -112,16 +112,13 @@ class MainHeader extends Component {
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
   }
-  
+
   handleScroll = (event) => {
     let scrollTop = event.target.scrollingElement.scrollTop
-
     if ((scrollTop > 0) && (this.state.isShadowVisible == false)) {
       this.setState({ isShadowVisible: true })
-      console.log('scrolled down')
     } else if ((scrollTop == 0) && (this.state.isShadowVisible == true)) {
       this.setState({ isShadowVisible: false })
-      console.log('top')
     }
   }
 }

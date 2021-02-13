@@ -9,8 +9,7 @@ import PDF from './renderers/PDF'
 import IPYNB from './renderers/ipynb'
 
 // UI Elements
-import { Row, Col, Spin, Dropdown, Menu, message } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { Row, Col, Dropdown, Menu, message } from 'antd'
 
 // Main Class
 export default class PageHandler extends Component {
@@ -23,7 +22,6 @@ export default class PageHandler extends Component {
       pageSubtype: null,
       pageFiles: null,
       pageFileURL: null,
-      isLoading: true,
     }
     this.baseState = this.state
   }
@@ -33,7 +31,6 @@ export default class PageHandler extends Component {
     let newState = { ...this.state }
     newState.category = this.props.match.params.category
     newState.pageName = this.props.match.params.page
-    newState.isLoading = true
     var res = await api.getPageInfo(newState.category, newState.pageName)
     if (res.status === 200) {
       newState.pageType = res.data.type
@@ -42,7 +39,8 @@ export default class PageHandler extends Component {
     } else {
       console.log('Server Error')
     }
-    newState.pageFileURL = api.getPageContentBaseUrl(this.props.match.params.category, this.props.match.params.page) + '/' + res.data.files
+    newState.pageFileURL =
+      api.getPageContentBaseUrl(this.props.match.params.category, this.props.match.params.page) + '/' + res.data.files
     this.setState({ ...newState })
     console.log('newstate', newState)
   }
@@ -61,40 +59,34 @@ export default class PageHandler extends Component {
     )
   }
 
-  doneLoading = () => {
-    console.log('Done Loading Child Component')
-    this.setState({ isLoading: false })
-  }
-
   handleMenuClick = (e) => {
     console.log('click', e.key)
-    if (e.key == "download") {
-      fetch(this.state.file)
-        .then(response => {
-          response.blob().then(blob => {
-            let url = window.URL.createObjectURL(blob);
-            let a = document.createElement('a');
-            a.href = url;
-            a.download = this.state.pageFiles;
-            a.click();
-          });
-          //window.location.href = response.url;
-        });
-    } else if (e.key == "open") {
+    if (e.key == 'download') {
+      fetch(this.state.file).then((response) => {
+        response.blob().then((blob) => {
+          let url = window.URL.createObjectURL(blob)
+          let a = document.createElement('a')
+          a.href = url
+          a.download = this.state.pageFiles
+          a.click()
+        })
+        //window.location.href = response.url;
+      })
+    } else if (e.key == 'open') {
       window.open(this.state.pageFileURL)
-    } else if (e.key == "share") {
+    } else if (e.key == 'share') {
       navigator.clipboard.writeText(window.location.href)
-      message.info('URL copied to clipboard');
+      message.info('URL copied to clipboard')
     }
   }
-  
-  menu = () =>  (
+
+  menu = () => (
     <Menu onClick={this.handleMenuClick}>
-      <Menu.Item key="download">Download Page</Menu.Item>
-      <Menu.Item key="open">Open Raw</Menu.Item>
-      <Menu.Item key="share">Share Page</Menu.Item>
+      <Menu.Item key='download'>Download Page</Menu.Item>
+      <Menu.Item key='open'>Open Raw</Menu.Item>
+      <Menu.Item key='share'>Share Page</Menu.Item>
     </Menu>
-  );
+  )
 
   PageBody = () => {
     if (this.props.match.params.page) {
@@ -106,17 +98,15 @@ export default class PageHandler extends Component {
               category={this.state.category}
               page={this.state.pageName}
               file={this.state.pageFiles}
-              doneLoading={this.doneLoading}
             />
           )
         } else if (this.state.pageSubtype === 'pdf') {
           return (
             <PDF
-              // key={this.state.page} // Interferes with page updating????
+              key={this.state.page} // Interferes with page updating????
               category={this.state.category}
               page={this.state.pageName}
               file={this.state.pageFiles}
-              doneLoading={this.doneLoading}
             />
           )
         } else if (this.state.pageSubtype === 'ipynb') {
@@ -126,16 +116,10 @@ export default class PageHandler extends Component {
               category={this.state.category}
               page={this.state.pageName}
               file={this.state.pageFiles}
-              doneLoading={this.doneLoading}
             />
           )
         } else if (this.state.pageSubtype === null) {
-          return (
-            <h3>
-              {' '}
-              this page does not exist
-            </h3>
-          )
+          return <h3> this page does not exist</h3>
         } else {
           return (
             <h3>
@@ -151,7 +135,6 @@ export default class PageHandler extends Component {
             category={this.state.category}
             page={this.state.pageName}
             files={this.state.pageFiles}
-            doneLoading={this.doneLoading}
           />
         )
       } else {
@@ -173,17 +156,12 @@ export default class PageHandler extends Component {
     }
   }
 
-
   render() {
     return (
       <div>
         <this.PageTitle />
         <Dropdown overlay={this.menu} trigger={['contextMenu']}>
-        <Spin spinning={this.state.isLoading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
-          
-            <this.PageBody />
-          
-        </Spin>
+          <this.PageBody />
         </Dropdown>
       </div>
     )
