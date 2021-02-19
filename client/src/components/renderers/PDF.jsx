@@ -9,6 +9,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 // Components
 import { pdfjs } from 'react-pdf';
 import api from '../../services/Api'
+import PageLoader from '../PageLoader'
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export default class GalleryRenderer extends Component {
@@ -57,7 +58,11 @@ export default class GalleryRenderer extends Component {
 
   updateInfo() {
     // console.log('Updating PDF page data...', this.props.file)
-    this.setState({ file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file, numRenderedPages: 0 }, () => { })
+    this.setState({
+      file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file,
+      numRenderedPages: 0,
+      loading: true
+    }, () => { })
   }
 
   onDocumentLoadSuccess = ({ numPages }) => {
@@ -97,6 +102,7 @@ export default class GalleryRenderer extends Component {
     return (
       <div>
         <Spin spinning={this.state.loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
+        {/* <PageLoader loading={this.state.loading}> */}
           <Row justify='center'>
             <Col>
               {(this.state.numRenderedPages < this.state.numPages) ?
@@ -112,6 +118,7 @@ export default class GalleryRenderer extends Component {
               </Document>
             </Col>
           </Row>
+        {/* </PageLoader> */}
         </Spin>
       </div>
     )
