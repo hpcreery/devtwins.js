@@ -24,12 +24,11 @@ export default class GalleryRenderer extends Component {
     }
   }
 
-
   updateInfo = async () => {
     let newState = { ...this.state }
-    console.log('Getting page data...', this.props.files)
+    console.log('Getting page data...', this.props.file)
 
-    newState.photos = await this.props.files.map((image) => ({
+    newState.photos = await this.props.file.map((image) => ({
       src: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + image.name,
       ...image,
     }))

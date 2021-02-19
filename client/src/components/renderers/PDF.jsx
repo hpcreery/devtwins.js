@@ -6,7 +6,7 @@ import { Document, Page } from 'react-pdf/dist/entry.webpack' // https://project
 import { Row, Col, Card, Progress } from 'antd'
 
 // Components
-import { pdfjs } from 'react-pdf';
+import { pdfjs } from 'react-pdf'
 import api from '../../services/Api'
 import PageLoader from '../PageLoader'
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -20,7 +20,7 @@ export default class GalleryRenderer extends Component {
       numRenderedPages: 0,
       width: 0,
       height: 0,
-      loading: true
+      loading: true,
     }
     this.baseState = this.state
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this)
@@ -29,7 +29,7 @@ export default class GalleryRenderer extends Component {
   componentDidUpdate(prevProps) {
     console.log('debug: PDFrenderer, componentDidUpdate()', prevProps, this.props)
     if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
-      this.updateInfo();
+      this.updateInfo()
     }
     // this.props.isLoading = false
   }
@@ -41,17 +41,17 @@ export default class GalleryRenderer extends Component {
     this.updateInfo()
   }
 
-
   componentWillUnmount() {
     // console.log('Unmounting PDF Component')
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
   updateWindowDimensions() {
-    if (window.innerWidth > window.innerHeight) { // Desktop
+    if (window.innerWidth > window.innerHeight) {
+      // Desktop
       this.setState({ width: null, height: window.innerHeight })
     } else {
-      this.setState({ width: window.innerWidth - (0.2 * window.innerWidth), height: null })
+      this.setState({ width: window.innerWidth - 0.2 * window.innerWidth, height: null })
     }
   }
 
@@ -72,7 +72,7 @@ export default class GalleryRenderer extends Component {
   }
 
   countLoadedPages = () => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return { numRenderedPages: prevState.numRenderedPages + 1 }
     })
     // console.log('rendered new page', this.state.numRenderedPages)
@@ -80,7 +80,6 @@ export default class GalleryRenderer extends Component {
       this.setState({ loading: false })
     }
   }
-
 
   PageViewer = (props) => {
     return Array.from(new Array(this.state.numPages), (el, index) => (
