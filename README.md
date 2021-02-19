@@ -2,13 +2,13 @@
 
 # devtwins.js
 
-Flat File Headless CMS SPA written by Hunter Creery and Peyton Creery to showcase photos and developments
+Flat File Headless SPA Blog written by Hunter Creery and Peyton Creery to showcase photos and developments
 
 :construction: This project is still under development :construction:
 
 ## About
 
-The easiest and quickest way to get your work on the web for those who are tech savvy, visually inspired, and want to get straight-to-the-point. You can publish new pages from any device over any file share protocol of your choice. Organize and share without a CMS. And do updates on the go!
+The easiest and quickest way to get your work on the web for those who are tech savvy, visually inspired, and want to get straight-to-the-point. You can publish new pages from any device over any file share protocol of your choice. Organize and share without a CMS and do updates your way!
 
 ### How does it work?
 
@@ -20,28 +20,27 @@ Below is an example of the directory layout for a simple webpage.
 
 ```
 [public-dir]
-.
-_app
-├── Home
-│   └── README.md
-├── Footer
-│   └── footer.json
-Projects
-├── My First Project
-│   ├── index.md
-│   └── images
-│       └── sweet-pic-referenced-in-markdown.png
-├── Cool Thing
-│   └── Cool-Thing.ipynb
-├── Formal Report
-│   └── Report.pdf
-Photos
-├── Family
-│   ├── hunter.jpg
-│   ├── lucas.jpg
-│   └── peyton.jpg
-└── Friends
-    └── Mark.png
+├── _app
+│   ├── Home
+│   │   └── README.md
+│   ├── Footer
+│   │   └── footer.json
+├── Projects
+│   ├── My First Project
+│   │   ├── index.md
+│   │   └── images
+│   │       └── sweet-pic-referenced-in-markdown.png
+│   ├── Cool Thing
+│   │   └── Cool-Thing.ipynb
+│   ├── Formal Report
+│   │   └── Report.pdf
+└── Photos
+    ├── Family
+    │   ├── hunter.jpg
+    │   ├── lucas.jpg
+    │   └── peyton.jpg
+    └── Friends
+        └── jack.png
 ```
 
 Already have a directory of all the work you want to share? Just point the instance to it and thats it!
@@ -50,22 +49,21 @@ All of your website attributes can be modified by editing the files under the `_
 
 ### Supported Content Files
 
-#### Markdown (.md)
+- Markdown (.md)
 
-- Supports displaying Markdown files for a simple yet powerful method for conveying your message.
+  - Supports displaying Markdown files for a simple yet powerful method for conveying your message.
 
-#### PDF (.pdf)
+- PDF (.pdf)
 
-- Shows PDF files as pages. The standard for professional reports.
+  - Shows PDF files as pages. The standard for professional reports.
 
-#### Jupyter Notebooks (.ipynb)
+- Jupyter Notebooks (.ipynb)
 
-- Renders non-interactive Jupyter notebooks along with kernel type to share your research done with programming.
-  Supports LATEX equations, code blocks, images, and more!
+  - Renders non-interactive Jupyter notebooks along with kernel type to share your research done with programming.
+    Supports LATEX equations, code blocks, images, and more!
 
-#### Image Collage (.png/.jpeg/.jpg)
-
-- Just drop all your images in a folder and thats all there is to creating an awesome collage!
+- Image Collage (.png/.jpeg/.jpg)
+  - Just drop all your images in a folder and thats all there is to creating an awesome collage!
 
 ## Installation
 
@@ -118,6 +116,21 @@ Create your own instance to show off your projects
      ```
 
      _Note: Replace all instances of [ ] with your own setup parameters_
+     _In this scenario, client is on :3000 and the server is on :8081. Requests to / are reverse-proxied to :3000 and /api are reverse proxied to :8081_
+
+     Example caddy file:
+
+     ```
+     [your-domain].com:443 {
+        route /api* {
+                uri strip_prefix /api
+                reverse_proxy http://[pm2-instance]:8081
+        }
+        route {
+                reverse_proxy http://[pm2-instance]:3000
+        }
+      }
+     ```
 
 4. Start server
    - `$ pm2 start ecosystem.config.js`
