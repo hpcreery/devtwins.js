@@ -2,13 +2,13 @@
 import React, { Component } from "react";
 
 // UI
-import { Row, Col, Card, Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { Row, Col, Card } from 'antd'
 import './App.css';
 
 // Components
 import api from '../../services/Api'
 import JupViewer from './JupViewer'
+import PageLoader from '../PageLoader'
 
 export default class GalleryRenderer extends Component {
   constructor(props) {
@@ -49,7 +49,7 @@ export default class GalleryRenderer extends Component {
   render() {
     return (
       <div>
-        <Spin spinning={this.state.loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
+        <PageLoader loading={this.state.loading}>
           <Row justify="center">
             <Col >
               {/* <Card> */}
@@ -66,7 +66,7 @@ export default class GalleryRenderer extends Component {
               {/* </Card> */}
             </Col>
           </Row>
-        </Spin>
+        </PageLoader>
       </div>
     );
   }

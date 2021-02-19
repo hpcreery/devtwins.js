@@ -3,8 +3,7 @@ import React, { Component, Link } from 'react'
 import { Document, Page } from 'react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
 
 // UI
-import { Row, Col, Card, Progress, Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { Row, Col, Card, Progress } from 'antd'
 
 // Components
 import { pdfjs } from 'react-pdf';
@@ -101,8 +100,7 @@ export default class GalleryRenderer extends Component {
     console.log('re-rendering PDF')
     return (
       <div>
-        <Spin spinning={this.state.loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
-        {/* <PageLoader loading={this.state.loading}> */}
+        <PageLoader loading={this.state.loading}>
           <Row justify='center'>
             <Col>
               {(this.state.numRenderedPages < this.state.numPages) ?
@@ -118,8 +116,7 @@ export default class GalleryRenderer extends Component {
               </Document>
             </Col>
           </Row>
-        {/* </PageLoader> */}
-        </Spin>
+        </PageLoader>
       </div>
     )
   }

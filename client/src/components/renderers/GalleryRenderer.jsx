@@ -7,8 +7,8 @@ import Carousel, { Modal, ModalGateway } from 'react-images'
 import api from '../../services/Api'
 
 // UI Elements
-import { Row, Col, Card, Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { Row, Col, Card } from 'antd'
+import PageLoader from '../PageLoader'
 // const { Meta } = Card
 
 // Main Class
@@ -62,7 +62,7 @@ export default class GalleryRenderer extends Component {
   render() {
     return (
       <div>
-        <Spin spinning={this.state.loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
+        <PageLoader loading={this.state.loading}>
           <Row justify='center'>
             <Col span={20}>
               {this.state.photosReady ? (
@@ -84,7 +84,7 @@ export default class GalleryRenderer extends Component {
               </ModalGateway>
             </Col>
           </Row>
-        </Spin>
+        </PageLoader>
       </div>
     )
   }

@@ -8,8 +8,8 @@ import gfm from 'remark-gfm'
 import api from '../../services/Api'
 
 // UI Elements
-import { Row, Col, Card, Typography, Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { Row, Col, Card, Typography } from 'antd'
+import PageLoader from '../PageLoader'
 
 // const { Header, Footer, Sider, Content } = Layout
 const { Meta } = Card
@@ -109,9 +109,7 @@ export default class MarkdownRenderer extends Component {
   render() {
     return (
       <div className='Page-Container md-container'>
-        <Spin spinning={this.state.loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
-
-
+        <PageLoader loading={this.state.loading}>
           <Row justify='center'>
             <Col xs={22} sm={22} md={20} lg={18} xl={14}>
               <Card style={{ padding: '2vw', marginTop: 10, marginBottom: 10, cursor: 'auto', borderColor: '#D9D9D9' }} hoverable bordered>
@@ -130,7 +128,7 @@ export default class MarkdownRenderer extends Component {
               </Card>
             </Col>
           </Row>
-        </Spin>
+        </PageLoader>
       </div>
     )
   }
