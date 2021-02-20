@@ -51,7 +51,8 @@ export default class FrontPage extends Component {
           pagetype: page.info.type,
           filetype: page.info.subtype,
           show: true,
-          archived: page.info.archived
+          archived: page.info.archived,
+          lastModified: new Date(page.info.lastModified).toDateString()
         }
       })
     }).then(() => {
@@ -112,6 +113,7 @@ export default class FrontPage extends Component {
                       // avatar={<Avatar src={item.avatar} />}
                       title={<span><span style={{color:'grey'}}>{item.description} / </span>{item.title}</span>}
                       // description={item.description}
+                      description={"Last Modified: " + item.lastModified}
                     />
                     {item.content}
                   </List.Item>

@@ -116,8 +116,20 @@ module.exports = {
         // return "https://www.google.com/imgres?imgurl=https%3A%2F%2Fimg.icons8.com%2Fcarbon-copy%2F2x%2Ffile.png&imgrefurl=https%3A%2F%2Ficons8.com%2Ficons%2Fset%2Ffile&tbnid=umEWAkqMMnbVmM&vet=12ahUKEwjj9syJrcnrAhWSfqwKHbFDA9gQMygCegUIARDYAQ..i&docid=fhdmazhWVkJ3aM&w=200&h=200&q=file%20icon&ved=2ahUKEwjj9syJrcnrAhWSfqwKHbFDA9gQMygCegUIARDYAQ"
       }
     }
+    let getFileUpdatedDate = (path) => {
+      const stats = fs.statSync(path)
+      return stats.mtime
+    }
+    let lastModified = (files) => {
+      var latest = 0
+      files.forEach((file) => {
+        var path = config.dir.pages + '/' + category + '/' +  page + '/' + file
+        if (getFileUpdatedDate(path) > latest) { latest = getFileUpdatedDate(path) }
+      })
+      return latest
+    }
 
-    let isArchived = page.startsWith('_')
+    let isArchived = page.startsWith('_') || page.startsWith('.')
 
     let files = []
 
@@ -137,6 +149,7 @@ module.exports = {
         thumb: getThumbnail(files),
         archived: isArchived,
         files: staticfile,
+        lastModified: lastModified(files),
       })
     } else if (hasSupportedCollage(files)) {
       return res({
@@ -145,6 +158,7 @@ module.exports = {
         thumb: getThumbnail(files),
         archived: isArchived,
         files: addSize(supportedCollageFiles(files)),
+        lastModified: lastModified(files)
       })
     } else {
       console.log('Err 404: No file found')

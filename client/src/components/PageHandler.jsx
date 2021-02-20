@@ -22,6 +22,7 @@ export default class PageHandler extends Component {
       pageSubtype: null,
       pageFiles: null,
       pageFileURL: null,
+      pageLastModified: null,
     }
     this.baseState = this.state
   }
@@ -36,6 +37,7 @@ export default class PageHandler extends Component {
       newState.pageType = res.data.type
       newState.pageSubtype = res.data.subtype
       newState.pageFiles = res.data.files
+      newState.pageLastModified = new Date(res.data.lastModified).toDateString()
     } else {
       console.log('Server Error')
     }
@@ -53,6 +55,20 @@ export default class PageHandler extends Component {
             <h1 style={{ fontSize: 'xx-large', textAlign: 'center', paddingTop: '20px' }}>
               {this.props.match.params.category} / {this.props.match.params.page}
             </h1>
+          </Col>
+        </Row>
+      </div>
+    )
+  }
+
+  PageSubTitle = (test) => {
+    return (
+      <div>
+        <Row justify='center'>
+          <Col span={18}>
+            <p style={{ fontSize: 'small', textAlign: 'center', color: 'grey', paddingTop: '0' }}>
+              {this.state.pageLastModified}
+            </p>
           </Col>
         </Row>
       </div>
@@ -122,6 +138,7 @@ export default class PageHandler extends Component {
     return (
       <div>
         <this.PageTitle />
+        <this.PageSubTitle />
         <Dropdown overlay={this.menu} trigger={['contextMenu']}>
           <PageBody
             key={this.state.pageName}
