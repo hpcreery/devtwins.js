@@ -26,7 +26,9 @@ export default class PageLoader extends Component {
   render() {
     return (
       <Spin spinning={this.props.loading} indicator={<LoadingOutlined style={{ fontSize: 24 }} />}>
-        {this.props.children}
+        <div style={{ transition: 'margin 700ms', marginTop: this.props.loading ? '100%' : '0' }}>
+          {this.props.children}
+        </div>
       </Spin>
     )
   }

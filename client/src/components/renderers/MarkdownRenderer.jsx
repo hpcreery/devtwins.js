@@ -28,11 +28,16 @@ export default class MarkdownRenderer extends Component {
 
   updateInfo = async () => {
     //this.loading = true
+    this.setState({ loading: true })
     console.log('Updating Markdown Renderer:', this.props.category, this.props.page, this.props.file)
     api.getPageContent(this.props.category, this.props.page, this.props.file).then((res) => {
       console.log('Got Markdown Data: ', res)
       if (res.status === 200) {
-        this.setState({ markdown: res.data, loading: false, fetched: true })
+        this.setState({
+          markdown: res.data,
+          fetched: true,
+          loading: false
+        })
       }
     })
   }

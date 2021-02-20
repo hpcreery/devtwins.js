@@ -42,6 +42,8 @@ class MainHeader extends Component {
 
   goTo = ({ key }) => {
     console.log('Clicked:', key)
+    // window.scrollTo(0, 0)
+    window.scroll({top: 0, left: 0, behavior: 'smooth' })
     const dest = key.replace(/ /g, '%20')
     // history.push(props.id)
     // this.props.history.push(dest)
