@@ -3,7 +3,7 @@ import React, { Component, Link } from 'react'
 import { Document, Page } from 'react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
 
 // UI
-import { Row, Col, Card, Progress } from 'antd'
+import { Row, Col, Card } from 'antd'
 
 // Components
 import { pdfjs } from 'react-pdf'
@@ -99,12 +99,12 @@ export default class GalleryRenderer extends Component {
     console.log('re-rendering PDF')
     return (
       <div>
-        <PageLoader loading={this.state.loading}>
+        <PageLoader loading={this.state.loading} progress={(this.state.numRenderedPages / this.state.numPages) * 100}>
           <Row justify='center'>
             <Col>
-              {(this.state.numRenderedPages < this.state.numPages) ?
+              {/* {(this.state.numRenderedPages < this.state.numPages) ?
                 <Progress percent={(this.state.numRenderedPages / this.state.numPages) * 100} showInfo={false} />
-                : null}
+                : null} */}
               <Document
                 file={this.state.file}
                 onLoadSuccess={this.onDocumentLoadSuccess}

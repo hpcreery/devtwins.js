@@ -8,6 +8,7 @@ import './App.css';
 // Components
 import api from '../../services/Api'
 import JupViewer from './JupViewer'
+// import JupViewer from 'React-Jupyter-Viewer/ipynb-viewer/src/JupViewer' // yarn add phcreery/React-Jupyter-Viewer
 import PageLoader from '../PageLoader'
 
 export default class GalleryRenderer extends Component {
