@@ -84,7 +84,7 @@ export default class MarkdownRenderer extends Component {
     // props: {literal: String, language: ex. JS}
     return (
       <Card bordered={true} style={{ marginTop: 10, marginBottom: 10 }}>
-        <span style={{ marginBottom: 0, fontFamily: 'monospace' }}>{props.value}</span>
+        <pre style={{ marginBottom: 0, fontFamily: 'monospace' }}>{props.value}</pre>
       </Card>
     )
   }
