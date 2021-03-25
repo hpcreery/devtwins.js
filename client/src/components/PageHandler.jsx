@@ -140,12 +140,14 @@ export default class PageHandler extends Component {
         <this.PageTitle />
         <this.PageSubTitle />
         <Dropdown overlay={this.menu} trigger={['contextMenu']}>
-          <PageBody
-            key={this.state.pageName}
-            category={this.state.category}
-            page={this.state.pageName}
-            file={this.state.pageFiles}
-          />
+          <div>
+            <PageBody
+              key={this.state.pageName}
+              category={this.state.category}
+              page={this.state.pageName}
+              file={this.state.pageFiles}
+            />
+          </div>
         </Dropdown>
       </div>
     )
