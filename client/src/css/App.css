@@ -1,7 +1,7 @@
 /* @import '~antd/dist/antd.css'; */
 /* @import '~antd/dist/antd.dark.css'; */
 /* @import '../../public/light-theme.css'; */
-@import 'light-theme.css';
+@import "light-theme.css";
 
 :root {
   --color-text-transparent: rgba(0, 0, 0, 0.65);
@@ -79,6 +79,10 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected {
   height: 82%;
 }
 
+.ant-spin-blur {
+  opacity: 0 !important;
+}
+
 .page-banner-image {
   /* Use "linear-gradient" to add a darken background effect to the image (photographer.jpg). This will make the text easier to read */
   /* background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("photographer.jpg"); */
@@ -145,12 +149,14 @@ html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected {
   /* color: red !important; */
 }
 
-html[data-scroll='0'] .Header-Menu-Item.ant-menu-item-selected .Header-SearchIcon {
+html[data-scroll="0"]
+  .Header-Menu-Item.ant-menu-item-selected
+  .Header-SearchIcon {
   color: var(--color-accent) !important;
   transition: all 0.05s linear;
 }
 
-html[data-scroll='0'] .Site-Header-Menu {
+html[data-scroll="0"] .Site-Header-Menu {
   /* attempt to make menu shink on scroll */
   /* line-height: 330% !important; */
 }
