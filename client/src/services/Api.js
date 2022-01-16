@@ -57,4 +57,3 @@ export default {
     return instance.defaults.baseURL + '/pagecontent/' + category + '/' + page
   },
 }
-

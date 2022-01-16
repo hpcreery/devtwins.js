@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Layout, Button, Row, Col, Dropdown, Menu, Divider } from 'antd'
+import { Layout, Button, Row, Col, Dropdown, Menu } from 'antd'
 import {
   GithubOutlined,
   YoutubeOutlined,
@@ -18,7 +18,7 @@ const { Footer } = Layout
 
 function handleMenuClick(e) {
   console.log('click', e.key)
-  var win = window.open(e.key, '_blank')
+  let win = window.open(e.key, '_blank')
   win.focus()
 }
 
@@ -58,7 +58,6 @@ export default class MainFooter extends Component {
   }
 
   updateInfo() {
-    var data = {}
     console.log('Updating footer')
     api.getPageContent("_App", "Footer", "footer.json").then((res) => {
       if (res.status === 200) {
@@ -69,7 +68,7 @@ export default class MainFooter extends Component {
         this.setState({ about: res.data.about })
 
         if (Object.keys(res.data.web).length > 0) {this.setState({ sites: true })}
-        var newsitesmenu = (
+        let newsitesmenu = (
           <Menu onClick={handleMenuClick}>
             {Object.keys(res.data.web).map((key, index) => {
               return <Menu.Item key={res.data.web[key]}>{key}</Menu.Item>
@@ -77,7 +76,7 @@ export default class MainFooter extends Component {
           </Menu>
         )
         if (Object.keys(res.data.linkedin).length > 0) {this.setState({ linkedin: true })}
-        var newlinkedinmenu = (
+        let newlinkedinmenu = (
           <Menu onClick={handleMenuClick}>
             {Object.keys(res.data.linkedin).map((key, index) => {
               return <Menu.Item key={res.data.linkedin[key]}>{key}</Menu.Item>
@@ -85,7 +84,7 @@ export default class MainFooter extends Component {
           </Menu>
         )
         if (Object.keys(res.data.youtube).length > 0) {this.setState({ yt: true })}
-        var newytmenu = (
+        let newytmenu = (
           <Menu onClick={handleMenuClick}>
             {Object.keys(res.data.youtube).map((key, index) => {
               return <Menu.Item key={res.data.youtube[key]}>{key}</Menu.Item>
@@ -93,7 +92,7 @@ export default class MainFooter extends Component {
           </Menu>
         )
         if (Object.keys(res.data.instagram).length > 0) {this.setState({ ig: true })}
-        var newigmenu = (
+        let newigmenu = (
           <Menu onClick={handleMenuClick}>
             {Object.keys(res.data.instagram).map((key, index) => {
               return <Menu.Item key={res.data.instagram[key]}>{key}</Menu.Item>
@@ -101,7 +100,7 @@ export default class MainFooter extends Component {
           </Menu>
         )
         if (Object.keys(res.data.twitter).length > 0) {this.setState({ twitter: true })}
-        var newtwittermenu = (
+        let newtwittermenu = (
           <Menu onClick={handleMenuClick}>
             {Object.keys(res.data.twitter).map((key, index) => {
               return <Menu.Item key={res.data.twitter[key]}>{key}</Menu.Item>
@@ -109,7 +108,7 @@ export default class MainFooter extends Component {
           </Menu>
         )
         if (Object.keys(res.data.github).length > 0) {this.setState({ github: true })}
-        var newgithubmenu = (
+        let newgithubmenu = (
           <Menu onClick={handleMenuClick}>
             {Object.keys(res.data.github).map((key, index) => {
               return <Menu.Item key={res.data.github[key]}>{key}</Menu.Item>
@@ -117,7 +116,7 @@ export default class MainFooter extends Component {
           </Menu>
         )
         if (Object.keys(res.data.facebook).length > 0) {this.setState({ facebook: true })}
-        var newfacebookmenu = (
+        let newfacebookmenu = (
           <Menu onClick={handleMenuClick}>
             {Object.keys(res.data.facebook).map((key, index) => {
               return <Menu.Item key={res.data.facebook[key]}>{key}</Menu.Item>
@@ -125,7 +124,7 @@ export default class MainFooter extends Component {
           </Menu>
         )
         if (Object.keys(res.data.medium).length > 0) {this.setState({ medium: true })}
-        var newmediummenu = (
+        let newmediummenu = (
           <Menu onClick={handleMenuClick}>
             {Object.keys(res.data.medium).map((key, index) => {
               return <Menu.Item key={res.data.medium[key]}>{key}</Menu.Item>
@@ -133,7 +132,7 @@ export default class MainFooter extends Component {
           </Menu>
         )
         if (Object.keys(res.data.reddit).length > 0) {this.setState({ reddit: true })}
-        var newredditmenu = (
+        let newredditmenu = (
           <Menu onClick={handleMenuClick}>
             {Object.keys(res.data.reddit).map((key, index) => {
               return <Menu.Item key={res.data.reddit[key]}>{key}</Menu.Item>

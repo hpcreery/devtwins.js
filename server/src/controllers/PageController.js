@@ -1,8 +1,6 @@
 const fs = require('fs')
 const config = require('../config/config')
 const sizeOf = require('image-size')
-var path = require('path')
-const { resolve } = require('path')
 
 module.exports = {
   // Parent Folder/Categories List (filter out archived pages)
@@ -89,21 +87,23 @@ module.exports = {
 
   _getPageData(category, page, res) {
     // Supported Files
-    let isSupportedFile = (file) =>
-      config.dir.supportedPageFormats.map((format) => file.endsWith(format)).includes(true)
+    let isSupportedFile = (file) => config.dir.supportedPageFormats.map((format) => file.endsWith(format)).includes(true)
     let supportedFiles = (files) => files.filter((file) => isSupportedFile(file))
     let parentFile = (files) => files[0]
     let hasSupportedFile = (files) => supportedFiles(files).length > 0
 
     // Supported Collages
-    let isSupportedCollage = (file) =>
-      config.dir.supportedCollageFormats.map((format) => file.endsWith(format)).includes(true)
+    let isSupportedCollage = (file) => config.dir.supportedCollageFormats.map((format) => file.endsWith(format)).includes(true)
     let supportedCollageFiles = (files) => files.filter((file) => isSupportedCollage(file))
     let hasSupportedCollage = (files) => supportedCollageFiles(files).length > 0
     let addSize = (files) =>
       files.map((file) => {
         let dimensions = sizeOf(config.dir.pages + '/' + category + '/' + page + '/' + file)
-        return { name: file, width: dimensions.width, height: dimensions.height }
+        return {
+          name: file,
+          width: dimensions.width,
+          height: dimensions.height,
+        }
       })
 
     // Get misc info about Page
@@ -123,8 +123,10 @@ module.exports = {
     let lastModified = (files) => {
       var latest = 0
       files.forEach((file) => {
-        var path = config.dir.pages + '/' + category + '/' +  page + '/' + file
-        if (getFileUpdatedDate(path) > latest) { latest = getFileUpdatedDate(path) }
+        var path = config.dir.pages + '/' + category + '/' + page + '/' + file
+        if (getFileUpdatedDate(path) > latest) {
+          latest = getFileUpdatedDate(path)
+        }
       })
       return latest
     }
@@ -158,7 +160,7 @@ module.exports = {
         thumb: getThumbnail(files),
         archived: isArchived,
         files: addSize(supportedCollageFiles(files)),
-        lastModified: lastModified(files)
+        lastModified: lastModified(files),
       })
     } else {
       console.log('Err 404: No file found')

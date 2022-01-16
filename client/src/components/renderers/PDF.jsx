@@ -1,5 +1,5 @@
 // ReactJS
-import React, { Component, Link } from 'react'
+import React, { Component } from 'react'
 import { Document, Page } from 'react-pdf/dist/entry.webpack' // https://projects.wojtekmaj.pl/react-pdf/
 
 // UI
@@ -9,7 +9,7 @@ import { Row, Col, Card } from 'antd'
 import { pdfjs } from 'react-pdf'
 import api from '../../services/Api'
 import PageLoader from '../PageLoader'
-pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 export default class GalleryRenderer extends Component {
   constructor(props) {
@@ -31,18 +31,15 @@ export default class GalleryRenderer extends Component {
     if (JSON.stringify(this.props) !== JSON.stringify(prevProps)) {
       this.updateInfo()
     }
-    // this.props.isLoading = false
   }
 
   componentDidMount() {
-    // console.log('PDF component mounted')
     this.updateWindowDimensions()
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateInfo()
   }
 
   componentWillUnmount() {
-    // console.log('Unmounting PDF Component')
     window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
@@ -51,17 +48,24 @@ export default class GalleryRenderer extends Component {
       // Desktop
       this.setState({ width: null, height: window.innerHeight })
     } else {
-      this.setState({ width: window.innerWidth - 0.2 * window.innerWidth, height: null })
+      // Mobile
+      this.setState({
+        width: window.innerWidth - 0.2 * window.innerWidth,
+        height: null,
+      })
     }
   }
 
   updateInfo() {
     // console.log('Updating PDF page data...', this.props.file)
-    this.setState({
-      file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file,
-      numRenderedPages: 0,
-      loading: true
-    }, () => { })
+    this.setState(
+      {
+        file: api.getPageContentBaseUrl(this.props.category, this.props.page) + '/' + this.props.file,
+        numRenderedPages: 0,
+        loading: true,
+      },
+      () => {}
+    )
   }
 
   onDocumentLoadSuccess = ({ numPages }) => {
@@ -75,7 +79,6 @@ export default class GalleryRenderer extends Component {
     this.setState((prevState) => {
       return { numRenderedPages: prevState.numRenderedPages + 1 }
     })
-    // console.log('rendered new page', this.state.numRenderedPages)
     if (this.state.numRenderedPages === this.state.numPages) {
       this.setState({ loading: false })
     }
@@ -83,7 +86,16 @@ export default class GalleryRenderer extends Component {
 
   PageViewer = (props) => {
     return Array.from(new Array(this.state.numPages), (el, index) => (
-      <Card style={{ marginTop: 10, marginBottom: 10, cursor: 'auto', borderColor: '#D9D9D9' }} hoverable bordered>
+      <Card
+        style={{
+          marginTop: 10,
+          marginBottom: 10,
+          cursor: 'auto',
+          borderColor: '#D9D9D9',
+        }}
+        hoverable
+        bordered
+      >
         <Page
           key={`${this.state.file}_page_${index + 1}`}
           pageNumber={index + 1}
@@ -100,11 +112,8 @@ export default class GalleryRenderer extends Component {
     return (
       <div>
         <PageLoader loading={this.state.loading} progress={(this.state.numRenderedPages / this.state.numPages) * 100}>
-          <Row justify='center'>
+          <Row justify="center">
             <Col>
-              {/* {(this.state.numRenderedPages < this.state.numPages) ?
-                <Progress percent={(this.state.numRenderedPages / this.state.numPages) * 100} showInfo={false} />
-                : null} */}
               <Document
                 file={this.state.file}
                 onLoadSuccess={this.onDocumentLoadSuccess}

@@ -16,7 +16,7 @@ class MainHeader extends Component {
       menuItems: null,
       menudata: {},
       redirect: null,
-      isShadowVisible: false
+      isShadowVisible: false,
     }
   }
 
@@ -25,7 +25,6 @@ class MainHeader extends Component {
       console.log('aye!', res.data)
       if (res.status === 200) {
         console.log(res)
-        // this.$store.commit('stopLoading')
       }
     })
   }
@@ -35,7 +34,6 @@ class MainHeader extends Component {
       if (res.status === 200) {
         console.log('Fetched map:', res.data)
         this.setState({ menudata: res.data })
-        // this.$store.commit('stopLoading')
       }
     })
   }
@@ -43,7 +41,7 @@ class MainHeader extends Component {
   goTo = ({ key }) => {
     console.log('Clicked:', key)
     // window.scrollTo(0, 0)
-    window.scroll({top: 0, left: 0, behavior: 'smooth' })
+    window.scroll({ top: 0, left: 0, behavior: 'smooth' })
     const dest = key.replace(/ /g, '%20')
     // history.push(props.id)
     // this.props.history.push(dest)
@@ -64,41 +62,37 @@ class MainHeader extends Component {
     // }
     return (
       <div>
-        <Header className={`Site-Header ${this.state.isShadowVisible ? "active" : ""}`} style={{ position: 'fixed', width: '100%', padding: '0 0' }}>
-          {/* <div className="logo" /> */}
+        <Header className={`Site-Header ${this.state.isShadowVisible ? 'active' : ''}`} style={{ position: 'fixed', width: '100%', padding: '0 0' }}>
           <Menu
-            theme='dark'
-            mode='horizontal'
-            className='Site-Header-Menu'
+            theme="dark"
+            mode="horizontal"
+            className="Site-Header-Menu"
             defaultSelectedKeys={['/']}
             getPopupContainer={(node) => node.parentNode}
-          // style={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
+            // style={{ boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.4)" }}
           >
-            <Menu.Item key='/' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
+            <Menu.Item key="/" className="Header-Menu-Item" onClick={(...props) => this.goTo(...props)}>
               Home
             </Menu.Item>
 
             {!this.state.menudata.categories
               ? null
               : this.state.menudata.categories.map((category, index) => {
-                return (
-                  <SubMenu key={category.name} title={category.name} className='Header-Menu-Item'>
-                    {category.pages.map((value, index) => {
-                      return (
-                        <Menu.Item
-                          key={'/' + category.name + '/' + value.name}
-                          onClick={(...props) => this.goTo(...props)}
-                        >
-                          {value.name}
-                        </Menu.Item>
-                      )
-                    })}
-                  </SubMenu>
-                )
-              })}
+                  return (
+                    <SubMenu key={category.name} title={category.name} className="Header-Menu-Item">
+                      {category.pages.map((value, index) => {
+                        return (
+                          <Menu.Item key={'/' + category.name + '/' + value.name} onClick={(...props) => this.goTo(...props)}>
+                            {value.name}
+                          </Menu.Item>
+                        )
+                      })}
+                    </SubMenu>
+                  )
+                })}
 
-            <Menu.Item key='/search' className='Header-Menu-Item' onClick={(...props) => this.goTo(...props)}>
-              <SearchOutlined className='Header-SearchIcon' />
+            <Menu.Item key="/search" className="Header-Menu-Item" onClick={(...props) => this.goTo(...props)}>
+              <SearchOutlined className="Header-SearchIcon" />
             </Menu.Item>
           </Menu>
         </Header>
@@ -107,19 +101,19 @@ class MainHeader extends Component {
   }
 
   async componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll)
     this.populateMenuItems()
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll)
   }
 
   handleScroll = (event) => {
     let scrollTop = event.target.scrollingElement.scrollTop
-    if ((scrollTop > 0) && (this.state.isShadowVisible == false)) {
+    if (scrollTop > 0 && this.state.isShadowVisible === false) {
       this.setState({ isShadowVisible: true })
-    } else if ((scrollTop == 0) && (this.state.isShadowVisible == true)) {
+    } else if (scrollTop === 0 && this.state.isShadowVisible === true) {
       this.setState({ isShadowVisible: false })
     }
   }

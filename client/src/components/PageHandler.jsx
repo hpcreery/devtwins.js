@@ -41,8 +41,7 @@ export default class PageHandler extends Component {
     } else {
       console.log('Server Error')
     }
-    newState.pageFileURL =
-      (await api.getPageContentBaseUrl(newState.category, newState.pageName)) + '/' + res.data.files
+    newState.pageFileURL = (await api.getPageContentBaseUrl(newState.category, newState.pageName)) + '/' + res.data.files
     this.setState({ ...newState })
     //console.log('newstate', newState)
   }
@@ -50,7 +49,7 @@ export default class PageHandler extends Component {
   PageTitle = () => {
     return (
       <div className={'Page-Heading'}>
-        <Row justify='center'>
+        <Row justify="center">
           <Col span={18}>
             <h1 style={{ fontSize: 'xx-large', textAlign: 'center', paddingTop: '20px' }}>
               {this.props.match.params.category} / {this.props.match.params.page}
@@ -61,14 +60,12 @@ export default class PageHandler extends Component {
     )
   }
 
-  PageSubTitle = (test) => {
+  PageSubTitle = () => {
     return (
       <div>
-        <Row justify='center'>
+        <Row justify="center">
           <Col span={18}>
-            <p style={{ fontSize: 'small', textAlign: 'center', color: 'grey', paddingTop: '0' }}>
-              {this.state.pageLastModified}
-            </p>
+            <p style={{ fontSize: 'small', textAlign: 'center', color: 'grey', paddingTop: '0' }}>{this.state.pageLastModified}</p>
           </Col>
         </Row>
       </div>
@@ -77,7 +74,7 @@ export default class PageHandler extends Component {
 
   handleMenuClick = (e) => {
     console.log('click', e.key)
-    if (e.key == 'download') {
+    if (e.key === 'download') {
       fetch(this.state.file).then((response) => {
         response.blob().then((blob) => {
           let url = window.URL.createObjectURL(blob)
@@ -86,11 +83,10 @@ export default class PageHandler extends Component {
           a.download = this.state.pageFiles
           a.click()
         })
-        //window.location.href = response.url;
       })
-    } else if (e.key == 'open') {
+    } else if (e.key === 'open') {
       window.open(this.state.pageFileURL)
-    } else if (e.key == 'share') {
+    } else if (e.key === 'share') {
       navigator.clipboard.writeText(window.location.href)
       message.info('URL copied to clipboard')
     }
@@ -98,9 +94,9 @@ export default class PageHandler extends Component {
 
   menu = () => (
     <Menu onClick={this.handleMenuClick}>
-      <Menu.Item key='download'>Download Page</Menu.Item>
-      <Menu.Item key='open'>Open Raw</Menu.Item>
-      <Menu.Item key='share'>Share Page</Menu.Item>
+      <Menu.Item key="download">Download Page</Menu.Item>
+      <Menu.Item key="open">Open Raw</Menu.Item>
+      <Menu.Item key="share">Share Page</Menu.Item>
     </Menu>
   )
 
@@ -131,9 +127,8 @@ export default class PageHandler extends Component {
     console.log(this.state)
     const PageBody =
       this.state.pageName !== null
-        ? this.pageBodyElements
-            .filter((element) => element.pageType == this.state.pageType)
-            .find((element) => element.pageSubtype == this.state.pageSubtype).component
+        ? this.pageBodyElements.filter((element) => element.pageType === this.state.pageType).find((element) => element.pageSubtype === this.state.pageSubtype)
+            .component
         : 'Working...'
     return (
       <div>
@@ -141,12 +136,7 @@ export default class PageHandler extends Component {
         <this.PageSubTitle />
         <Dropdown overlay={this.menu} trigger={['contextMenu']}>
           <div>
-            <PageBody
-              key={this.state.pageName}
-              category={this.state.category}
-              page={this.state.pageName}
-              file={this.state.pageFiles}
-            />
+            <PageBody key={this.state.pageName} category={this.state.category} page={this.state.pageName} file={this.state.pageFiles} />
           </div>
         </Dropdown>
       </div>
@@ -163,72 +153,3 @@ export default class PageHandler extends Component {
     }
   }
 }
-
-// Deprecited Methods
-// PageBody = () => {
-//   if (this.props.match.params.page) {
-//     if (this.state.pageType === 'static') {
-//       if (this.state.pageSubtype === 'md') {
-//         return (
-//           <MarkdownRenderer
-//             key={this.state.pageName}
-//             category={this.state.category}
-//             page={this.state.pageName}
-//             file={this.state.pageFiles}
-//           />
-//         )
-//       } else if (this.state.pageSubtype === 'pdf') {
-//         return (
-//           <PDF
-//             key={this.state.page} // Interferes with page updating????
-//             category={this.state.category}
-//             page={this.state.pageName}
-//             file={this.state.pageFiles}
-//           />
-//         )
-//       } else if (this.state.pageSubtype === 'ipynb') {
-//         return (
-//           <IPYNB
-//             key={this.state.pageName}
-//             category={this.state.category}
-//             page={this.state.pageName}
-//             file={this.state.pageFiles}
-//           />
-//         )
-//       } else if (this.state.pageSubtype === null) {
-//         return <h3> this page does not exist</h3>
-//       } else {
-//         return (
-//           <h3>
-//             {' '}
-//             this page is unsupported <br /> error: {this.state.page} {this.state.pageType} {this.state.pageSubtype}
-//           </h3>
-//         )
-//       }
-//     } else if (this.state.pageType === 'collage') {
-//       return (
-//         <CollageRenderer
-//           key={this.state.pageName}
-//           category={this.state.category}
-//           page={this.state.pageName}
-//           file={this.state.pageFiles}
-//         />
-//       )
-//     } else {
-//       return (
-//         <h3>
-//           {' '}
-//           gathering pagetype or this page ain't no good ... (yet?) <br /> IDK what kinda page this is{' '}
-//         </h3>
-//       )
-//     }
-//   } else {
-//     return (
-//       <h3>
-//         {' '}
-//         somethin ain't right. <br /> I received no page to render from my component properties OR the state has not
-//         been set{' '}
-//       </h3>
-//     )
-//   }
-// }
