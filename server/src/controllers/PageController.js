@@ -22,7 +22,7 @@ module.exports = {
     console.log(config.dir.pages)
     try {
       let items = fs.readdirSync(config.dir.pages)
-      var filtereditems = items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
+      let filtereditems = items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
       console.log('List of Directories', filtereditems)
       res.status(200).json(filtereditems)
     } catch (err) {
@@ -47,7 +47,7 @@ module.exports = {
     let filled_categories = categories.map((category) => {
       try {
         items = fs.readdirSync(config.dir.pages + '/' + category)
-        var filtereditems = items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
+        let filtereditems = items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
         pages = filtereditems
         let filled_pages = pages.map((page) => {
           let page_info = module.exports._getPageData(category, page, (data, err) => {
@@ -121,9 +121,9 @@ module.exports = {
       return stats.mtime
     }
     let lastModified = (files) => {
-      var latest = 0
+      let latest = 0
       files.forEach((file) => {
-        var path = config.dir.pages + '/' + category + '/' + page + '/' + file
+        let path = config.dir.pages + '/' + category + '/' + page + '/' + file
         if (getFileUpdatedDate(path) > latest) {
           latest = getFileUpdatedDate(path)
         }

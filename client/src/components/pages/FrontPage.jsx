@@ -27,7 +27,7 @@ export default class PageHandler extends Component {
     let newState = { ...this.state }
     newState.category = '_app'
     newState.page = 'Home'
-    var res = await api.getPageInfo(newState.category, newState.page)
+    let res = await api.getPageInfo(newState.category, newState.page)
     if (res.status === 200) {
       newState.pageType = res.data.type // "static"
       newState.pageSubtype = res.data.subtype // "md"

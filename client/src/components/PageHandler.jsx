@@ -32,7 +32,7 @@ export default class PageHandler extends Component {
     let newState = { ...this.state }
     newState.category = this.props.match.params.category
     newState.pageName = this.props.match.params.page
-    var res = await api.getPageInfo(newState.category, newState.pageName)
+    let res = await api.getPageInfo(newState.category, newState.pageName)
     if (res.status === 200) {
       newState.pageType = res.data.type
       newState.pageSubtype = res.data.subtype

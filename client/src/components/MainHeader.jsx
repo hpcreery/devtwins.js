@@ -56,7 +56,7 @@ class MainHeader extends Component {
 
   render() {
     // if (this.state.redirect) {  // Use with redirect router method && remove withRouter from export
-    //   var dest = this.state.redirect
+    //   let dest = this.state.redirect
     //   this.setState({ redirect: null });
     //   return <Redirect to={dest} />
     // }

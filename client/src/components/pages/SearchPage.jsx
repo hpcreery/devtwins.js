@@ -29,11 +29,11 @@ export default class FrontPage extends Component {
 
   updateInfo = () => {
     console.log('this ur;:', this.props.location.pathname, window.location.href, this.props.location)
-    var list = []
+    let list = []
     api.getPageList().then((res) => {
       console.log('Fetched Page list:', res)
       list = res.data.map((page) => {
-        var pagelink = '/' + page.category.replace(/ /g, '%20') + '/' + page.name.replace(/ /g, '%20')
+        let pagelink = '/' + page.category.replace(/ /g, '%20') + '/' + page.name.replace(/ /g, '%20')
         return {
           href: pagelink,
           title: page.name,
