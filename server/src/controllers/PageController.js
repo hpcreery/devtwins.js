@@ -2,7 +2,23 @@ const fs = require('fs')
 const config = require('../config/config')
 const sizeOf = require('image-size')
 
+function notArchived(items) {
+  return items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
+}
+
 module.exports = {
+  getCategoryList(req, res) {
+    console.log(config.dir.pages)
+    try {
+      let items = fs.readdirSync(config.dir.pages)
+      let filtereditems = notArchived(items)
+      console.log('List of Directories', filtereditems)
+      res.status(200).json(filtereditems)
+    } catch (err) {
+      res.status(500).send(err)
+    }
+  },
+
   // Parent Folder/Categories List (filter out archived pages)
   getPageList(req, res) {
     console.log('req', req)
@@ -10,20 +26,8 @@ module.exports = {
     console.log(config.dir.pages + '/' + category)
     try {
       let items = fs.readdirSync(config.dir.pages + '/' + category)
-      let filtereditems = items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
+      let filtereditems = notArchived(items)
       console.log('List of Directories in', category, filtereditems)
-      res.status(200).json(filtereditems)
-    } catch (err) {
-      res.status(500).send(err)
-    }
-  },
-
-  getCategoryList(req, res) {
-    console.log(config.dir.pages)
-    try {
-      let items = fs.readdirSync(config.dir.pages)
-      let filtereditems = items.filter((item) => !item.startsWith('_') && !item.startsWith('.'))
-      console.log('List of Directories', filtereditems)
       res.status(200).json(filtereditems)
     } catch (err) {
       res.status(500).send(err)

@@ -2,21 +2,15 @@
 import React, { Component } from 'react'
 
 // Components
-import 'photoswipe/dist/photoswipe.css'
-import { Gallery, Item } from 'react-photoswipe-gallery'
+import Gallery from 'react-photo-gallery'
+import Carousel, { Modal, ModalGateway } from 'react-images'
 import api from '../../services/Api'
 
 // UI Elements
 import { Row, Col, Card } from 'antd'
 import PageLoader from '../PageLoader'
 // const { Meta } = Card
-const smallItemStyles = {
-  cursor: 'pointer',
-  // objectFit: 'cover',
-  maxWidth: '250px',
-  // height: '150px',
-  padding: '10px',
-}
+
 // Main Class
 export default class GalleryRenderer extends Component {
   constructor(props) {
@@ -45,30 +39,46 @@ export default class GalleryRenderer extends Component {
     this.setState({ ...newState })
   }
 
+  openLightbox = (event, { photo, index }) => {
+    console.log(event, photo, index)
+    this.setState({ currentImage: index, viewerIsOpen: true })
+  }
+
+  closeLightbox = () => {
+    this.setState({ currentImage: 0, viewerIsOpen: false })
+  }
+
+  imageRenderer = ({ index, left, top, key, photo }) => {
+    console.log(photo)
+    return (
+      <Card hoverable style={{ marginTop: 10 }}>
+        {/* <Meta style={{ fontStyle: 'italic' }} description={index} /> */}
+        <img alt='' src={photo.src} />
+      </Card>
+    )
+  }
+
   render() {
     return (
       <div>
         <PageLoader loading={this.state.loading}>
-          <Row justify="center">
+          <Row justify='center'>
             <Col span={20}>
               {this.state.photosReady ? (
-                <Gallery id="my-gallery" withDownloadButton>
-                  <div
-                    style={{
-                      // display: 'grid',
-                      // gridTemplateColumns: 'repeat(3, 0fr)',
-                      // gridGap: 10,
-                      textAlign: 'center'
-                    }}
-                  >
-                    {this.state.photos.map((img) => {
-                      return <Item original={img.src} thumbnail={img.src} width={img.width} height={img.height}>
-                      {({ ref, open }) => <img style={smallItemStyles} ref={ref} onClick={open} src={img.src} />}
-                    </Item>
-                    })}
-                  </div>
-                </Gallery>
+                <Gallery photos={this.state.photos} onClick={this.openLightbox} /> // renderImage={this.imageRenderer}
               ) : null}
+              <ModalGateway>
+                {this.state.viewerIsOpen ? (
+                  <Modal onClose={this.closeLightbox}>
+                    <Carousel
+                      currentIndex={this.state.currentImage}
+                      views={this.state.photos.map((x) => ({
+                        ...x,
+                      }))}
+                    />
+                  </Modal>
+                ) : null}
+              </ModalGateway>
             </Col>
           </Row>
         </PageLoader>
